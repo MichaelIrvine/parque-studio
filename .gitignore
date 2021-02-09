@@ -1,0 +1,14 @@
+# Shopify Config Files to Ignore#
+config.yml
+
+# Config Prepros Files to Ignore#
+prepros.config
+
+# Ignore vscode settings
+.vscode
+node_modules
+
+# cache folder
+.cache
+
+package-lock.json

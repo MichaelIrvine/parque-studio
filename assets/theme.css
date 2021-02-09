@@ -1,0 +1,380 @@
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default padding */
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+/* Set core body defaults */
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Remove list styles on ul, ol elements with a class attribute */
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+/* Remove list styles on ul, ol  */
+ul,
+ol {
+  list-style: none;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+  -webkit-text-decoration-skip: ink;
+          text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Natural flow and rhythm in articles by default */
+article > * + * {
+  margin-top: 1em;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+button {
+  border: none;
+  background-color: transparent;
+}
+button:focus {
+  outline: none;
+}
+button:hover {
+  cursor: pointer;
+}
+
+a {
+  color: #ffffff;
+}
+
+html {
+  font-size: 16px;
+  font-family: "aktiv-grotesk", Arial, Helvetica, sans-serif;
+}
+@media screen and (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 648px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+.coming-soon__wrapper {
+  display: block;
+}
+.coming-soon__wrapper .cs__section-1 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+}
+.coming-soon__wrapper .cs__section-1 .section-1__screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  opacity: 0;
+  background-color: black;
+  transition: opacity 1000ms ease-in-out;
+  pointer-events: none;
+}
+.coming-soon__wrapper .cs__section-1 .cs__logo--wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  animation: fadeIn 1100ms ease-in 400ms backwards;
+}
+.coming-soon__wrapper .cs__section-1 .cs__logo--wrapper .cs__logo {
+  width: 400px;
+  max-width: 465px;
+}
+.coming-soon__wrapper .cs__section-1 .cs__logo--wrapper .cs__logo svg g path {
+  fill: #F3EEE8;
+}
+@media screen and (max-width: 648px) {
+  .coming-soon__wrapper .cs__section-1 .cs__logo--wrapper .cs__logo {
+    width: 85%;
+  }
+}
+.coming-soon__wrapper .cs__section-1 .cs__arrow--wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  animation: fadeIn 800ms ease-in 800ms backwards;
+}
+@media screen and (max-width: 420px) {
+  .coming-soon__wrapper .cs__section-1 .cs__arrow--wrapper {
+    margin-bottom: 10vh;
+  }
+}
+.coming-soon__wrapper .cs__section-1 .cs__arrow--wrapper .cs__arrow {
+  width: 25px;
+}
+.coming-soon__wrapper .cs__section-2 {
+  position: relative;
+  margin-top: 100vh;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header .header__logo-wrapper {
+  height: 40px;
+  width: 170px;
+}
+@media screen and (max-width: 768px) {
+  .coming-soon__wrapper .cs__section-2 .section-2__header .header__logo-wrapper {
+    width: 150px;
+  }
+}
+@media screen and (max-width: 648px) {
+  .coming-soon__wrapper .cs__section-2 .section-2__header .header__logo-wrapper {
+    width: 130px;
+  }
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header .header__logo-wrapper svg g path {
+  fill: #F3EEE8;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header button {
+  height: 40px;
+  border-radius: 50px;
+  border: 1px solid #F3EEE8;
+  background-color: #F3EEE8;
+  padding: 0 1rem;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header button:hover {
+  background-color: transparent;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header button:hover a {
+  color: #F3EEE8;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__header button a {
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: "moret", serif;
+  color: #000000;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__main-content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+.coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+@media screen and (max-width: 420px) {
+  .coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper {
+    width: 96.5%;
+  }
+}
+.coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper h2 {
+  font-size: 3.5rem;
+  font-family: "moret", serif;
+  color: #F3EEE8;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: 3px;
+}
+@media screen and (max-width: 648px) {
+  .coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper h2 {
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper h2 {
+    font-size: 2.5rem;
+  }
+}
+.coming-soon__wrapper .cs__section-2 .section-2__main-content .main-content--wrapper .main-content__break-line {
+  display: block;
+  width: 25%;
+  height: 1px;
+  background-color: #F3EEE8;
+  margin: 2.5rem auto;
+}
+.coming-soon__wrapper .cs__section-2 .footer__copyright {
+  font-family: "aktiv-grotesk", sans-serif;
+  font-size: 0.6rem;
+  color: #F3EEE8;
+  text-align: center;
+}
+
+.darken {
+  opacity: 0.6 !important;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.newsletter h3 {
+  font-size: 1.3rem;
+  font-family: "moret", serif;
+  color: #F3EEE8;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: 1.5px;
+}
+.newsletter .newsletter--form .form-success {
+  font-size: 2rem;
+  font-family: "moret", serif;
+  color: #F3EEE8;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: 1.5px;
+}
+.newsletter .newsletter--form .input-group {
+  width: 85%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #F3EEE8;
+  border-radius: 50px;
+  margin: 0.7rem auto 0.7rem;
+}
+@media screen and (max-width: 420px) {
+  .newsletter .newsletter--form .input-group {
+    width: 100%;
+  }
+}
+.newsletter .newsletter--form .input-group input {
+  border: none;
+  background-color: transparent;
+  font-family: "moret", serif;
+  font-size: 1.8rem;
+  color: #F3EEE8;
+  padding-left: 1rem;
+  width: 100%;
+}
+@media screen and (max-width: 420px) {
+  .newsletter .newsletter--form .input-group input {
+    font-size: 1.35rem;
+  }
+}
+.newsletter .newsletter--form .input-group input:focus::placeholder {
+  color: #828282;
+}
+.newsletter .newsletter--form .input-group input:focus {
+  outline: none;
+}
+.newsletter .newsletter--form .input-group input::placeholder {
+  font-family: "moret", serif;
+  font-size: 1.8rem;
+  color: #F3EEE8;
+  transition: color 400ms ease-in-out;
+}
+.newsletter .newsletter--form .input-group .input-group-btn {
+  padding-right: 1rem;
+}
+.newsletter .newsletter--form .input-group .input-group-btn .newsletter__submit svg {
+  height: 60px;
+  width: 60px;
+}
+.newsletter .newsletter--form .newsletter--opt-in {
+  font-family: "aktiv-grotesk", sans-serif;
+  font-size: 0.7rem;
+  color: #F3EEE8;
+  text-align: center;
+}
+
+.errors ul {
+  padding: 0;
+}
+.errors ul li {
+  font-size: 2rem;
+  font-family: "moret", serif;
+  color: #F3EEE8;
+  text-align: center;
+  line-height: 1.25;
+  letter-spacing: 1.5px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 14px;
+}
+
+body {
+  background-color: blue;
+}

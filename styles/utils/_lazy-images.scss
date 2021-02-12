@@ -1,0 +1,9 @@
+.lazy .blurUp {
+  opacity: 0.3;
+  filter: blur(20px);
+}
+
+.lazy-reveal {
+  opacity: 1;
+  filter: blur(0);
+}

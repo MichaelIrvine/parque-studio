@@ -1,17 +1,53 @@
 html {
   font-size: 16px;
-  font-family: 'aktiv-grotesk', Arial, Helvetica, sans-serif;
+  font-family: 'prestige-elite-std', monospace;
 
-  @media screen and (max-width: 768px){
+  @media screen and (max-width: 768px) {
     font-size: 14px;
   }
 
-  @media screen and (max-width: 648px){
+  @media screen and (max-width: 648px) {
     font-size: 12px;
   }
-
 }
 
+h1,
+h2,
+h3 {
+  font-size: 2.25rem;
+  color: $black;
+  font-family: 'haboro-contrast-normal', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.15;
+}
 
+h4 {
+  font-size: 1.32rem;
+  color: $black;
+  font-family: 'haboro-contrast-normal', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+p {
+  font-size: 1rem;
+  color: $black;
+  font-family: 'haboro-contrast-normal', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 
+a {
+  font-size: 1rem;
+  color: $black;
+  font-family: 'prestige-elite-std', monospace;
+  font-weight: 400;
+  font-style: normal;
+  border-bottom: 1px solid $black;
+  text-decoration: none;
+}
+
+.small {
+  font-size: 13px;
+}

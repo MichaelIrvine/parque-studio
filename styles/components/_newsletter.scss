@@ -1,8 +1,8 @@
 .newsletter {
   h3 {
     font-size: 1.3rem;
-    font-family: $font__moret;
-    color: $parque__off-white;
+
+    color: $white;
     text-align: center;
     line-height: 1.25;
     letter-spacing: 1.5px;
@@ -11,8 +11,8 @@
   .newsletter--form {
     .form-success {
       font-size: 2rem;
-      font-family: $font__moret;
-      color: $parque__off-white;
+
+      color: $white;
       text-align: center;
       line-height: 1.25;
       letter-spacing: 1.5px;
@@ -23,24 +23,24 @@
       height: 60px;
       display: flex;
       justify-content: space-between;
-      border: 1px solid $parque__off-white;
+      border: 1px solid $white;
       border-radius: 50px;
       margin: 0.7rem auto 0.7rem;
 
-      @media screen and (max-width: 420px){
+      @media screen and (max-width: 420px) {
         width: 100%;
       }
 
       input {
         border: none;
         background-color: transparent;
-        font-family: $font__moret;
+
         font-size: 1.8rem;
-        color: $parque__off-white;
+        color: $white;
         padding-left: 1rem;
         width: 100%;
 
-        @media screen and (max-width: 420px){
+        @media screen and (max-width: 420px) {
           font-size: 1.35rem;
         }
 
@@ -53,19 +53,16 @@
         }
 
         &::placeholder {
-          font-family: $font__moret;
           font-size: 1.8rem;
-          color: $parque__off-white;
+          color: $white;
           transition: color 400ms ease-in-out;
         }
-
       }
 
       .input-group-btn {
         padding-right: 1rem;
 
         .newsletter__submit {
-
           svg {
             height: 60px;
             width: 60px;
@@ -75,15 +72,12 @@
     }
 
     .newsletter--opt-in {
-      font-family: $font__aktiv;
       font-size: 0.7rem;
-      color: $parque__off-white;
+      color: $white;
       text-align: center;
-      
     }
   }
 }
-
 
 .errors {
   ul {
@@ -91,8 +85,8 @@
 
     li {
       font-size: 2rem;
-      font-family: $font__moret;
-      color: $parque__off-white;
+
+      color: $white;
       text-align: center;
       line-height: 1.25;
       letter-spacing: 1.5px;

@@ -1,0 +1,41 @@
+.header__wrapper {
+  padding: 25px;
+  display: flex;
+  width: 100%;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    width: 80%;
+
+    .header__logo--wrapper {
+      svg {
+        width: 134px;
+      }
+    }
+
+    .main-nav {
+      display: flex;
+      justify-content: center;
+      flex: 1;
+      align-items: center;
+
+      a {
+        margin-right: 4rem;
+      }
+    }
+  }
+}
+
+.index .header__wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+
+  .no-display {
+    display: none;
+  }
+}

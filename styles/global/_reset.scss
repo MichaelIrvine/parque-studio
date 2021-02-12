@@ -1,5 +1,3 @@
-
-
 /* Box sizing rules */
 *,
 *::before,
@@ -58,7 +56,9 @@ a:not([class]) {
 
 /* Make images easier to work with */
 img {
+  width: 100%;
   max-width: 100%;
+  height: auto;
   display: block;
 }
 
@@ -83,23 +83,4 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-// Custom Reset Styles
-
-button {
-  border: none;
-  background-color: transparent;
-  &:focus {
-    outline: none;
-  }
-  &:hover {
-    cursor: pointer;
-  }
-}
-
-// Link Color Reset
-
-a {
-  color: #ffffff;
 }

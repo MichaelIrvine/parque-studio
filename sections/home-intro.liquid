@@ -1,0 +1,41 @@
+<section class="page-intro">
+  <div class="page-intro__text">
+    <h2>{{section.settings.home-intro-text}}</h2>
+    <a href="{{section.settings.home-intro-url}}">
+      {{section.settings.home-intro-link}}
+    </a>
+  </div>
+  <div class="image__wrapper cropped">
+    {% render 'responsive-image' with imgSrc: section.settings.home-intro-image, aspectVar: '_16x9' %} 
+  </div>
+</section>
+
+
+
+{% schema %}
+  {
+    "name": "Home Introduction",
+    "settings": [
+      {
+        "id": "home-intro-text",
+        "type": "textarea",
+        "label": "Home Page Introduction Text"
+      },
+      {
+        "id": "home-intro-link",
+        "type": "text",
+        "label": "Text for Link"
+      },
+      {
+        "id": "home-intro-url",
+        "type": "url",
+        "label": "Page or Link"
+      },
+      {
+        "id": "home-intro-image",
+        "type": "image_picker",
+        "label": "Home Page Introduction Image"
+      }
+    ]
+  }
+{% endschema %}

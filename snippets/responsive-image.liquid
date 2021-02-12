@@ -1,0 +1,24 @@
+{% comment %} Reusable Snippet for lazyloaded + srcset images {% endcomment %}
+<div class="aspect__wrapper {{ aspectVar }}">
+  <picture>
+    <source
+      media="(max-width: 375px)"
+      srcset="{{ imgSrc.src | img_url: '575x' }}"
+    />
+    <source
+      media="(max-width: 768px)"
+      srcset="{{ imgSrc.src | img_url: '768x' }}"
+    />
+    <source
+      media="(min-width: 768px)"
+      srcset="{{ imgSrc.src | img_url: 'master' }}"
+    />
+    <img
+      src="{{ imgSrc.src | img_url: '10x' }}"
+      srcset="{{ imgSrc.src | img_url: 'master' }}"
+      alt="{{ imgSrc.alt | escape }}"
+      loading="lazy"
+      class="lazy blurUp lazy-reveal"
+    />
+  </picture>
+</div>

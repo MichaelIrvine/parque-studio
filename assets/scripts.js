@@ -117,29 +117,66 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"test.js":[function(require,module,exports) {
-"use strict";
+})({"scripts.js":[function(require,module,exports) {
+// Iports
+// Code from https://codepen.io/imagekit_io/pen/BPXQZZ
+document.addEventListener('DOMContentLoaded', function () {
+  var lazyloadImages;
+  var options = {
+    root: null,
+    rootMargin: '0px 0px 50px 0px',
+    threshold: 0.1
+  };
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+  if ('IntersectionObserver' in window) {
+    lazyloadImages = document.querySelectorAll('.lazy');
+    var imageObserver = new IntersectionObserver(function (entries, observer) {
+      entries.forEach(function (entry) {
+        if (entry.intersectionRatio > 0) {
+          var image = entry.target; // image.srcset = image.dataset.srcset;
+
+          image.src = image.dataset.src ? image.dataset.src : image.srcset;
+          image.classList.remove('blurUp');
+          observer.unobserve(image);
+        }
+      });
+    });
+    lazyloadImages.forEach(function (image) {
+      imageObserver.observe(image);
+    });
+  } else {
+    console.log('fallback');
+    var lazyloadThrottleTimeout;
+    lazyloadImages = document.querySelectorAll('.lazy');
+
+    function lazyload() {
+      if (lazyloadThrottleTimeout) {
+        clearTimeout(lazyloadThrottleTimeout);
+      }
+
+      lazyloadThrottleTimeout = setTimeout(function () {
+        var scrollTop = window.pageYOffset;
+        lazyloadImages.forEach(function (img) {
+          if (img.offsetTop < window.innerHeight + scrollTop) {
+            img.src = img.dataset.src;
+            img.classList.remove('lazy');
+          }
+        });
+
+        if (lazyloadImages.length == 0) {
+          document.removeEventListener('scroll', lazyload);
+          window.removeEventListener('resize', lazyload);
+          window.removeEventListener('orientationChange', lazyload);
+        }
+      }, 20);
+    }
+
+    document.addEventListener('scroll', lazyload);
+    window.addEventListener('resize', lazyload);
+    window.addEventListener('orientationChange', lazyload);
+  }
 });
-exports.default = void 0;
-
-var Test = function Test() {
-  console.log('Parque Studio - Developed by Michael Irvine - https://michaelirvinedesign.ca | Designed by ZAK - https://wearezak.com/');
-};
-
-var _default = Test;
-exports.default = _default;
-},{}],"scripts.js":[function(require,module,exports) {
-"use strict";
-
-var _test = _interopRequireDefault(require("./test"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-(0, _test.default)();
-},{"./test":"test.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -167,7 +204,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59028" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63968" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

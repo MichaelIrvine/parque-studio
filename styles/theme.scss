@@ -1,7 +1,5 @@
 @import 'variables/variables';
 @import 'global/reset';
 @import 'global/global';
-
-body {
-  background-color: blue;
-}
+@import 'utils/utils';
+@import 'elements/elements';

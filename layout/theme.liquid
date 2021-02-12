@@ -1,22 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <title>{{ page_title }}</title>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="description" content="{{ page_description | escape }}">
-  <link rel="canonical" href="{{ canonical_url }}">
-  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
-  {{ content_for_header }} <!-- Header hook for plugins -->
-  {{ 'theme.css' | asset_url | stylesheet_tag }}
-  
-  <link rel="stylesheet" href="https://use.typekit.net/ulu3cae.css">
-</head>
-<body>
-  <main role="main">
-    {{ content_for_layout }}
-  </main>
+  <head>
+    <title>{{ page_title }}</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="{{ page_description | escape }}" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,shrink-to-fit=no"
+    />
+    {{
+      content_for_header
+    }}
+    <!-- Header hook for plugins -->
+    {{
+      'theme.css' | asset_url | stylesheet_tag
+    }}
 
-  {{ 'scripts.js' | asset_url | script_tag }}
-</body>
+    <link rel="stylesheet" href="https://use.typekit.net/ulu3cae.css" />
+  </head>
+  <body class="{{ template | handleize }}">
+    <main role="main">
+      <div class="header__wrapper">
+        <div class="branding__wrapper">
+          {% render 'home-page-branding'%}
+        </div>
+        <header>
+          <div class="header__logo--wrapper {% if template == 'index' %}no-display{% endif %}">
+            <a href="/" aria-label="Parque Studio Home Page"> {% render 'header-logo' %}</a>
+          </div>
+
+          <nav class="main-nav">{%include 'menu' %}</nav>
+          <div class="cart">
+            <button>Cart(0)</button>
+          </div>
+        </header>
+      </div>
+      {{ content_for_layout }}
+      <footer></footer>
+    </main>
+
+    {{ 'scripts.js' | asset_url | script_tag }}
+  </body>
 </html>

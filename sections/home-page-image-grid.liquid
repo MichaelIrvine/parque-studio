@@ -1,0 +1,56 @@
+<div class="image-grid__wrapper">
+  {% for block in section.blocks %}
+    {% if block.settings.home-gallery-image %}
+      {% render 'responsive-image-grid' with imgSrc: block.settings.home-gallery-image, aspectVar: {{block.settings.image-aspect}}, imagePosY: {{block.settings.image-position-y}},imagePosX: {{block.settings.image-position-x}}, imageSize: {{block.settings.image-size}} %}
+    {% endif %}
+  {% endfor %}
+
+</div>
+
+
+{% schema %}
+  {
+    "blocks": [
+      {
+        "name": "Home Page Gallery Image",
+        "type": "image_picker",
+        "settings": [
+          {
+            "id": "home-gallery-image",
+            "type": "image_picker",
+            "label": "Gallery Image"
+          },
+          {
+            "id": "image-position-y",
+            "type": "select",
+            "options": [
+              { "value": "top", "label": "Top"},
+              { "value": "middle", "label": "Middle"},
+              { "value": "bottom", "label": "Bottom"}
+            ],
+            "label": "Vertical alignment"
+          },
+          {
+            "id": "image-position-x",
+            "type": "select",
+            "options": [
+              { "value": "left", "label": "Left"},
+              { "value": "center", "label": "Center"},
+              { "value": "right", "label": "Right"}
+            ],
+            "label": "Horizontal alignment"
+          },
+          {
+            "id": "image-size",
+            "type": "select",
+            "options": [
+              { "value": "grid-image-full", "label": "Full"},
+              { "value": "grid-image-crop", "label": "Cropped"}
+            ],
+            "label": "Image Size"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}

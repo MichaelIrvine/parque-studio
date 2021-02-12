@@ -1,0 +1,22 @@
+<div class="home-hero__wrapper">
+  {% comment %} {% render 'responsive-image__full' with imgSrc: section.settings.home-hero %} {% endcomment %}
+  <img 
+  data-src="{{section.settings.home-hero | img_url: 'master' }}"
+  src="{{section.settings.home-hero | img_url: '250' }}" alt="{{home-hero.alt | escape}}" loading="lazy" class="lazy blurUp lazy-reveal">
+</div>
+
+
+{% schema %}
+  {
+    "name": "Home Hero Image",
+    "settings": [
+      {
+        "id": "home-hero",
+        "type": "image_picker",
+        "label": "Home Page Hero Image"
+      }
+    ]
+  }
+{% endschema %}
+
+

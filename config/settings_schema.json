@@ -6,5 +6,25 @@
     "theme_author": "Michael Irvine",
     "theme_documentation_url": "https://github.com/MichaelIrvine/parque-studio",
     "theme_support_url": "https://github.com/MichaelIrvine/parque-studio"
+  },
+  {
+    "name": "Social Media Links",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_twitter_link",
+        "label": "Twitter"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook_link",
+        "label": "Facebook"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram_link",
+        "label": "Instagram"
+      }
+    ]
   }
 ]

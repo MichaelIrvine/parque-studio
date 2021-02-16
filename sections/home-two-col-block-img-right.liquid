@@ -1,0 +1,53 @@
+<div class="two-col-block__wrapper --img-right">
+  <div class="block__column">
+    {% if section.settings.home-two-col-r-text-image %}
+      <div class="text-col-image">
+        <img 
+          data-src="{{section.settings.home-two-col-r-text-image | img_url: 'master' }}"
+          src="{{section.settings.home-two-col-r-text-image | img_url: '50' }}" alt="{{home-hero.alt | escape}}" loading="lazy" class="lazy blurUp lazy-reveal">
+      </div>
+    {% endif %}
+    <div class="text-col-text">
+      <h3>{{section.settings.home-two-col-r-header}}</h3>
+      <p>{{section.settings.home-two-col-r-text}}</p>
+      <a href="{{section.settings.home-two-col-r-link}}" class="cta-link">Learn More</a>
+    </div>
+  </div>
+  <div class="block__column">
+    {% render 'responsive-image-grid' with imgSrc: section.settings.home-two-col-r-feature-image %}  
+  </div>
+</div>
+
+
+{% schema %}
+  {
+  "name": "Two Columns Right Image",
+  "settings": [
+    {
+      "id": "home-two-col-r-text-image",
+      "type": "image_picker",
+      "label": "Left Column Smaller Image"
+    },
+    {
+      "id": "home-two-col-r-header",
+      "type": "text",
+      "label": "Left Column Header"
+    },
+    {
+      "id": "home-two-col-r-text",
+      "type": "textarea",
+      "label": "Left Column Text"
+    },
+    {
+      "id": "home-two-col-r-link",
+      "type": "url",
+      "label": "Left Column Link"
+    },
+    {
+      "id": "home-two-col-r-feature-image",
+      "type": "image_picker",
+      "label": "Right Column Image"
+    }
+  ]
+  }
+{% endschema %}

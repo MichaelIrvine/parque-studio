@@ -1,0 +1,44 @@
+<div class="sub-footer-newsletter__wrapper">
+  <h3>Stay in The Know</h3>
+  <p class="font-prestige">
+    Subscribe to our newsletters to hear first &nbsp;about new releases and
+    more!
+  </p>
+  {% form 'customer' %}
+  {{ form.errors | default_errors }}
+  {% if form.posted_successfully? %}
+  <div class="newsletter--form">
+    <div class="note form-success">
+      Thanks for signing up, please check your email to confirm your
+      subscription.
+    </div>
+  </div>
+  {% else %}
+  <input type="hidden" name="contact[tags]" value="newsletter" />
+  <div class="newsletter--form">
+    <div class="input-group">
+      <input
+        type="email"
+        value="{% if customer %}{{ customer.email }}{% endif %}"
+        placeholder="Your Email"
+        name="contact[email]"
+        id="Email"
+        class="input-group-field newsletter__input"
+        autocorrect="off"
+        autocapitalize="off"
+        aria-label="Parque Studio Newsletter Sign up form"
+      />
+      <span class="input-group-btn">
+        <button
+          id="Subscribe"
+          type="submit"
+          class="button-main"
+          aria-label="Newsletter sign-up"
+        >
+          {% render 'newsletter-arrow' %}
+        </button>
+      </span>
+    </div>
+  </div>
+  {% endif %} {% endform %}
+</div>

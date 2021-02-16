@@ -1,20 +1,25 @@
-<div class="header__cart-drawer--wrapper">
+<div class="cart-drawer__wrapper">
   {% if cart.item_count > 0 %}
-  <h3>Your cart</h3>
+  <div class="cart-header__wrapper">
+    <h3>cart</h3>
+    <button>Close</button>
+  </div>
   <form action="/cart" method="post" novalidate>
     {% for item in cart.items %}
 
-    <div class="cart-drawer__main-content--wrapper">
+    <div class="cart-drawer__main-content__wrapper">
       <div class="main-content__col-01">
         <a href="{{ item.url | within: collections.all }}">
           <img
-            src="{{ item | img_url: 'medium' }}"
+            data-src="{{ item | img_url: '500x' }}"
+            src="{{ item | img_url: '10x' }}"
             alt="{{ item.title | escape }}"
+            class="lazy blurUp lazy-reveal"
           />
         </a>
       </div>
       <div class="main-content__col-02">
-        <div class="cart-drawer__title--wrapper">
+        <div class="cart-drawer__title__wrapper">
           <a href="{{ item.url }}">
             <p class="cart-drawer__product-title">
               {{ item.product.title }}
@@ -22,7 +27,7 @@
           </a>
           <p class="cart-drawer__product-type">{{ item.product.type }}</p>
         </div>
-        <div class="cart-drawer__quantity--wrapper">
+        <div class="cart-drawer__quantity__wrapper">
           <div class="decrement">
             <button
               id="decreaseQuantity"
@@ -81,7 +86,7 @@
       </div>
     </div>
 
-    <div class="cart-drawer__subtotal--wrapper">
+    <div class="cart-drawer__subtotal__wrapper">
       <div class="subtotal__col-01">
         <p>Subtotal</p>
       </div>

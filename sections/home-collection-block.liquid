@@ -1,0 +1,55 @@
+<section class="collection-block">
+  <div class="collection-header__wrapper">
+    <h2>{{section.settings.home-product-heading}}</h2>
+  </div>
+
+  {% assign collection = collections[section.settings.collection] %}
+  
+  <div class="responsive-grid">
+    {% for product in collection.products limit: section.settings.product_limit %}
+        <div class="product-item">
+          <div class="product-thumb">
+            {% if product.compare_at_price and product.compare_at_price != product.price %}
+              <span class="sale-badge">Sale</span>
+            {% endif %}
+
+            {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %} 
+          </div>
+          <div class="product-content">  
+            <h4>{{product.title}}</h4>
+            <div class="product-content__meta">
+              <p class="font-prestige">{{product.price | money}}</p>
+              <a href="{{product.url}}">Pre-Order</a>
+            </div>
+          </div>
+        </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Home Page Products",
+    "settings": [
+      {
+        "type": "text",
+        "id": "home-product-heading",
+        "label": "Home Product Heading",
+        "default": "Collection"
+      },
+      {
+        "type": "collection",
+        "id": "collection",
+        "label": "Home Page Products"
+      },
+      {
+        "type": "range",
+        "id": "product_limit",
+        "label": "Product Limit",
+        "min": 3,
+        "max": 9,
+        "default": 3
+      }
+    ]
+  }
+{% endschema %}

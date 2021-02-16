@@ -1,3 +1,8 @@
+.index .header__wrapper header {
+  width: 80%;
+  border-bottom: none;
+}
+
 .header__wrapper {
   padding: 25px;
   display: flex;
@@ -8,9 +13,13 @@
     justify-content: space-between;
     align-items: center;
     height: 90px;
-    width: 80%;
+    width: 100%;
+    border-bottom: 1px solid $darkGrey;
 
     .header__logo--wrapper {
+      a {
+        border-bottom: none;
+      }
       svg {
         width: 134px;
       }
@@ -33,7 +42,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 9997;
 
   .no-display {
     display: none;

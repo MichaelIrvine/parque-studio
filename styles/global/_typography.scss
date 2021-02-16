@@ -38,6 +38,14 @@ p {
   font-style: normal;
 }
 
+p.font-prestige {
+  font-size: 1rem;
+  color: $black;
+  font-family: 'prestige-elite-std', monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+
 a {
   font-size: 1rem;
   color: $black;

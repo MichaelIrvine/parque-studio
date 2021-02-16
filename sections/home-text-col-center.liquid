@@ -1,0 +1,32 @@
+<div class="page-text-col align-center">
+  <div class="col-text__wrapper">
+    <h3>{{section.settings.home-center-col-header}}</h3>
+    <p>{{section.settings.home-center-col-text}}</p>
+    <a href="{{section.settings.home-center-col-url}}" class="cta-link">Learn More</a>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Home Text Center Column",
+    "settings": [
+      {
+        "id": "home-center-col-header",
+        "type": "text",
+        "label": "Home Text center Column Header"
+      },
+      {
+        "id": "home-center-col-text",
+        "type": "textarea",
+        "label": "Home Text center Column Text"
+      },
+      {
+        "id": "home-center-col-url",
+        "type": "url",
+        "label": "Link"
+      }
+    ]
+  }
+{% endschema %}

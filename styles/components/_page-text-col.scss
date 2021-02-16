@@ -1,5 +1,6 @@
 .page-text-col {
-  padding: 3.75rem;
+  padding: 0 3.75rem;
+  display: flex;
 
   .col-text__wrapper {
     max-width: 40%;
@@ -8,4 +9,9 @@
 
 .align-left {
   text-align: left;
+  justify-content: flex-start;
+}
+.align-center {
+  text-align: center;
+  justify-content: center;
 }

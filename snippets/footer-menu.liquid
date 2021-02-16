@@ -1,0 +1,20 @@
+<div class="footer-menu__wrapper">
+  {% for link in linklists.footer.links %} {% assign child_list_handle = link.title | handleize %}
+    <a href="{{ link.url }}">{{ link.title }}</a>
+  {% endfor %}
+  {%- if settings.social_twitter_link != blank -%}
+    <a class="social-icons__link" href="{{ settings.social_twitter_link | escape }}" aria-describedby="Parque Studio Twitter link">
+      {% render 'icon-twitter' %}
+    </a>
+  {%- endif -%}
+  {%- if settings.social_facebook_link != blank -%}
+    <a class="social-icons__link" href="{{ settings.social_facebook_link | escape }}" aria-describedby="Parque Studio Facebook link">
+      {% render 'icon-facebook' %}
+    </a>
+  {%- endif -%}
+  {%- if settings.social_instagram_link != blank -%}
+    <a class="social-icons__link" href="{{ settings.social_instagram_link | escape }}" aria-describedby="Parque Studio Instagram link">
+      {% render 'icon-instagram' %}
+    </a>
+  {%- endif -%}
+</div>

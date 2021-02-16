@@ -1,4 +1,4 @@
-// Iports
+// Imports
 
 // Code from https://codepen.io/imagekit_io/pen/BPXQZZ
 document.addEventListener('DOMContentLoaded', function () {

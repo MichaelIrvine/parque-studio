@@ -1,0 +1,18 @@
+.two-col-block__wrapper {
+  display: grid;
+  gap: 2rem;
+}
+
+.--img-right {
+  grid-template-columns: 1fr 1.25fr;
+
+  .block__column:first-of-type {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    div {
+      width: 70%;
+    }
+  }
+}

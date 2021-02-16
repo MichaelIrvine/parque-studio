@@ -1,12 +1,20 @@
+// Header
 @import './header';
 @import './header_nav';
 @import './branding';
+// Cart
+@import './cart-drawer';
+
 // Index
 @import './home-hero';
 
 // Pages Blocks
 @import './page-intro';
 @import './page-text-col';
+@import './two-col-block';
+
+// Collections
+@import './collection';
 
 // Images
 @import './image-wrapper';

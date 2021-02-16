@@ -1,0 +1,18 @@
+{% if section.settings.home-image-full-feature %}
+  <div class="image__wrapper--full-feature">
+    {% render 'responsive-image' with imgSrc: section.settings.home-image-full-feature, aspectVar: '_11x21' %} 
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Home Full Width Image",
+    "settings": [
+      {
+        "id": "home-image-full-feature",
+        "type": "image_picker",
+        "label": "Home Page Full Width Image"
+      }
+    ]
+  }
+{% endschema %}

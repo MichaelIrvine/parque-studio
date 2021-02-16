@@ -13,14 +13,28 @@
     width: 100%;
     height: 100%;
   }
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+._9x21 {
+  padding-top: 42.85%;
+}
+._11x21 {
+  padding-top: (11 / 21) * 100%;
 }
 
 ._16x9 {
   padding-top: (9 / 16) * 100%;
 }
 
-._5x7 {
-  padding-top: (5 / 7) * 100%;
+._5x7 > picture {
+  padding-bottom: (5 / 7) * 100%;
 }
 
 ._1x1 {

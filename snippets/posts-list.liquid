@@ -1,0 +1,12 @@
+{% for article in blog.articles %}
+<div class="article-item">
+  <a href="{{ article.url }}">
+    {% render 'responsive-image' with imgSrc: article.image, aspectVar: '_1x1'
+    %}
+  </a>
+  <h4>{{ article.title }}</h4>
+  <p class="font-prestige">
+    {{ article.created_at | date: '%d.%m.%Y' }}
+  </p>
+</div>
+{% endfor %}

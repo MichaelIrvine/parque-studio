@@ -1,0 +1,18 @@
+{% if section.settings.contact-header-image %}
+  <div class="image__wrapper --header-image">
+    {% render 'responsive-image' with imgSrc: section.settings.contact-header-image, aspectVar: '_9x21' %} 
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Contact Image",
+    "settings": [
+      {
+        "id": "contact-header-image",
+        "type": "image_picker",
+        "label": "Contact Page Full Width Image"
+      }
+    ]
+  }
+{% endschema %}

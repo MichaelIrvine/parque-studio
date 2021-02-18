@@ -5,7 +5,7 @@
 
   {% assign collection = collections[section.settings.collection] %}
   
-  <div class="responsive-grid">
+  <div class="grid_3x">
     {% for product in collection.products limit: section.settings.product_limit %}
         <div class="product-item">
           <div class="product-thumb">

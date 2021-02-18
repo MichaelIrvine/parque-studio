@@ -1,0 +1,28 @@
+{% assign blog_handle = blog.handle %} {% for article in
+blogs[blog_handle].articles limit: 1 %}
+<div class="responsive-grid">
+  <div>
+    <div class="meta__wrapper">
+      <p class="font-prestige small">
+        {{ article.created_at | date: '%d.%m.%Y' }}
+      </p>
+      <h2>{{ article.title }}</h2>
+      <div class="latest-post__excerpt--wrapper">
+        {% if article.excerpt.size > 0 %}
+        <p>{{ article.excerpt }}</p>
+        {% else %}
+        <p>{{ article.content | strip_html | truncate: 150 }}</p>
+        {% endif %}
+      </div>
+      <a href="{{ article.url }}">Read More</a>
+    </div>
+  </div>
+  <!-- right col -->
+  <div>
+    <a href="{{ article.url }}">
+      {% render 'responsive-image' with imgSrc: article.image, aspectVar: '_1x1'
+      %}
+    </a>
+  </div>
+</div>
+{% endfor %}

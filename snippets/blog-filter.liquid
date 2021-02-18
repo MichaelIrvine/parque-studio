@@ -1,0 +1,17 @@
+{% if blog.tags.size > 0 %}
+<nav class="tags-menu">
+  <a href="/blogs/{{ blog.handle }}" class="tag__wrapper">
+    <span class="blog-tag--check"></span>
+    <span>All Entries</span>
+  </a>
+  {% for tag in blog.all_tags %}
+  <a
+    href="/blogs/{{ blog.handle }}/tagged/{{ tag | handleize }}"
+    class="tag__wrapper"
+  >
+    <span class="blog-tag--check"></span>
+    <span>{{ tag }}</span>
+  </a>
+  {% endfor %}
+</nav>
+{% endif %}

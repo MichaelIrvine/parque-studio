@@ -17,7 +17,8 @@
     {{
       'theme.css' | asset_url | stylesheet_tag
     }}
-
+    <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+    {% comment %} Pre Fetch Adobe Fonts {% endcomment %}
     <link rel="stylesheet" href="https://use.typekit.net/ulu3cae.css" />
   </head>
   <body class="{{ template | handleize }}">
@@ -25,20 +26,22 @@
     {% include 'cart-drawer' %}
     <main role="main">
       <div class="header__wrapper">
-      {% if template == 'index'%}
-        <div class="branding__wrapper">
-          {% render 'home-page-branding'%}
-        </div>
-      {% endif %}
+        {% if template == 'index'%}
+        <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
+        {% endif %}
         <header>
-          <div class="header__logo--wrapper {% if template == 'index' %}no-display{% endif %}">
-            <a href="/" aria-label="Parque Studio Home Page"> {% render 'header-logo' %}</a>
+          <div
+            class="header__logo--wrapper {% if template == 'index' %}no-display{% endif %}"
+          >
+            <a href="/" aria-label="Parque Studio Home Page">
+              {% render 'header-logo' %}</a
+            >
           </div>
           <nav class="main-nav">{%include 'menu' %}</nav>
           <div class="cart">
-            <button>
+            <button id="cart-drawer-open">
               <span>Cart</span>
-              <span>({{cart.item_count}})</span>
+              <span>({{ cart.item_count }})</span>
             </button>
           </div>
         </header>
@@ -47,13 +50,19 @@
     </main>
     <footer id="footer">
       <div class="footer-col">
-        {% render 'footer-logo' %}
-        {% render 'footer-menu' %}
+        {% render 'footer-logo' %} {% render 'footer-menu' %}
       </div>
       <div class="footer-col">
         {% comment %} {% render 'newsletter-footer' %} {% endcomment %}
       </div>
     </footer>
     {{ 'scripts.js' | asset_url | script_tag }}
+    {{ 'cartDrawerQuantityUpdate.js' | asset_url | script_tag }}
+    {% if template.name == 'blog' %}
+    {{ 'tagFilter.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template.name == 'collection' %}
+    {{ 'tagFilter.js' | asset_url | script_tag }}
+    {% endif %}
   </body>
 </html>

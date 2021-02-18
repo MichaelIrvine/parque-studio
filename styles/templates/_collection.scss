@@ -1,0 +1,30 @@
+.collection {
+  .header__wrapper {
+    padding-bottom: 0;
+
+    header {
+      border-bottom: none;
+    }
+  }
+
+  .--header-image {
+    padding-top: 0;
+  }
+
+  .product-filter__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-header__wrapper {
+    border-bottom: 0;
+    border-top: 1px solid $black;
+    margin-bottom: 0;
+  }
+
+  .collection-list {
+    padding: 25px;
+  }
+}

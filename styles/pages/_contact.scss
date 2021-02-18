@@ -1,0 +1,16 @@
+.contact-details__wrapper {
+  width: 90%;
+  margin: 0 auto;
+
+  .responsive-grid {
+    gap: 8rem;
+  }
+
+  .detail__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+}

@@ -1,21 +1,37 @@
+import { gsap } from 'gsap';
+
 const cartDrawer = () => {
   const body = document.querySelector('body');
   const cartOpen = document.querySelector('#cart-drawer-open');
   const cartClose = document.querySelector('#cart-drawer-close');
 
-  function openCart() {
-    // set body overflow
-    body.style.overFlow = 'hidden';
-    // open cart-screen
-    // open cart
-    document.querySelector('.cart-drawer').classList.add('open');
-  }
-  function closeCart() {
-    document.querySelector('.cart-drawer').classList.remove('open');
-  }
+  const tl = gsap.timeline({ paused: true });
 
-  cartOpen.addEventListener('click', openCart);
-  cartClose.addEventListener('click', closeCart);
+  tl.to(body, { duration: 0, overflow: 'hidden' })
+    .to('.cart-screen', { duration: 0, minHeight: '100vh' })
+    .to('.cart-screen', {
+      delay: 0.1,
+      duration: 0.3,
+      opacity: 1,
+      ease: 'power2.out',
+    })
+    .to('.cart-drawer__wrapper', {
+      delay: 0,
+      duration: 0.3,
+      x: 0,
+      ease: 'power2.out',
+    });
+
+  cartOpen.addEventListener('click', function () {
+    tl.play();
+  });
+  cartClose.addEventListener('click', function () {
+    if (tl.reversed()) {
+      tl.play();
+    } else {
+      tl.reverse();
+    }
+  });
 };
 
 export default cartDrawer;

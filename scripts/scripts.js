@@ -1,6 +1,10 @@
 // Imports
+import cartDrawer from './cartDrawer';
 
-// Code from https://codepen.io/imagekit_io/pen/BPXQZZ
+// Imported Functions
+cartDrawer();
+
+// Lazy Load
 document.addEventListener('DOMContentLoaded', function () {
   let lazyloadImages;
   let options = {

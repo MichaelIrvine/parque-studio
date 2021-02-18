@@ -1,0 +1,38 @@
+.article {
+  .page-header__wrapper {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 0;
+    flex-direction: column;
+
+    > a {
+      align-self: flex-start;
+      border-bottom: none;
+
+      svg {
+        height: 10px;
+      }
+    }
+
+    .header-text__wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 3rem;
+    }
+  }
+
+  .article-content {
+    padding: 0 25px;
+    margin-bottom: 13.5rem;
+
+    p {
+      max-width: 75%;
+    }
+
+    * + * {
+      margin: 0 auto 3rem;
+    }
+  }
+}

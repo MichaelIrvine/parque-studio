@@ -1,22 +1,19 @@
-{% paginate blog.articles by 5 %}
+<div class="page-header__wrapper">
+  <h1>Parque Studio Journal</h1>
+  {% render 'blog-filter' %}
+</div>
 
-<h1>{{ blog.title }}</h1>
-{% for article in blog.articles %}
-  <div>
-    <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
-    {{ article.author }} @ {{ article.created_at }}
-    <div>
-      {% if article.excerpt.size > 0 %}
-        {{ article.excerpt }}
-      {% else %}
-        <p>{{ article.content | strip_html | truncatewords: 100 }}</p>
-      {% endif %}
-    </div>
-  </div>
-{% endfor %}
-
-{% if paginate.pages > 1 %}
-  {{ paginate | default_pagination }}
+{% if current_tags %}
+<section></section>
+{% else %}
+<section class="latest-post__wrapper">{% render 'latest-post' %}</section>
 {% endif %}
 
-{% endpaginate %}
+<section class="article-list">
+  <div class="article-list-title">
+    <h2>
+      Journal Entries{% if current_tags %}: {{ current_tags.first }}{% endif %}
+    </h2>
+  </div>
+  <div class="grid_3x">{% render 'posts-list' %}</div>
+</section>

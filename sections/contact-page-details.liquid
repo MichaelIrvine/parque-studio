@@ -1,0 +1,62 @@
+<div class="contact-details__wrapper">
+  <div class="responsive-grid">
+    <div class="detail__wrapper">
+      <p class="font-prestige">Customer Service</p>
+      <h3>{{section.settings.customer-service-header}}</h3>
+      <p>{{section.settings.customer-service-text}}</p>
+    </div>
+    <div class="detail__wrapper">
+      <p class="font-prestige">Press Inquiries</p>
+      <h3>{{section.settings.press-header}}</h3>
+      <p>{{section.settings.press-text}}</p>
+    </div>
+    <div class="detail__wrapper">
+      <p class="font-prestige">Collaborate</p>
+      <h3>{{section.settings.collaborate-header}}</h3>
+      <p>{{section.settings.collaborate-text}}</p>
+    </div>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "Contact Page Details",
+    "settings": [
+      {
+        "id": "customer-service-header",
+        "type": "text",
+        "label": "Customer Service Header",
+        "default": "Customer Service"
+      },
+      {
+        "id": "customer-service-text",
+        "type": "textarea",
+        "label": "Customer Service Text"
+      },
+      {
+        "id": "press-header",
+        "type": "text",
+        "label": "Press Header",
+        "default": "Press Inquiries"
+      },
+      {
+        "id": "press-text",
+        "type": "textarea",
+        "label": "Press Inquiries Text"
+      },
+      {
+        "id": "collaborate-header",
+        "type": "text",
+        "label": "Collaborate Header",
+        "default": "Collaborate"
+      },
+      {
+        "id": "collaborate-text",
+        "type": "textarea",
+        "label": "Collaborate Text"
+      }
+    ]
+  }
+{% endschema %}

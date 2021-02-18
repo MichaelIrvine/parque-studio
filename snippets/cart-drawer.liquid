@@ -1,108 +1,105 @@
 <div class="cart-drawer__wrapper">
-  {% if cart.item_count > 0 %}
-  <div class="cart-header__wrapper">
-    <h3>cart</h3>
-    <button>Close</button>
+    <div class="cart-header__wrapper">
+    <h3>Cart</h3>
+    <button id="cart-drawer-close" class="close-cart">
+      <span></span>
+      <span></span>
+    </button>
   </div>
+  {% if cart.item_count > 0 %}
   <form action="/cart" method="post" novalidate>
     {% for item in cart.items %}
 
-    <div class="cart-drawer__main-content__wrapper">
-      <div class="main-content__col-01">
-        <a href="{{ item.url | within: collections.all }}">
-          <img
-            data-src="{{ item | img_url: '500x' }}"
-            src="{{ item | img_url: '10x' }}"
-            alt="{{ item.title | escape }}"
-            class="lazy blurUp lazy-reveal"
-          />
-        </a>
+    <div class="cart-drawer__products__wrapper">
+      <div>
+        <div class="aspect__wrapper _1x1">
+            <img
+              data-src="{{ item | img_url: '500x' }}"
+              src="{{ item | img_url: '10x' }}"
+              alt="{{ item.title | escape }}"
+              class="lazy blurUp lazy-reveal"
+            />
+        </div>
       </div>
-      <div class="main-content__col-02">
+      <div>
         <div class="cart-drawer__title__wrapper">
-          <a href="{{ item.url }}">
-            <p class="cart-drawer__product-title">
+            <h4 class="cart-drawer__product-title">
               {{ item.product.title }}
-            </p>
-          </a>
-          <p class="cart-drawer__product-type">{{ item.product.type }}</p>
+            </h4>
         </div>
-        <div class="cart-drawer__quantity__wrapper">
-          <div class="decrement">
-            <button
-              id="decreaseQuantity"
-              type="button"
-              aria-label="decrease quantity"
-              onclick="cartDrawerDecrement(0)"
-            >
-              <svg id="decrement-arrow" width="9.019" height="11.819">
-                <g data-name="decrement-arrow">
-                  <path
-                    d="M8.729.412L.872 5.831l7.857 5.581"
-                    fill="none"
-                    stroke="black"
-                    stroke-miterlimit="10"
-                  />
-                </g>
-              </svg>
-            </button>
+        <div class="cart-quantity-details">
+          <div class="cart-drawer__quantity__wrapper">
+            <div class="decrement">
+              <button
+                id="decreaseQuantity"
+                type="button"
+                aria-label="decrease quantity"
+                onclick="cartDrawerDecrement(0)"
+              >
+                —
+              </button>
+            </div>
+            <input
+              type="number"
+              name="updates[]"
+              id="updates_{{ item.key }}"
+              value="{{ item.quantity }}"
+              min="0"
+              class="QuantityCount__Drawer"
+            />
+            <div class="increment">
+              <button
+                id="increaseQuantity"
+                type="button"
+                aria-label="increase quantity"
+                onclick="cartDrawerIncrement(10)"
+              >
+                +
+              </button>
+            </div>
           </div>
-          <input
-            type="number"
-            name="updates[]"
-            id="updates_{{ item.key }}"
-            value="{{ item.quantity }}"
-            min="0"
-            class="QuantityCount__Drawer"
-          />
-          <div class="increment">
-            <button
-              id="increaseQuantity"
-              type="button"
-              aria-label="increase quantity"
-              onclick="cartDrawerIncrement(10)"
-            >
-              <svg id="increment-arrow" width="9.019" height="11.819">
-                <g data-name="increment-arrow">
-                  <path
-                    d="M.29.412l7.857 5.419L.29 11.412"
-                    fill="none"
-                    stroke="black"
-                    stroke-miterlimit="10"
-                  />
-                </g>
-              </svg>
-            </button>
-          </div>
+          <p class="font-prestige">
+            {% if item.original_line_price != item.line_price %}{{
+              item.original_line_price | money
+            }}{% endif %}
+            {{ item.line_price | money }}
+            {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
+            {% endfor %}
+          </p>
         </div>
-        <p>
-          {% if item.original_line_price != item.line_price %}{{
-            item.original_line_price | money
-          }}{% endif %}
-          {{ item.line_price | money }}
-          {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
-          {% endfor %}
-        </p>
       </div>
+
     </div>
 
     <div class="cart-drawer__subtotal__wrapper">
       <div class="subtotal__col-01">
-        <p>Subtotal</p>
+        <p class="font-prestige --small">Subtotal:</p>
+        <p class="font-prestige --small">Taxes:</p>
+        <div class="total-price">
+          <p class="font-prestige">
+            Total:
+          </p>
+        </div>
       </div>
       <div class="subtotal__col-02">
-        <p>{{ cart.total_price | money }}</p>
+        <p class="font-prestige --small">{{ cart.items_subtotal_price | money }} CAD</p>
+        <p class="font-prestige --small">—</p>
+        <div class="total-price">
+          <p class="font-prestige">
+            {{cart.total_price | money }} CAD
+          </p>
+        </div>
       </div>
     </div>
     <button
       type="submit"
       name="checkout"
-      class="cart-drawer__checkout-button button-main no-border"
+      class="cart-drawer__checkout-button"
     >
       Checkout
     </button>
   </form>
   {% else %}
-  <h2>cart</h2>
-  Your Cart is currently empty {% endif %}
+    <h4>Your Cart is currently empty</h4> 
+  {% endif %}
 </div>

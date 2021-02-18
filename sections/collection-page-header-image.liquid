@@ -1,0 +1,21 @@
+{% if section.settings.collection.image %}
+  <div class="image__wrapper --header-image">
+    {% render 'responsive-image' with imgSrc: collection.image, aspectVar: '_9x21' %}
+  </div>
+  <div class="product-filter__wrapper">
+    {% render 'product-filter' %}
+  </div>
+{% endif %}
+
+{% comment %} {% schema %}
+  {
+    "name": "Collection Image",
+    "settings": [
+      {
+        "id": "collection-header-image",
+        "type": "image_picker",
+        "label": "Collection Page Full Width Image"
+      }
+    ]
+  }
+{% endschema %} {% endcomment %}

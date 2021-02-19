@@ -20,6 +20,8 @@
     <link rel="dns-prefetch" href="https://cdn.shopify.com" />
     {% comment %} Pre Fetch Adobe Fonts {% endcomment %}
     <link rel="stylesheet" href="https://use.typekit.net/ulu3cae.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
   </head>
   <body class="{{ template | handleize }}">
     <div class="cart-screen"></div>
@@ -56,6 +58,9 @@
         {% comment %} {% render 'newsletter-footer' %} {% endcomment %}
       </div>
     </footer>
+    <script type="text/javascript">  document.body.innerHTML = document.body.innerHTML.replace(/\u2028/g, '');  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
     {{ 'scripts.js' | asset_url | script_tag }}
     {{ 'cartDrawerQuantityUpdate.js' | asset_url | script_tag }}
     {% if template.name == 'blog' %}
@@ -63,6 +68,9 @@
     {% endif %}
     {% if template.name == 'collection' %}
     {{ 'tagFilter.js' | asset_url | script_tag }}
+    {% endif %}
+    {% if template.name == 'product' %}
+    {{ 'productSlider.js' | asset_url | script_tag }}
     {% endif %}
   </body>
 </html>

@@ -1,8 +1,10 @@
 // Imports
 import cartDrawer from './cartDrawer';
+import productTabs from './productTabs';
 
 // Imported Functions
 cartDrawer();
+productTabs();
 
 // Lazy Load
 document.addEventListener('DOMContentLoaded', function () {

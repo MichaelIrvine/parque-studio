@@ -1,10 +1,15 @@
 // Imports
 import cartDrawer from './cartDrawer';
+import fitChartModal from './fitChartModal';
 import productTabs from './productTabs';
 
 // Imported Functions
 cartDrawer();
 productTabs();
+
+if (document.body.classList.contains('product')) {
+  fitChartModal();
+}
 
 // Lazy Load
 document.addEventListener('DOMContentLoaded', function () {

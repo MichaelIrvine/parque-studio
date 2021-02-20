@@ -5604,10 +5604,10 @@ var cartDrawer = function cartDrawer() {
   tl.to(body, {
     duration: 0,
     overflow: 'hidden'
-  }).to('.cart-screen', {
+  }).to('.screen', {
     duration: 0,
     minHeight: '100vh'
-  }).to('.cart-screen', {
+  }).to('.screen', {
     delay: 0.1,
     duration: 0.3,
     opacity: 1,
@@ -5631,6 +5631,56 @@ var cartDrawer = function cartDrawer() {
 };
 
 var _default = cartDrawer;
+exports.default = _default;
+},{"gsap":"../node_modules/gsap/index.js"}],"fitChartModal.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _gsap = require("gsap");
+
+var fitChartModal = function fitChartModal() {
+  var body = document.querySelector('body');
+  var fitModalOpen = document.querySelector('#fit-chart-toggle');
+  var fitModalClose = document.querySelector('#close-fit-size-modal');
+
+  var fitChartTl = _gsap.gsap.timeline({
+    paused: true
+  });
+
+  fitChartTl.to(body, {
+    duration: 0,
+    overflow: 'hidden'
+  }).to('#shopify-section-product-fit-sizes', {
+    duration: 0,
+    minHeight: '100vh'
+  }).to('#shopify-section-product-fit-sizes', {
+    delay: 0.1,
+    duration: 0.3,
+    opacity: 1,
+    ease: 'power2.out'
+  }).to('#fit-size-modal', {
+    delay: 0.3,
+    duration: 0.2,
+    opacity: 1,
+    ease: 'power2.out'
+  });
+  fitModalOpen.addEventListener('click', function () {
+    fitChartTl.play();
+  });
+  fitModalClose.addEventListener('click', function () {
+    if (fitChartTl.reversed()) {
+      fitChartTl.play();
+    } else {
+      fitChartTl.reverse();
+    }
+  });
+};
+
+var _default = fitChartModal;
 exports.default = _default;
 },{"gsap":"../node_modules/gsap/index.js"}],"productTabs.js":[function(require,module,exports) {
 "use strict";
@@ -5670,6 +5720,8 @@ exports.default = _default;
 
 var _cartDrawer = _interopRequireDefault(require("./cartDrawer"));
 
+var _fitChartModal = _interopRequireDefault(require("./fitChartModal"));
+
 var _productTabs = _interopRequireDefault(require("./productTabs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5677,7 +5729,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Imports
 // Imported Functions
 (0, _cartDrawer.default)();
-(0, _productTabs.default)(); // Lazy Load
+(0, _productTabs.default)();
+
+if (document.body.classList.contains('product')) {
+  (0, _fitChartModal.default)();
+} // Lazy Load
+
 
 document.addEventListener('DOMContentLoaded', function () {
   var lazyloadImages;
@@ -5735,7 +5792,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('orientationChange', lazyload);
   }
 });
-},{"./cartDrawer":"cartDrawer.js","./productTabs":"productTabs.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./productTabs":"productTabs.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -5763,7 +5820,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54565" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50448" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -4,26 +4,35 @@
 {% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
 {% assign product_care = product.description | split: "Care" | last %}
 
+<script type="text/javascript">
+  window.product = {{product | json}} || {};
+</script>
 
 <section class="single-product">
-  <div class="product-images__wrapper">
-    <div class="product-slider-nav">
-        {% if product.images.size > 1 %}
-            {% for image in product.images %}
-              <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
-            {% endfor %}
-        {% endif %} 
-    </div>
-    <div class="product-slider">
-      {% if product.images.size > 1 %}
+    {% if product.images.size > 1 %}
+      <div class="product-images__wrapper--grid">
+        <div class="product-slider-nav">
           {% for image in product.images %}
-            <a href="{{ image.src | img_url: '600x' }}" data-thumbnail-id="{{ image.id }}" data-product-single-thumbnail{% if featured_image == image %} aria-current="true"{% endif %}>
+            <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
+          {% endfor %}
+        </div>
+          
+        <div class="product-slider">
+          {% for image in product.images %}
+            <a href="{{ image.src | img_url: '600x' }}" >
               <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
             </a>
           {% endfor %}
+        </div>
+      </div>
+      {% else %}
+        <div class="product-images__wrapper">
+          <a href="{{ product.featured_image.src | img_url: '600x' }}">
+            <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+          </a>
+        </div>
+      </div>
       {% endif %}
-    </div>
-  </div>
 
   <div class="product-details__wrapper">
     <div class="details-header__wrapper">
@@ -51,18 +60,35 @@
       </div>
     </div>
     <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+    {% unless product.has_only_default_variant %}
+      <div class="product-options__wrapper">
       {% for product_option in product.options_with_values %}
-        <select name="id" id="productSelect">
-          <option value="" disabled selected hidden>{{product_option.name}}</option>
-          {% for variant in product.variants %}
-            {% for option in variant.options %}
-            <option value="{{variant.id}}">{{option}}</option>
-            {% endfor %}
-          {% endfor %}
-        </select>
+          <div class="product-options">
+            <label for="product-options-select" class="font-prestige">{{product_option.name}}</label>
+            <select id="product-options-select" class="form-control" data-index="option{{forloop.index}}">
+              {% for value in product_option.values %}
+                <option value="{{value | escape}}" {% if product_option.selected_value == value %} selected="selected" {% endif %}>{{value}}</option>
+              {% endfor %}
+            </select>
+          </div>
       {% endfor %}
-      <button class="add-to-cart" type="submit" name="add" id="AddToCart">Add to Cart</button>
+      </div>
+    {% endunless %}
+
+    <button type="button" id="fit-chart-toggle" class="font-prestige small">Fit & Sizing</button>
+    <input type="hidden" id="variant-id" name="id" value={{product.variants.first.id}}>
+    {% if product.variants.available %}
+      <button class="add-to-cart" type="submit" name="add" id="AddToCart"> 
+        Add to Cart
+      </button>
+    {% else %}
+      <button class="add-to-cart" type="submit" name="add" id="AddToCart"> 
+        Not Available
+      </button>
+    {% endif %}
+    {% comment %} <button class="add-to-cart" type="submit" name="add" id="AddToCart">Buy Now</button> {% endcomment %}
     </form>
   </div>
 
 </section>
+{% section 'product-fit-sizes' %}

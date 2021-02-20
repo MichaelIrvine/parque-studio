@@ -8,8 +8,8 @@ const cartDrawer = () => {
   const tl = gsap.timeline({ paused: true });
 
   tl.to(body, { duration: 0, overflow: 'hidden' })
-    .to('.cart-screen', { duration: 0, minHeight: '100vh' })
-    .to('.cart-screen', {
+    .to('.screen', { duration: 0, minHeight: '100vh' })
+    .to('.screen', {
       delay: 0.1,
       duration: 0.3,
       opacity: 1,

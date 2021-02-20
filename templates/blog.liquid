@@ -3,11 +3,9 @@
   {% render 'blog-filter' %}
 </div>
 
-{% if current_tags %}
-<section></section>
-{% else %}
-<section class="latest-post__wrapper">{% render 'latest-post' %}</section>
-{% endif %}
+{% unless current_tags %}
+  <section class="latest-post__wrapper">{% render 'latest-post' %}</section>
+{% endunless %}
 
 <section class="article-list">
   <div class="article-list-title">

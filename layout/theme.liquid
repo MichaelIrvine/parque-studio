@@ -22,15 +22,16 @@
     <link rel="stylesheet" href="https://use.typekit.net/ulu3cae.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    {{ 'option_selection.js' | shopify_asset_url | script_tag }}
   </head>
   <body class="{{ template | handleize }}">
     <div class="screen"></div>
-    {% include 'cart-drawer' %}
-    <main role="main">
+    {% render 'cart-drawer' %}
       <div class="header__wrapper">
-        {% if template == 'index'%}
+      {% if template == 'index'%}
         <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
-        {% endif %}
+      {% endif %}
         <header>
           <div
             class="header__logo--wrapper {% if template == 'index' %}no-display{% endif %}"
@@ -40,14 +41,15 @@
             >
           </div>
           <nav class="main-nav">{%include 'menu' %}</nav>
-          <div class="cart">
-            <button id="cart-drawer-open">
+          <div class="mini-cart">
+            <button id="mini-cart-drawer-open">
               <span>Cart</span>
               <span>({{ cart.item_count }})</span>
             </button>
           </div>
         </header>
       </div>
+    <main role="main">
       {{ content_for_layout }}
     </main>
     <footer id="footer">
@@ -58,10 +60,7 @@
         {% comment %} {% render 'newsletter-footer' %} {% endcomment %}
       </div>
     </footer>
-    <script type="text/javascript">  document.body.innerHTML = document.body.innerHTML.replace(/\u2028/g, '');  </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js" integrity="sha512-90vH1Z83AJY9DmlWa8WkjkV79yfS2n2Oxhsi2dZbIv0nC4E6m5AbH8Nh156kkM7JePmqD6tcZsfad1ueoaovww==" crossorigin="anonymous"></script>
     {{ 'scripts.js' | asset_url | script_tag }}
     {{ 'cartDrawerQuantityUpdate.js' | asset_url | script_tag }}
     {% if template.name == 'blog' %}

@@ -1,0 +1,32 @@
+<div class="page-text-col align-center">
+  <div class="col-text__wrapper">
+    <h3>{{section.settings.about-center-col-header}}</h3>
+    <p>{{section.settings.about-center-col-text}}</p>
+  </div>
+</div>
+{% render 'responsive-image' with imgSrc: section.settings.about-center-col-image, aspectVar: '_16x9' %} 
+
+
+
+{% schema %}
+  {
+    "name": "About Text Center Column",
+    "settings": [
+      {
+        "id": "about-center-col-header",
+        "type": "text",
+        "label": "About Text center Column Header"
+      },
+      {
+        "id": "about-center-col-text",
+        "type": "textarea",
+        "label": "About Text center Column Text"
+      },
+      {
+        "id": "about-center-col-image",
+        "type": "image_picker",
+        "label": "About Text Center Image"
+      }
+    ]
+  }
+{% endschema %}

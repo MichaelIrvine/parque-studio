@@ -1,0 +1,47 @@
+<div class="two-col-block__wrapper --img-left">
+  <div class="block__column">
+    {% render 'responsive-image-grid' with imgSrc: section.settings.about-two-col-l-feature-image %}  
+  </div>
+  <div class="block__column">
+    {% if section.settings.about-two-col-l-text-image %}
+      <div class="text-col-image">
+        <img 
+          data-src="{{section.settings.about-two-col-l-text-image | img_url: 'master' }}"
+          src="{{section.settings.about-two-col-l-text-image | img_url: '50' }}" alt="{{about-two-col-l-text-image.alt | escape}}" loading="lazy" class="lazy blurUp lazy-reveal">
+      </div>
+    {% endif %}
+    <div class="text-col-text">
+      <h3>{{section.settings.about-two-col-l-header}}</h3>
+      <p>{{section.settings.about-two-col-l-text}}</p>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+  "name": "Two Columns Left Image",
+  "settings": [
+    {
+      "id": "about-two-col-l-feature-image",
+      "type": "image_picker",
+      "label": "Left Column Image"
+    },
+    {
+      "id": "about-two-col-l-text-image",
+      "type": "image_picker",
+      "label": "Right Column Smaller Image"
+    },
+    {
+      "id": "about-two-col-l-header",
+      "type": "text",
+      "label": "Right Column Header"
+    },
+    {
+      "id": "about-two-col-l-text",
+      "type": "textarea",
+      "label": "Right Column Text"
+    }
+  ]
+  }
+{% endschema %}

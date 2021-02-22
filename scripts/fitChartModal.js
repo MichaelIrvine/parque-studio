@@ -9,11 +9,11 @@ const fitChartModal = () => {
 
   fitChartTl
     .to(body, { duration: 0, overflow: 'hidden' })
-    .to('#shopify-section-product-fit-sizes', {
+    .to('.screen', {
       duration: 0,
       minHeight: '100vh',
     })
-    .to('#shopify-section-product-fit-sizes', {
+    .to('.screen', {
       delay: 0.1,
       duration: 0.3,
       opacity: 1,

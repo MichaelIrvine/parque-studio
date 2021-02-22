@@ -1,14 +1,13 @@
-{% assign current_variant = product.selected_or_first_available_variant %}
-
 {% assign product_overview = product.description | split: "Overview" | last | split: "Details" | first %}
 {% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
 {% assign product_care = product.description | split: "Care" | last %}
 
-<script type="text/javascript">
+<script>
   window.product = {{product | json}} || {};
 </script>
 
-<div class="single-product">
+
+<section class="single-product">
     {% if product.images.size > 1 %}
       <div class="product-images__wrapper--grid">
         <div class="product-slider-nav">
@@ -59,27 +58,22 @@
          </div>
       </div>
     </div>
-      <div class="product-options__wrapper">
-        <div class="product-options">
-          <label for="productSelect">Size</label>
-          <select name="id" id="productSelect">   
-            {% for variant in product.variants %}
-              {% if variant.available %}    
-                <option value="{{ variant.id }}">
-                  {{ variant.title }}
-                </option>
-              {% else %}
-                <option disabled="disabled">
-                  {{ variant.title }} - sold out
-                </option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-        <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
-        <div class="cart-message font-prestige">{Your item} has been added to your cart</div>
-        <button type="button" name="add" id="AddToCart" class="ps-btn --dark">Add to Cart</button>
-      </div>  
+    <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+    <select name="id" id="productSelect">
+      {% for variant in product.variants %} {% if variant.available %}
+      <option value="{{ variant.id }}">
+        {{ variant.title }} - {{ variant.price | money_with_currency }}
+      </option>
+      {% else %}
+      <option disabled="disabled">{{ variant.title }} - sold out</option>
+      {% endif %} {% endfor %}
+    </select>
+
+    <button type="button" id="fit-chart-toggle" class="font-prestige small">Fit & Sizing</button>
+    
+    <button class="add-to-cart" type="submit" name="add" id="AddToCart">Add To Cart</button>
+    </form>
   </div>
-</div>
-{% render 'product-fit-sizes' %}
+
+</section>
+{% section 'product-fit-sizes' %}

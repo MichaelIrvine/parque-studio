@@ -1,0 +1,26 @@
+<div class="page-text-col align-left">
+  <div class="col-text__wrapper">
+    <h3>{{section.settings.about-left-col-header}}</h3>
+    <p>{{section.settings.about-left-col-text}}</p>
+  </div>
+</div>
+
+
+
+{% schema %}
+  {
+    "name": "About Text Left Column",
+    "settings": [
+      {
+        "id": "about-left-col-header",
+        "type": "text",
+        "label": "About Text Left Column Header"
+      },
+      {
+        "id": "about-left-col-text",
+        "type": "textarea",
+        "label": "About Text Left Column Text"
+      }
+    ]
+  }
+{% endschema %}

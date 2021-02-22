@@ -1,6 +1,10 @@
 .two-col-block__wrapper {
   display: grid;
-  gap: 2rem;
+  gap: 6rem;
+
+  .text-col-image {
+    margin-bottom: 6rem;
+  }
 }
 
 .--img-right {
@@ -10,6 +14,20 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+
+    div {
+      width: 70%;
+    }
+  }
+}
+.--img-left {
+  grid-template-columns: 1fr 1fr;
+
+  .block__column:last-of-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 
     div {
       width: 70%;

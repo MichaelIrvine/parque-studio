@@ -1,0 +1,18 @@
+{% if section.settings.about-header-image %}
+  <div class="image__wrapper --header-image">
+    {% render 'responsive-image' with imgSrc: section.settings.about-header-image, aspectVar: '_9x21' %} 
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "About Image",
+    "settings": [
+      {
+        "id": "about-header-image",
+        "type": "image_picker",
+        "label": "About Page Full Width Image"
+      }
+    ]
+  }
+{% endschema %}

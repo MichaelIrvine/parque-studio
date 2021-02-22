@@ -1,0 +1,26 @@
+<section class="page-intro">
+  <div class="page-intro__text">
+    <h2>{{section.settings.about-intro-text}}</h2>
+  </div>
+    {% render 'responsive-image' with imgSrc: section.settings.about-intro-image, aspectVar: '_16x9' %} 
+</section>
+
+
+
+{% schema %}
+  {
+    "name": "About Introduction",
+    "settings": [
+      {
+        "id": "about-intro-text",
+        "type": "textarea",
+        "label": "About Page Introduction Text"
+      },
+      {
+        "id": "about-intro-image",
+        "type": "image_picker",
+        "label": "About Page Introduction Image"
+      }
+    ]
+  }
+{% endschema %}

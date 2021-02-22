@@ -1,3 +1,7 @@
+// Imports for @Shopify/theme-cart
+import 'unfetch/polyfill';
+import 'es6-promise/auto';
+
 // Imports
 import cartDrawer from './cartDrawer';
 import fitChartModal from './fitChartModal';

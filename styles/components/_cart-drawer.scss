@@ -1,7 +1,7 @@
 .mini-cart-header__wrapper {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .mini-cart-drawer__wrapper {
@@ -17,18 +17,27 @@
   transform: translateX(110%);
 
   .mini-cart-items__wrapper {
-    display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 1rem;
-
     padding-bottom: 2.5rem;
     margin-bottom: 2.5rem;
     border-bottom: 1px solid $darkGrey;
+    max-height: 290px;
+    overflow: auto;
 
-    > div:last-of-type {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+    .items-row {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+
+      .mini-cart-drawer__title__wrapper {
+        display: flex;
+        flex-direction: column;
+
+        h4,
+        p {
+          margin-bottom: 1rem;
+        }
+      }
     }
   }
 }
@@ -84,7 +93,7 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
 }
 
-.mini-cart-drawer__subtotal__wrapper {
+.mini-cart-total__wrapper {
   display: flex;
   justify-content: flex-start;
   padding-bottom: 2rem;
@@ -150,4 +159,9 @@ input[type='number']::-webkit-outer-spin-button {
 .close-cart span:last-of-type {
   transform-origin: center center;
   transform: rotate(-45deg);
+}
+
+// Hides checkout button for mini cart
+body.cart--no-items #mini-cart-checkout {
+  display: none;
 }

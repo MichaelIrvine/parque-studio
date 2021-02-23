@@ -7382,23 +7382,40 @@ var cartDrawer = function cartDrawer() {
   var cartOpen = document.querySelector('#mini-cart-drawer-open');
   var cartClose = document.querySelector('#mini-cart-drawer-close');
   var itemsWrapper = document.querySelector('.mini-cart-items__wrapper');
+  var totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
 
   var tl = _gsap.gsap.timeline({
     paused: true
-  }); // Mini Cart
+  });
+
+  window.Cart = cart; // Mini Cart
   // -- Grab Data From cart.state
 
-
   cart.getState().then(function (state) {
-    // console.log(state);
+    console.log(state);
     miniCart(state);
   }); // -- Map over data and build innerHTML for mini-cart__wrapper
   // -- Append to mini cart
 
   function miniCart(state) {
-    itemsWrapper.innerHTML = state.items.map(function (item) {
-      return "<div>\n            <div class=\"aspect__wrapper _1x1\">\n              <img\n                src=\"".concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </div>\n          </div>\n          <div>\n            <div class=\"mini-cart-drawer__title__wrapper\">\n              <h4 class=\"mini-cart-drawer__product-title\">\n                ").concat(item.product_title, "\n              </h4>\n              <p class=\"font-prestige --small\">\n                ").concat(item.variant_title, "\n              </p>\n              <p class=\"font-prestige\">\n                ").concat(new Intl.NumberFormat().format(item.price), "\n              </p>\n            </div>          \n          </div>\n        </div>\n      ");
-    });
+    if (state.items.length === 0) {
+      // itemsWrapper.classList.remove('--grid');
+      itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
+    } else {
+      // Remove cart--no-items on body to display checkout button
+      body.classList.remove('cart--no-items');
+      itemsWrapper.innerHTML = state.items.map(function (item) {
+        return "<div class=\"items-row\">\n            <div class=\"aspect__wrapper _1x1\">\n              <img\n                src=\"".concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </div>\n            <div class=\"mini-cart-drawer__title__wrapper\">\n              <h4 class=\"mini-cart-drawer__product-title\">\n                ").concat(item.product_title, "\n              </h4>\n              <p class=\"font-prestige --small\">\n                ").concat(item.options_with_values[0].name, " / ").concat(item.variant_title, "\n              </p>\n              <p class=\"font-prestige\">\n                $").concat(new Intl.NumberFormat('en-US', {
+          minimumFractionDigits: 2
+        }).format(item.price / 100), "\n              </p>\n            </div>          \n          </div>\n        </div>\n      ");
+      }).join(''); // Sub total and total prices
+
+      totalsWrapper.innerHTML = "\n      <div class=\"subtotal__col-01\">\n        <p class=\"font-prestige --small\">Subtotal:</p>\n        <p class=\"font-prestige --small\">Taxes:</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n            Total:\n          </p>\n        </div>\n      </div>\n      <div class=\"subtotal__col-02\">\n        <p class=\"font-prestige --small\">\n        $".concat(new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+      }).format(state.items_subtotal_price / 100), " CAD\n        </p>\n        <p class=\"font-prestige --small\">\u2014</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n          $").concat(new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+      }).format(state.total_price / 100), " CAD\n          </p>\n        </div>\n      </div>\n      ");
+    }
   }
 
   tl.to(body, {
@@ -7625,7 +7642,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61778" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50783" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

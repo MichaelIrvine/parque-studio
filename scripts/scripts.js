@@ -5,7 +5,9 @@ import 'es6-promise/auto';
 // Imports
 import cartDrawer from './cartDrawer';
 import fitChartModal from './fitChartModal';
+import addToCart from './addToCart';
 import productTabs from './productTabs';
+import cartPage from './cartPage';
 
 // Imported Functions
 cartDrawer();
@@ -13,6 +15,10 @@ productTabs();
 
 if (document.body.classList.contains('product')) {
   fitChartModal();
+  addToCart();
+}
+if (document.body.classList.contains('cart')) {
+  cartPage();
 }
 
 // Lazy Load

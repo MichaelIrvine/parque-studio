@@ -7386,20 +7386,18 @@ var cartDrawer = function cartDrawer() {
 
   var tl = _gsap.gsap.timeline({
     paused: true
-  });
-
-  window.Cart = cart; // Mini Cart
+  }); // Mini Cart
   // -- Grab Data From cart.state
 
+
   cart.getState().then(function (state) {
-    console.log(state);
+    // console.log(state);
     miniCart(state);
   }); // -- Map over data and build innerHTML for mini-cart__wrapper
   // -- Append to mini cart
 
   function miniCart(state) {
     if (state.items.length === 0) {
-      // itemsWrapper.classList.remove('--grid');
       itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
     } else {
       // Remove cart--no-items on body to display checkout button
@@ -7499,7 +7497,40 @@ var fitChartModal = function fitChartModal() {
 
 var _default = fitChartModal;
 exports.default = _default;
-},{"gsap":"../node_modules/gsap/index.js"}],"productTabs.js":[function(require,module,exports) {
+},{"gsap":"../node_modules/gsap/index.js"}],"addToCart.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var addToCart = function addToCart() {
+  var variantOption = document.querySelector('#productSelect');
+  var selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
+  var addToCartBtn = document.querySelector('#AddToCart');
+  console.log(selectedVariantId);
+  variantOption.addEventListener('change', function () {
+    console.log('inside change event:', variantOption.options[variantOption.selectedIndex].value);
+  });
+  addToCartBtn.addEventListener('click', function () {
+    cart.addItem(selectedVariantId).then(function (item) {
+      console.log("An item with a quantity of ".concat(selectedVariantId, " was added to your cart:"), item); // Send items Id to cart
+
+      item.id;
+    });
+  });
+};
+
+var _default = addToCart;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"productTabs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7532,7 +7563,61 @@ var productTabs = function productTabs() {
 
 var _default = productTabs;
 exports.default = _default;
-},{}],"scripts.js":[function(require,module,exports) {
+},{}],"removeItem.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var removeItem = function removeItem(key) {
+  var itemKey = key.id; // console.log(itemKey);
+
+  cart.removeItem(itemKey).then(console.log("removing ".concat(itemKey, " item from cart")));
+};
+
+var _default = removeItem;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"cartPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _removeItem = _interopRequireDefault(require("./removeItem"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var cartPage = function cartPage() {
+  var state;
+  var removeItemBtn = document.querySelectorAll('.remove-cart-item'); // cart.getState().then((state) => (state = state));
+
+  removeItemBtn.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      // console.log(btn.id);
+      (0, _removeItem.default)(btn);
+    });
+  });
+};
+
+var _default = cartPage;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
 require("unfetch/polyfill");
@@ -7543,7 +7628,11 @@ var _cartDrawer = _interopRequireDefault(require("./cartDrawer"));
 
 var _fitChartModal = _interopRequireDefault(require("./fitChartModal"));
 
+var _addToCart = _interopRequireDefault(require("./addToCart"));
+
 var _productTabs = _interopRequireDefault(require("./productTabs"));
+
+var _cartPage = _interopRequireDefault(require("./cartPage"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7555,6 +7644,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 if (document.body.classList.contains('product')) {
   (0, _fitChartModal.default)();
+  (0, _addToCart.default)();
+}
+
+if (document.body.classList.contains('cart')) {
+  (0, _cartPage.default)();
 } // Lazy Load
 
 
@@ -7614,7 +7708,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('orientationChange', lazyload);
   }
 });
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./productTabs":"productTabs.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -7642,7 +7736,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50783" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51243" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -8,5 +8,12 @@
     </div>
     <div class="mini-cart-items__wrapper"></div>
     <div class="mini-cart-total__wrapper"></div>
-    <a id="mini-cart-checkout" href="/cart"><button class="ps-btn --dark">Checkout</button></a>
+
+    
+    <form action="/cart" method="post" novalidate>
+      <button type="submit" name="checkout" class="ps-btn --dark">
+        Proceed To Checkout
+      </button>
+    </form>
+    <a href="/cart"><button class="ps-btn --light">Go To Cart</button></a>
 </div>

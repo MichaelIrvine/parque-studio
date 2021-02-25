@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ page_title }}</title>
+    <title>Parque Studio | {{ page_title }}</title>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="description" content="{{ page_description | escape }}" />
@@ -44,7 +44,7 @@
           <div class="mini-cart">
             <button id="mini-cart-drawer-open">
               <span>Cart</span>
-              <span>({{ cart.item_count }})</span>
+              <span id="cart-item-count">{{cart.item_count}}</span>
             </button>
           </div>
         </header>
@@ -62,7 +62,7 @@
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QVj1o0Pk6PwYLohm206ZzNfubg==" crossorigin="anonymous"></script>
     {{ 'scripts.js' | asset_url | script_tag }}
-    {{ 'cartDrawerQuantityUpdate.js' | asset_url | script_tag }}
+
     {% if template.name == 'blog' %}
     {{ 'tagFilter.js' | asset_url | script_tag }}
     {% endif %}
@@ -72,8 +72,9 @@
     {% if template.name == 'product' %}
     {{ 'productSlider.js' | asset_url | script_tag }}
     {% endif %}
-    {% if template.name == 'product' %}
-    {{ 'variantUpdater.js' | asset_url | script_tag }}
+    
+    {% if template.name == 'cart' %}
+    {{ 'cartItemQuantityUpdate.js' | asset_url | script_tag }}
     {% endif %}
   </body>
 </html>

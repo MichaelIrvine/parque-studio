@@ -39,24 +39,34 @@
       <h1>{{ product.title }}</h1>
       <p class="font-prestige">{{ product.price | money }}</p>
     </div>
+    {% comment %} {% if condition %}
+      
+    {% endif %} {% endcomment %}
+
+
+
+
 
     <div class="description-tab__wrapper">
       <ul class="tabs" role="tablist">
         <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
-        <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>
+        
+          <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>  
+        
+        
         <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
       </ul>
       {% comment %} Tab Content {% endcomment %}
       <div class="tabcontent__wrapper">
-         <div id="Overview" class="tabcontent active">
+        <div id="Overview" class="tabcontent active">
             <p>{{ product_overview }}</p>
-         </div>
-         <div id="Details" class="tabcontent">
+        </div>
+        <div id="Details" class="tabcontent">
             <p>{{product_details}}</p>
-         </div>
-         <div id="Care" class="tabcontent">
+        </div>
+        <div id="Care" class="tabcontent">
             {{ product_care}}
-         </div>
+        </div>
       </div>
     </div>
       <div class="product-options__wrapper">
@@ -65,7 +75,8 @@
           <select name="id" id="productSelect">   
             {% for variant in product.variants %}
               {% if variant.available %}    
-                <option value="{{ variant.id }}">
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} 
+                value="{{ variant.id }}">
                   {{ variant.title }}
                 </option>
               {% else %}

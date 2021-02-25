@@ -1,11 +1,11 @@
 <div class="sub-footer__wrapper">
   <div class="sub-footer__row">{% render 'page-newsletter' %}</div>
-  <div class="sub-footer__row" style="background-image: url('{{section.settings.home-sub-footer-image.src | img_url: 'master'}}');">
-  <div class="sub-footer__row--screen" style="opacity: {{section.settings.home-sub-footer-screen-opacity}}"></div>
+  <div class="sub-footer__row" style="background-image: url('{{section.settings.about-sub-footer-image.src | img_url: 'master'}}');">
+  <div class="sub-footer__row--screen" style="opacity: {{section.settings.about-sub-footer-screen-opacity}}"></div>
     <div class="sub-footer__text-wrapper">
-      <h3>{{section.settings.home-sub-footer-header}}</h3>
-      <a href="{{section.settings.home-sub-footer-link}}">
-        {{section.settings.home-sub-footer-link-title}}
+      <h3>{{section.settings.about-sub-footer-header}}</h3>
+      <a href="{{section.settings.about-sub-footer-link}}">
+        {{section.settings.about-sub-footer-link-title}}
       </a>
     </div>
   </div>
@@ -17,27 +17,27 @@
     "name": "Sub Footer",
     "settings": [
       {
-        "id": "home-sub-footer-image",
+        "id": "about-sub-footer-image",
         "type": "image_picker",
         "label": "Sub Footer Image"
       },
       {
-        "id": "home-sub-footer-header",
+        "id": "about-sub-footer-header",
         "type": "text",
         "label": "Sub Footer Header"
       },
       {
-        "id": "home-sub-footer-link-title",
+        "id": "about-sub-footer-link-title",
         "type": "text",
         "label": "Sub Footer Link Title"
       },
       {
-        "id": "home-sub-footer-link",
+        "id": "about-sub-footer-link",
         "type": "url",
         "label": "Sub Footer Link"
       },
       {
-        "id": "home-sub-footer-screen-opacity",
+        "id": "about-sub-footer-screen-opacity",
         "type": "range",
         "min": 0,
         "max": 1,

@@ -9,19 +9,16 @@ const cartDrawer = () => {
   const totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
   const tl = gsap.timeline({ paused: true });
 
-  window.Cart = cart;
-
   // Mini Cart
   // -- Grab Data From cart.state
   cart.getState().then((state) => {
-    console.log(state);
+    // console.log(state);
     miniCart(state);
   });
   // -- Map over data and build innerHTML for mini-cart__wrapper
   // -- Append to mini cart
   function miniCart(state) {
     if (state.items.length === 0) {
-      // itemsWrapper.classList.remove('--grid');
       itemsWrapper.innerHTML = `<h3>Your cart is currently empty</h3>`;
     } else {
       // Remove cart--no-items on body to display checkout button

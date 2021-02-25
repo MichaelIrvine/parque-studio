@@ -1,0 +1,117 @@
+.cart-page__wrapper {
+  max-width: 85%;
+  margin: 0 auto 13.5rem;
+
+  form {
+    &.grid__2x {
+      gap: 6rem;
+      grid-template-columns: 1.5fr 1fr;
+    }
+
+    .items-table {
+      gap: 2rem;
+      padding-top: 1.8rem;
+      border-top: 1px solid $darkGrey;
+
+      .table-row__wrapper {
+        margin-bottom: 1.8rem;
+
+        h4,
+        p {
+          margin-bottom: 1rem;
+        }
+
+        .items-tables__details {
+          div {
+            div:last-of-type {
+              text-align: right;
+            }
+          }
+
+          > div:last-of-type {
+            margin-top: 2rem;
+          }
+        }
+      }
+    }
+  }
+
+  .cart-summary__wrapper {
+    max-width: 390px;
+
+    div {
+      background-color: #f7f7f7;
+
+      div {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 1.75rem 1.5rem;
+        border-bottom: 1px solid $darkGrey;
+
+        & * {
+          margin: 0;
+        }
+      }
+
+      div:last-of-type {
+        border: none;
+        margin-bottom: 1.5em;
+      }
+
+      div > p {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        color: #6d7278;
+      }
+
+      div:last-of-type p {
+        color: $black;
+      }
+    }
+  }
+}
+
+// Quantity Updater
+
+.cart-items-quantity__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  width: 50%;
+  flex: 1;
+
+  .decrement {
+    padding-left: 0.15rem;
+    padding-right: 0.15rem;
+
+    #decreaseQuantity {
+      font-size: 1.15rem;
+    }
+  }
+
+  .QuantityCount {
+    border: none;
+    font-size: 1.15rem;
+    font-weight: normal;
+    text-align: center;
+    width: 35px;
+  }
+
+  .increment {
+    padding-right: 0.15rem;
+    padding-left: 0.15rem;
+  }
+}
+
+input[type='number'] {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}

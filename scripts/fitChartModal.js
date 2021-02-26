@@ -7,6 +7,12 @@ const fitChartModal = () => {
 
   const fitChartTl = gsap.timeline({ paused: true });
 
+  let windowHeight = window.innerHeight / 2;
+
+  window.addEventListener('resize', () => {
+    console.log(window.innerHeight);
+  });
+
   fitChartTl
     .to(body, { duration: 0, overflow: 'hidden' })
     .to('.screen', {
@@ -20,7 +26,14 @@ const fitChartModal = () => {
       ease: 'power2.out',
     })
     .to('#fit-size-modal', {
-      delay: 0.3,
+      delay: 0,
+      duration: 0.2,
+      y: windowHeight,
+      yPercent: -50,
+      ease: 'power2.out',
+    })
+    .to('#fit-size-modal', {
+      delay: 0.1,
       duration: 0.2,
       opacity: 1,
       ease: 'power2.out',

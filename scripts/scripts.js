@@ -1,6 +1,7 @@
 // Imports for @Shopify/theme-cart
 import 'unfetch/polyfill';
 import 'es6-promise/auto';
+import * as cart from '@shopify/theme-cart';
 
 // Imports
 import cartDrawer from './cartDrawer';
@@ -8,6 +9,8 @@ import fitChartModal from './fitChartModal';
 import addToCart from './addToCart';
 import productTabs from './productTabs';
 import cartPage from './cartPage';
+import updateCartCount from './updateCartCount';
+import miniCart from './miniCart';
 
 // Imported Functions
 cartDrawer();
@@ -20,6 +23,13 @@ if (document.body.classList.contains('product')) {
 if (document.body.classList.contains('cart')) {
   cartPage();
 }
+
+// Cart State and Functions
+// -- On page load - grab the items in Cart State
+cart.getState().then((state) => {
+  updateCartCount(state);
+  miniCart(state);
+});
 
 // Lazy Load
 document.addEventListener('DOMContentLoaded', function () {

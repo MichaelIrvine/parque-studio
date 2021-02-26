@@ -1,0 +1,131 @@
+{% if cart.item_count > 0 %}
+<div class="cart-page__wrapper">
+  <h1>Cart</h1>
+  <div class="cart-form__wrapper">
+    <form action="/cart" method="post" novalidate class="grid__2x">
+
+      <div class="items-table">
+        {% for item in cart.items %}
+        <div class="table-row__wrapper grid__2x">
+          <div class="items-table__image">
+            <a href="{{ item.url | within: collections.all }}">
+              <img
+                data-src="{{ item | img_url: '500x' }}"
+                src="{{ item | img_url: '10x' }}"
+                alt="{{ item.title | escape }}"
+                class="lazy blurUp lazy-reveal"
+              />
+            </a>
+          </div>
+          <div class="items-tables__details">
+            <div class="grid__2x">
+              <div>
+                <a href="{{ item.url }}">
+                  <h4>
+                    {{ item.product.title }}
+                  </h4>
+                </a>
+                <p class="font-prestige">{{ item.options_with_values[0].name }} / {{ item.options_with_values[0].value }}</p>
+              </div>
+              <div>
+                <button id="{{item.key}}" type="button" class="remove-cart-item" data-item-key="{{item.key}}">
+                  <span></span>
+                  <span></span>
+                </button>
+              </div>
+            </div>
+            <div class="grid__2x">
+              <div class="cart-items-quantity__wrapper">
+                <div class="decrement">
+                  <button
+                    class="decreaseQuantity"
+                    type="button"
+                    aria-label="decrease quantity"
+                    onclick="cartItemDecrement(0)"
+                    
+                  >
+                  -
+                  </button>
+                </div>
+                <input
+                  type="number"
+                  name="updates[]"
+                  id="updates_{{ item.key }}"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  class="QuantityCount font-prestige --small"
+                />
+                <div class="increment">
+                  <button
+                    class="increaseQuantity"
+                    type="button"
+                    aria-label="increase quantity"
+                    onclick="cartItemIncrement(10)"
+                    
+                  >
+                  +
+                  </button>
+                </div>
+              </div>
+              <div>
+                {% if item.original_line_price != item.line_price %}{{
+                  item.original_line_price | money
+                }}{% endif %}
+                {{ item.line_price | money }}
+                {% for discount in item.discounts %}{{ discount.title }}{% endfor
+                %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="cart-summary__wrapper">
+        <div>
+          <div><h4>Order Summary</h4></div>
+          <div><p class="font-prestige"><span>Sub-Total</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Tax</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Shipping</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Total</span><span>{{ cart.total_price | money }}</span></p></div>
+        </div>
+        <button type="submit" name="checkout" class="ps-btn --dark">
+          Proceed To Checkout
+        </button>
+        <button type="submit" name="update" class="ps-btn --light">
+          Update Cart
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% else %}
+
+<div class="cart-page__wrapper --empty-cart">
+  <h1>Cart</h1>
+  <div class="cart-form__wrapper">
+    <div class="items-table">
+      <h4>Your cart is currently empty</h4>
+    </div>
+
+    <div class="cart-summary__wrapper">
+        <div>
+          <div><h4>Order Summary</h4></div>
+          <div><p class="font-prestige"><span>Sub-Total</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Tax</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Shipping</span><span>{{ cart.total_price | money }}</span></p></div>
+          <div><p class="font-prestige"><span>Total</span><span>{{ cart.total_price | money }}</span></p></div>
+        </div>
+        <button type="submit" name="checkout" class="ps-btn --dark">
+          Proceed To Checkout
+        </button>
+        <button type="submit" name="update" class="ps-btn --light">
+          Update Cart
+        </button>
+      </div>
+  </div>
+</div>
+
+
+{% endif %}
+

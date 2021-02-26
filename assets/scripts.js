@@ -1514,7 +1514,389 @@ return Promise$1;
 'use strict';
 module.exports = require('./').polyfill();
 
-},{"./":"../node_modules/es6-promise/dist/es6-promise.js"}],"../node_modules/gsap/gsap-core.js":[function(require,module,exports) {
+},{"./":"../node_modules/es6-promise/dist/es6-promise.js"}],"../node_modules/@shopify/theme-cart/request.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.cart = cart;
+exports.cartAdd = cartAdd;
+exports.cartAddFromForm = cartAddFromForm;
+exports.cartChange = cartChange;
+exports.cartClear = cartClear;
+exports.cartUpdate = cartUpdate;
+exports.cartShippingRates = cartShippingRates;
+
+function getDefaultRequestConfig() {
+  return JSON.parse(JSON.stringify({
+    credentials: 'same-origin',
+    headers: {
+      'X-Requested-With': 'XMLHttpRequest',
+      'Content-Type': 'application/json;'
+    }
+  }));
+}
+
+function fetchJSON(url, config) {
+  return fetch(url, config).then(function (response) {
+    if (!response.ok) {
+      throw response;
+    }
+
+    return response.json();
+  });
+}
+
+function cart() {
+  return fetchJSON('/cart.js', getDefaultRequestConfig());
+}
+
+function cartAdd(id, quantity, properties) {
+  var config = getDefaultRequestConfig();
+  config.method = 'POST';
+  config.body = JSON.stringify({
+    id: id,
+    quantity: quantity,
+    properties: properties
+  });
+  return fetchJSON('/cart/add.js', config);
+}
+
+function cartAddFromForm(formData) {
+  var config = getDefaultRequestConfig();
+  delete config.headers['Content-Type'];
+  config.method = 'POST';
+  config.body = formData;
+  return fetchJSON('/cart/add.js', config);
+}
+
+function cartChange(line, options) {
+  var config = getDefaultRequestConfig();
+  options = options || {};
+  config.method = 'POST';
+  config.body = JSON.stringify({
+    line: line,
+    quantity: options.quantity,
+    properties: options.properties
+  });
+  return fetchJSON('/cart/change.js', config);
+}
+
+function cartClear() {
+  var config = getDefaultRequestConfig();
+  config.method = 'POST';
+  return fetchJSON('/cart/clear.js', config);
+}
+
+function cartUpdate(body) {
+  var config = getDefaultRequestConfig();
+  config.method = 'POST';
+  config.body = JSON.stringify(body);
+  return fetchJSON('/cart/update.js', config);
+}
+
+function cartShippingRates() {
+  return fetchJSON('/cart/shipping_rates.json', getDefaultRequestConfig());
+}
+},{}],"../node_modules/@shopify/theme-cart/validate.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.key = key;
+exports.quantity = quantity;
+exports.id = id;
+exports.properties = properties;
+exports.form = form;
+exports.options = options;
+
+function key(key) {
+  if (typeof key !== 'string' || key.split(':').length !== 2) {
+    throw new TypeError('Theme Cart: Provided key value is not a string with the format xxx:xxx');
+  }
+}
+
+function quantity(quantity) {
+  if (typeof quantity !== 'number' || isNaN(quantity)) {
+    throw new TypeError('Theme Cart: An object which specifies a quantity or properties value is required');
+  }
+}
+
+function id(id) {
+  if (typeof id !== 'number' || isNaN(id)) {
+    throw new TypeError('Theme Cart: Variant ID must be a number');
+  }
+}
+
+function properties(properties) {
+  if (typeof properties !== 'object') {
+    throw new TypeError('Theme Cart: Properties must be an object');
+  }
+}
+
+function form(form) {
+  if (!(form instanceof HTMLFormElement)) {
+    throw new TypeError('Theme Cart: Form must be an instance of HTMLFormElement');
+  }
+}
+
+function options(options) {
+  if (typeof options !== 'object') {
+    throw new TypeError('Theme Cart: Options must be an object');
+  }
+
+  if (typeof options.quantity === 'undefined' && typeof options.properties === 'undefined') {
+    throw new Error('Theme Cart: You muse define a value for quantity or properties');
+  }
+
+  if (typeof options.quantity !== 'undefined') {
+    quantity(options.quantity);
+  }
+
+  if (typeof options.properties !== 'undefined') {
+    properties(options.properties);
+  }
+}
+},{}],"../node_modules/@shopify/theme-cart/theme-cart.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getState = getState;
+exports.getItemIndex = getItemIndex;
+exports.getItem = getItem;
+exports.addItem = addItem;
+exports.addItemFromForm = addItemFromForm;
+exports.updateItem = updateItem;
+exports.removeItem = removeItem;
+exports.clearItems = clearItems;
+exports.getAttributes = getAttributes;
+exports.updateAttributes = updateAttributes;
+exports.clearAttributes = clearAttributes;
+exports.getNote = getNote;
+exports.updateNote = updateNote;
+exports.clearNote = clearNote;
+exports.getShippingRates = getShippingRates;
+
+var request = _interopRequireWildcard(require("./request"));
+
+var validate = _interopRequireWildcard(require("./validate"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+/**
+ * Cart Template Script
+ * ------------------------------------------------------------------------------
+ * A file that contains scripts highly couple code to the Cart template.
+ *
+ * @namespace cart
+ */
+
+/**
+ * Returns the state object of the cart
+ * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
+ */
+function getState() {
+  return request.cart();
+}
+/**
+ * Returns the index of the cart line item
+ * @param {string} key The unique key of the line item
+ * @returns {Promise} Resolves with the index number of the line item
+ */
+
+
+function getItemIndex(key) {
+  validate.key(key);
+  return request.cart().then(function (state) {
+    var index = -1;
+    state.items.forEach(function (item, i) {
+      index = item.key === key ? i + 1 : index;
+    });
+
+    if (index === -1) {
+      return Promise.reject(new Error('Theme Cart: Unable to match line item with provided key'));
+    }
+
+    return index;
+  });
+}
+/**
+ * Fetches the line item object
+ * @param {string} key The unique key of the line item
+ * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
+ */
+
+
+function getItem(key) {
+  validate.key(key);
+  return request.cart().then(function (state) {
+    var lineItem = null;
+    state.items.forEach(function (item) {
+      lineItem = item.key === key ? item : lineItem;
+    });
+
+    if (lineItem === null) {
+      return Promise.reject(new Error('Theme Cart: Unable to match line item with provided key'));
+    }
+
+    return lineItem;
+  });
+}
+/**
+ * Add a new line item to the cart
+ * @param {number} id The variant's unique ID
+ * @param {object} options Optional values to pass to /cart/add.js
+ * @param {number} options.quantity The quantity of items to be added to the cart
+ * @param {object} options.properties Line item property key/values (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-properties)
+ * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
+ */
+
+
+function addItem(id, options) {
+  options = options || {};
+  validate.id(id);
+  return request.cartAdd(id, options.quantity, options.properties);
+}
+/**
+ * Add a new line item to the cart from a product form
+ * @param {object} form DOM element which is equal to the <form> node
+ * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
+ */
+
+
+function addItemFromForm(form) {
+  validate.form(form);
+  var formData = new FormData(form);
+  validate.id(parseInt(formData.get('id'), 10));
+  return request.cartAddFromForm(formData);
+}
+/**
+ * Changes the quantity and/or properties of an existing line item.
+ * @param {string} key The unique key of the line item (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-key)
+ * @param {object} options Optional values to pass to /cart/add.js
+ * @param {number} options.quantity The quantity of items to be added to the cart
+ * @param {object} options.properties Line item property key/values (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-properties)
+ * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
+ */
+
+
+function updateItem(key, options) {
+  validate.key(key);
+  validate.options(options);
+  return getItemIndex(key).then(function (line) {
+    return request.cartChange(line, options);
+  });
+}
+/**
+ * Removes a line item from the cart
+ * @param {string} key The unique key of the line item (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-key)
+ * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
+ */
+
+
+function removeItem(key) {
+  validate.key(key);
+  return getItemIndex(key).then(function (line) {
+    return request.cartChange(line, {
+      quantity: 0
+    });
+  });
+}
+/**
+ * Sets all quantities of all line items in the cart to zero. This does not remove cart attributes nor the cart note.
+ * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
+ */
+
+
+function clearItems() {
+  return request.cartClear();
+}
+/**
+ * Gets all cart attributes
+ * @returns {Promise} Resolves with the cart attributes object
+ */
+
+
+function getAttributes() {
+  return request.cart().then(function (state) {
+    return state.attributes;
+  });
+}
+/**
+ * Sets all cart attributes
+ * @returns {Promise} Resolves with the cart state object
+ */
+
+
+function updateAttributes(attributes) {
+  return request.cartUpdate({
+    attributes: attributes
+  });
+}
+/**
+ * Clears all cart attributes
+ * @returns {Promise} Resolves with the cart state object
+ */
+
+
+function clearAttributes() {
+  return getAttributes().then(function (attributes) {
+    for (var key in attributes) {
+      attributes[key] = '';
+    }
+
+    return updateAttributes(attributes);
+  });
+}
+/**
+ * Gets cart note
+ * @returns {Promise} Resolves with the cart note string
+ */
+
+
+function getNote() {
+  return request.cart().then(function (state) {
+    return state.note;
+  });
+}
+/**
+ * Sets cart note
+ * @returns {Promise} Resolves with the cart state object
+ */
+
+
+function updateNote(note) {
+  return request.cartUpdate({
+    note: note
+  });
+}
+/**
+ * Clears cart note
+ * @returns {Promise} Resolves with the cart state object
+ */
+
+
+function clearNote() {
+  return request.cartUpdate({
+    note: ''
+  });
+}
+/**
+ * Get estimated shipping rates.
+ * @returns {Promise} Resolves with response of /cart/shipping_rates.json (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-shipping-rates)
+ */
+
+
+function getShippingRates() {
+  return request.cartShippingRates();
+}
+},{"./request":"../node_modules/@shopify/theme-cart/request.js","./validate":"../node_modules/@shopify/theme-cart/validate.js"}],"../node_modules/gsap/gsap-core.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6979,389 +7361,7 @@ TweenMaxWithCSS = gsapWithCSS.core.Tween;
 
 exports.TweenMax = TweenMaxWithCSS;
 exports.default = exports.gsap = gsapWithCSS;
-},{"./gsap-core.js":"../node_modules/gsap/gsap-core.js","./CSSPlugin.js":"../node_modules/gsap/CSSPlugin.js"}],"../node_modules/@shopify/theme-cart/request.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.cart = cart;
-exports.cartAdd = cartAdd;
-exports.cartAddFromForm = cartAddFromForm;
-exports.cartChange = cartChange;
-exports.cartClear = cartClear;
-exports.cartUpdate = cartUpdate;
-exports.cartShippingRates = cartShippingRates;
-
-function getDefaultRequestConfig() {
-  return JSON.parse(JSON.stringify({
-    credentials: 'same-origin',
-    headers: {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-Type': 'application/json;'
-    }
-  }));
-}
-
-function fetchJSON(url, config) {
-  return fetch(url, config).then(function (response) {
-    if (!response.ok) {
-      throw response;
-    }
-
-    return response.json();
-  });
-}
-
-function cart() {
-  return fetchJSON('/cart.js', getDefaultRequestConfig());
-}
-
-function cartAdd(id, quantity, properties) {
-  var config = getDefaultRequestConfig();
-  config.method = 'POST';
-  config.body = JSON.stringify({
-    id: id,
-    quantity: quantity,
-    properties: properties
-  });
-  return fetchJSON('/cart/add.js', config);
-}
-
-function cartAddFromForm(formData) {
-  var config = getDefaultRequestConfig();
-  delete config.headers['Content-Type'];
-  config.method = 'POST';
-  config.body = formData;
-  return fetchJSON('/cart/add.js', config);
-}
-
-function cartChange(line, options) {
-  var config = getDefaultRequestConfig();
-  options = options || {};
-  config.method = 'POST';
-  config.body = JSON.stringify({
-    line: line,
-    quantity: options.quantity,
-    properties: options.properties
-  });
-  return fetchJSON('/cart/change.js', config);
-}
-
-function cartClear() {
-  var config = getDefaultRequestConfig();
-  config.method = 'POST';
-  return fetchJSON('/cart/clear.js', config);
-}
-
-function cartUpdate(body) {
-  var config = getDefaultRequestConfig();
-  config.method = 'POST';
-  config.body = JSON.stringify(body);
-  return fetchJSON('/cart/update.js', config);
-}
-
-function cartShippingRates() {
-  return fetchJSON('/cart/shipping_rates.json', getDefaultRequestConfig());
-}
-},{}],"../node_modules/@shopify/theme-cart/validate.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.key = key;
-exports.quantity = quantity;
-exports.id = id;
-exports.properties = properties;
-exports.form = form;
-exports.options = options;
-
-function key(key) {
-  if (typeof key !== 'string' || key.split(':').length !== 2) {
-    throw new TypeError('Theme Cart: Provided key value is not a string with the format xxx:xxx');
-  }
-}
-
-function quantity(quantity) {
-  if (typeof quantity !== 'number' || isNaN(quantity)) {
-    throw new TypeError('Theme Cart: An object which specifies a quantity or properties value is required');
-  }
-}
-
-function id(id) {
-  if (typeof id !== 'number' || isNaN(id)) {
-    throw new TypeError('Theme Cart: Variant ID must be a number');
-  }
-}
-
-function properties(properties) {
-  if (typeof properties !== 'object') {
-    throw new TypeError('Theme Cart: Properties must be an object');
-  }
-}
-
-function form(form) {
-  if (!(form instanceof HTMLFormElement)) {
-    throw new TypeError('Theme Cart: Form must be an instance of HTMLFormElement');
-  }
-}
-
-function options(options) {
-  if (typeof options !== 'object') {
-    throw new TypeError('Theme Cart: Options must be an object');
-  }
-
-  if (typeof options.quantity === 'undefined' && typeof options.properties === 'undefined') {
-    throw new Error('Theme Cart: You muse define a value for quantity or properties');
-  }
-
-  if (typeof options.quantity !== 'undefined') {
-    quantity(options.quantity);
-  }
-
-  if (typeof options.properties !== 'undefined') {
-    properties(options.properties);
-  }
-}
-},{}],"../node_modules/@shopify/theme-cart/theme-cart.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.getState = getState;
-exports.getItemIndex = getItemIndex;
-exports.getItem = getItem;
-exports.addItem = addItem;
-exports.addItemFromForm = addItemFromForm;
-exports.updateItem = updateItem;
-exports.removeItem = removeItem;
-exports.clearItems = clearItems;
-exports.getAttributes = getAttributes;
-exports.updateAttributes = updateAttributes;
-exports.clearAttributes = clearAttributes;
-exports.getNote = getNote;
-exports.updateNote = updateNote;
-exports.clearNote = clearNote;
-exports.getShippingRates = getShippingRates;
-
-var request = _interopRequireWildcard(require("./request"));
-
-var validate = _interopRequireWildcard(require("./validate"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * Cart Template Script
- * ------------------------------------------------------------------------------
- * A file that contains scripts highly couple code to the Cart template.
- *
- * @namespace cart
- */
-
-/**
- * Returns the state object of the cart
- * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
- */
-function getState() {
-  return request.cart();
-}
-/**
- * Returns the index of the cart line item
- * @param {string} key The unique key of the line item
- * @returns {Promise} Resolves with the index number of the line item
- */
-
-
-function getItemIndex(key) {
-  validate.key(key);
-  return request.cart().then(function (state) {
-    var index = -1;
-    state.items.forEach(function (item, i) {
-      index = item.key === key ? i + 1 : index;
-    });
-
-    if (index === -1) {
-      return Promise.reject(new Error('Theme Cart: Unable to match line item with provided key'));
-    }
-
-    return index;
-  });
-}
-/**
- * Fetches the line item object
- * @param {string} key The unique key of the line item
- * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
- */
-
-
-function getItem(key) {
-  validate.key(key);
-  return request.cart().then(function (state) {
-    var lineItem = null;
-    state.items.forEach(function (item) {
-      lineItem = item.key === key ? item : lineItem;
-    });
-
-    if (lineItem === null) {
-      return Promise.reject(new Error('Theme Cart: Unable to match line item with provided key'));
-    }
-
-    return lineItem;
-  });
-}
-/**
- * Add a new line item to the cart
- * @param {number} id The variant's unique ID
- * @param {object} options Optional values to pass to /cart/add.js
- * @param {number} options.quantity The quantity of items to be added to the cart
- * @param {object} options.properties Line item property key/values (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-properties)
- * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
- */
-
-
-function addItem(id, options) {
-  options = options || {};
-  validate.id(id);
-  return request.cartAdd(id, options.quantity, options.properties);
-}
-/**
- * Add a new line item to the cart from a product form
- * @param {object} form DOM element which is equal to the <form> node
- * @returns {Promise} Resolves with the line item object (See response of cart/add.js https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#add-to-cart)
- */
-
-
-function addItemFromForm(form) {
-  validate.form(form);
-  var formData = new FormData(form);
-  validate.id(parseInt(formData.get('id'), 10));
-  return request.cartAddFromForm(formData);
-}
-/**
- * Changes the quantity and/or properties of an existing line item.
- * @param {string} key The unique key of the line item (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-key)
- * @param {object} options Optional values to pass to /cart/add.js
- * @param {number} options.quantity The quantity of items to be added to the cart
- * @param {object} options.properties Line item property key/values (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-properties)
- * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
- */
-
-
-function updateItem(key, options) {
-  validate.key(key);
-  validate.options(options);
-  return getItemIndex(key).then(function (line) {
-    return request.cartChange(line, options);
-  });
-}
-/**
- * Removes a line item from the cart
- * @param {string} key The unique key of the line item (https://help.shopify.com/en/themes/liquid/objects/line_item#line_item-key)
- * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
- */
-
-
-function removeItem(key) {
-  validate.key(key);
-  return getItemIndex(key).then(function (line) {
-    return request.cartChange(line, {
-      quantity: 0
-    });
-  });
-}
-/**
- * Sets all quantities of all line items in the cart to zero. This does not remove cart attributes nor the cart note.
- * @returns {Promise} Resolves with the state object of the cart (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-cart)
- */
-
-
-function clearItems() {
-  return request.cartClear();
-}
-/**
- * Gets all cart attributes
- * @returns {Promise} Resolves with the cart attributes object
- */
-
-
-function getAttributes() {
-  return request.cart().then(function (state) {
-    return state.attributes;
-  });
-}
-/**
- * Sets all cart attributes
- * @returns {Promise} Resolves with the cart state object
- */
-
-
-function updateAttributes(attributes) {
-  return request.cartUpdate({
-    attributes: attributes
-  });
-}
-/**
- * Clears all cart attributes
- * @returns {Promise} Resolves with the cart state object
- */
-
-
-function clearAttributes() {
-  return getAttributes().then(function (attributes) {
-    for (var key in attributes) {
-      attributes[key] = '';
-    }
-
-    return updateAttributes(attributes);
-  });
-}
-/**
- * Gets cart note
- * @returns {Promise} Resolves with the cart note string
- */
-
-
-function getNote() {
-  return request.cart().then(function (state) {
-    return state.note;
-  });
-}
-/**
- * Sets cart note
- * @returns {Promise} Resolves with the cart state object
- */
-
-
-function updateNote(note) {
-  return request.cartUpdate({
-    note: note
-  });
-}
-/**
- * Clears cart note
- * @returns {Promise} Resolves with the cart state object
- */
-
-
-function clearNote() {
-  return request.cartUpdate({
-    note: ''
-  });
-}
-/**
- * Get estimated shipping rates.
- * @returns {Promise} Resolves with response of /cart/shipping_rates.json (https://help.shopify.com/en/themes/development/getting-started/using-ajax-api#get-shipping-rates)
- */
-
-
-function getShippingRates() {
-  return request.cartShippingRates();
-}
-},{"./request":"../node_modules/@shopify/theme-cart/request.js","./validate":"../node_modules/@shopify/theme-cart/validate.js"}],"cartDrawer.js":[function(require,module,exports) {
+},{"./gsap-core.js":"../node_modules/gsap/gsap-core.js","./CSSPlugin.js":"../node_modules/gsap/CSSPlugin.js"}],"cartDrawer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7371,50 +7371,14 @@ exports.default = void 0;
 
 var _gsap = require("gsap");
 
-var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
 var cartDrawer = function cartDrawer() {
   var body = document.querySelector('body');
   var cartOpen = document.querySelector('#mini-cart-drawer-open');
   var cartClose = document.querySelector('#mini-cart-drawer-close');
-  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper');
-  var totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
 
   var tl = _gsap.gsap.timeline({
     paused: true
-  }); // Mini Cart
-  // -- Grab Data From cart.state
-
-
-  cart.getState().then(function (state) {
-    // console.log(state);
-    miniCart(state);
-  }); // -- Map over data and build innerHTML for mini-cart__wrapper
-  // -- Append to mini cart
-
-  function miniCart(state) {
-    if (state.items.length === 0) {
-      itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
-    } else {
-      // Remove cart--no-items on body to display checkout button
-      body.classList.remove('cart--no-items');
-      itemsWrapper.innerHTML = state.items.map(function (item) {
-        return "<div class=\"items-row\">\n            <div class=\"aspect__wrapper _1x1\">\n              <img\n                src=\"".concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </div>\n            <div class=\"mini-cart-drawer__title__wrapper\">\n              <h4 class=\"mini-cart-drawer__product-title\">\n                ").concat(item.product_title, "\n              </h4>\n              <p class=\"font-prestige --small\">\n                ").concat(item.options_with_values[0].name, " / ").concat(item.variant_title, "\n              </p>\n              <p class=\"font-prestige\">\n                $").concat(new Intl.NumberFormat('en-US', {
-          minimumFractionDigits: 2
-        }).format(item.price / 100), "\n              </p>\n            </div>          \n          </div>\n        </div>\n      ");
-      }).join(''); // Sub total and total prices
-
-      totalsWrapper.innerHTML = "\n      <div class=\"subtotal__col-01\">\n        <p class=\"font-prestige --small\">Subtotal:</p>\n        <p class=\"font-prestige --small\">Taxes:</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n            Total:\n          </p>\n        </div>\n      </div>\n      <div class=\"subtotal__col-02\">\n        <p class=\"font-prestige --small\">\n        $".concat(new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2
-      }).format(state.items_subtotal_price / 100), " CAD\n        </p>\n        <p class=\"font-prestige --small\">\u2014</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n          $").concat(new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2
-      }).format(state.total_price / 100), " CAD\n          </p>\n        </div>\n      </div>\n      ");
-    }
-  }
+  });
 
   tl.to(body, {
     duration: 0,
@@ -7447,7 +7411,7 @@ var cartDrawer = function cartDrawer() {
 
 var _default = cartDrawer;
 exports.default = _default;
-},{"gsap":"../node_modules/gsap/index.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"fitChartModal.js":[function(require,module,exports) {
+},{"gsap":"../node_modules/gsap/index.js"}],"fitChartModal.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7466,6 +7430,10 @@ var fitChartModal = function fitChartModal() {
     paused: true
   });
 
+  var windowHeight = window.innerHeight / 2;
+  window.addEventListener('resize', function () {
+    console.log(window.innerHeight);
+  });
   fitChartTl.to(body, {
     duration: 0,
     overflow: 'hidden'
@@ -7478,7 +7446,13 @@ var fitChartModal = function fitChartModal() {
     opacity: 1,
     ease: 'power2.out'
   }).to('#fit-size-modal', {
-    delay: 0.3,
+    delay: 0,
+    duration: 0.2,
+    y: windowHeight,
+    yPercent: -50,
+    ease: 'power2.out'
+  }).to('#fit-size-modal', {
+    delay: 0.1,
     duration: 0.2,
     opacity: 1,
     ease: 'power2.out'
@@ -7497,7 +7471,82 @@ var fitChartModal = function fitChartModal() {
 
 var _default = fitChartModal;
 exports.default = _default;
-},{"gsap":"../node_modules/gsap/index.js"}],"addToCart.js":[function(require,module,exports) {
+},{"gsap":"../node_modules/gsap/index.js"}],"updateCartCount.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var updateCartCount = function updateCartCount(state) {
+  var cartCounter = document.querySelector('#cart-item-count');
+  cartCounter.textContent = "(".concat(state.item_count, ")");
+};
+
+var _default = updateCartCount;
+exports.default = _default;
+},{}],"miniCart.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+// Mini Cart
+var miniCart = function miniCart(state) {
+  var body = document.querySelector('body');
+  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper');
+  var totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
+
+  if (state.items.length === 0) {
+    itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
+  } else {
+    // Remove cart--no-items on body to display checkout button
+    body.classList.remove('cart--no-items');
+    itemsWrapper.innerHTML = state.items.map(function (item) {
+      return "<div class=\"items-row\">\n            <div class=\"aspect__wrapper _1x1\">\n              <img\n                src=\"".concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </div>\n            <div class=\"mini-cart-drawer__title__wrapper\">\n              <h4 class=\"mini-cart-drawer__product-title\">\n                ").concat(item.product_title, "\n              </h4>\n              <p class=\"font-prestige --small\">\n                ").concat(item.options_with_values[0].name, " / ").concat(item.variant_title, "\n              </p>\n              <p class=\"font-prestige\">\n                $").concat(new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+      }).format(item.price / 100), "\n              </p>\n            </div>          \n          </div>\n        </div>\n      ");
+    }).join(''); // Sub total and total prices
+
+    totalsWrapper.innerHTML = "\n      <div class=\"subtotal__col-01\">\n        <p class=\"font-prestige --small\">Subtotal:</p>\n        <p class=\"font-prestige --small\">Taxes:</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n            Total:\n          </p>\n        </div>\n      </div>\n      <div class=\"subtotal__col-02\">\n        <p class=\"font-prestige --small\">\n        $".concat(new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2
+    }).format(state.items_subtotal_price / 100), " CAD\n        </p>\n        <p class=\"font-prestige --small\">\u2014</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n          $").concat(new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 2
+    }).format(state.total_price / 100), " CAD\n          </p>\n        </div>\n      </div>\n      ");
+  }
+};
+
+var _default = miniCart;
+exports.default = _default;
+},{}],"cartTemplate.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cartTemplate = function cartTemplate(state) {
+  var cartItemsTable = document.querySelector('.cart-items__wrapper');
+  var cartSummaryTable = document.querySelector('.cart-summary__wrapper');
+  console.log(state);
+
+  if (state.items === 0) {// render out Empty Cart UI
+  } else {
+    cartItemsTable.insertAdjacentHTML('afterbegin', state.items.map(function (item) {
+      return "<div class=\"items-table\">\n        <div class=\"table-row__wrapper grid__2x\">\n          <div class=\"items-table__image\">\n            <a href=\"".concat(item, "\">\n              <img\n                src=\"").concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </a>\n          </div>\n          <div class=\"items-tables__details\">\n            <div class=\"grid__2x\">\n              <div>\n                <a href=\"").concat(item.url, "\">\n                  <h4 style=\"text-transform: uppercase;\">\n                    ").concat(item.handle, "\n                  </h4>\n                </a>\n                <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n              </div>\n              <div>\n                <button id=\"").concat(item.key, "\" type=\"button\" class=\"remove-cart-item\" data-item-key=\"").concat(item.key, "\">\n                  <span></span>\n                  <span></span>\n                </button>\n              </div>\n            </div>\n            <div class=\"grid__2x\">\n              <div class=\"cart-items-quantity__wrapper\">\n                <div class=\"decrement\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    onclick=\"cartItemDecrement(0)\"\n                    \n                  >\n                  -\n                  </button>\n                </div>\n                <input\n                  type=\"number\"\n                  name=\"updates[]\"\n                  id=\"updates_").concat(item.key, "\"\n                  value=\"").concat(item.quantity, "\"\n                  min=\"0\"\n                  class=\"QuantityCount font-prestige --small\"\n                />\n                <div class=\"increment\">\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    onclick=\"cartItemIncrement(10)\"\n                    \n                  >\n                  +\n                  </button>\n                </div>\n              </div>\n              <div>\n              $").concat(new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+      }).format(item.price / 100), "\n              </div>\n            </div>\n          </div>\n        </div>\n    ");
+    }).join(''));
+  }
+};
+
+var _default = cartTemplate;
+exports.default = _default;
+},{}],"addToCart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7507,6 +7556,14 @@ exports.default = void 0;
 
 var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+var _miniCart = _interopRequireDefault(require("./miniCart"));
+
+var _cartTemplate = _interopRequireDefault(require("./cartTemplate"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -7515,22 +7572,35 @@ var addToCart = function addToCart() {
   var variantOption = document.querySelector('#productSelect');
   var selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
   var addToCartBtn = document.querySelector('#AddToCart');
-  console.log(selectedVariantId);
+  var message = document.querySelector('.cart-message');
   variantOption.addEventListener('change', function () {
-    console.log('inside change event:', variantOption.options[variantOption.selectedIndex].value);
+    selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
   });
   addToCartBtn.addEventListener('click', function () {
     cart.addItem(selectedVariantId).then(function (item) {
-      console.log("An item with a quantity of ".concat(selectedVariantId, " was added to your cart:"), item); // Send items Id to cart
+      cart.getState().then(function (state) {
+        (0, _updateCartCount.default)(state);
+        (0, _cartTemplate.default)(state);
+        (0, _miniCart.default)(state);
+      }); // Update UI to reflect changes
 
-      item.id;
+      addToCartBtn.textContent = "Adding...";
+      addToCartBtn.disabled = true;
+      setTimeout(function () {
+        addToCartBtn.textContent = "Add to Cart";
+        addToCartBtn.disabled = false;
+        message.textContent = "Your item has been added to the cart";
+      }, 1400); // Update cart counter
+    }).catch(function (error) {
+      console.log(error);
+      message.textContent = "Sorry, we are out of stock in that size";
     });
   });
 };
 
 var _default = addToCart;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"productTabs.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./cartTemplate":"cartTemplate.js"}],"productTabs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7577,13 +7647,13 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var removeItem = function removeItem(key) {
+var removeItemFromCart = function removeItemFromCart(key) {
   var itemKey = key.id; // console.log(itemKey);
 
   cart.removeItem(itemKey).then(console.log("removing ".concat(itemKey, " item from cart")));
 };
 
-var _default = removeItem;
+var _default = removeItemFromCart;
 exports.default = _default;
 },{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"cartPage.js":[function(require,module,exports) {
 "use strict";
@@ -7595,6 +7665,8 @@ exports.default = void 0;
 
 var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 
+var _cartTemplate = _interopRequireDefault(require("./cartTemplate"));
+
 var _removeItem = _interopRequireDefault(require("./removeItem"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -7604,12 +7676,13 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var cartPage = function cartPage() {
-  var state;
-  var removeItemBtn = document.querySelectorAll('.remove-cart-item'); // cart.getState().then((state) => (state = state));
-
+  window.Cart = cart;
+  cart.getState().then(function (state) {
+    (0, _cartTemplate.default)(state);
+  });
+  var removeItemBtn = document.querySelectorAll('.remove-cart-item');
   removeItemBtn.forEach(function (btn) {
     btn.addEventListener('click', function () {
-      // console.log(btn.id);
       (0, _removeItem.default)(btn);
     });
   });
@@ -7617,12 +7690,14 @@ var cartPage = function cartPage() {
 
 var _default = cartPage;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartTemplate":"cartTemplate.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
 require("unfetch/polyfill");
 
 require("es6-promise/auto");
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 
 var _cartDrawer = _interopRequireDefault(require("./cartDrawer"));
 
@@ -7634,7 +7709,15 @@ var _productTabs = _interopRequireDefault(require("./productTabs"));
 
 var _cartPage = _interopRequireDefault(require("./cartPage"));
 
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+var _miniCart = _interopRequireDefault(require("./miniCart"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // Imports for @Shopify/theme-cart
 // Imports
@@ -7649,8 +7732,14 @@ if (document.body.classList.contains('product')) {
 
 if (document.body.classList.contains('cart')) {
   (0, _cartPage.default)();
-} // Lazy Load
+} // Cart State and Functions
+// -- On page load - grab the items in Cart State
 
+
+cart.getState().then(function (state) {
+  (0, _updateCartCount.default)(state);
+  (0, _miniCart.default)(state);
+}); // Lazy Load
 
 document.addEventListener('DOMContentLoaded', function () {
   var lazyloadImages;
@@ -7708,7 +7797,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('orientationChange', lazyload);
   }
 });
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -7736,7 +7825,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51243" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

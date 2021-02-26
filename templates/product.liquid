@@ -39,12 +39,6 @@
       <h1>{{ product.title }}</h1>
       <p class="font-prestige">{{ product.price | money }}</p>
     </div>
-    {% comment %} {% if condition %}
-      
-    {% endif %} {% endcomment %}
-
-
-
 
 
     <div class="description-tab__wrapper">
@@ -88,9 +82,8 @@
           </select>
         </div>
         <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
-        <div class="cart-message font-prestige">{Your item} has been added to your cart</div>
-        <button type="button" name="add" id="AddToCart" class="ps-btn --dark">Add to Cart</button>
+        <div class="cart-message font-prestige"></div>
+        <button type="button" name="add" id="AddToCart" class="ps-btn --dark" >Add to Cart</button>
       </div>  
   </div>
 </div>
-{% render 'product-fit-sizes' %}

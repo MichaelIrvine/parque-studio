@@ -42,6 +42,7 @@ a.cta-link {
   width: 100%;
   text-align: center;
   appearance: none;
+  transition: color 300ms ease-in-out;
 
   &.--light {
     color: $white;
@@ -54,6 +55,12 @@ a.cta-link {
     background-color: $black;
     margin-bottom: 0.6rem;
   }
+}
+
+.ps-btn:disabled,
+.ps-btn[disabled] {
+  background-color: $darkGrey;
+  border: 1px solid $darkGrey;
 }
 
 .remove-cart-item {

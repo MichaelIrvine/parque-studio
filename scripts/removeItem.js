@@ -1,6 +1,6 @@
 import * as cart from '@shopify/theme-cart';
 
-const removeItem = (key) => {
+const removeItemFromCart = (key) => {
   const itemKey = key.id;
 
   // console.log(itemKey);
@@ -9,4 +9,4 @@ const removeItem = (key) => {
     .then(console.log(`removing ${itemKey} item from cart`));
 };
 
-export default removeItem;
+export default removeItemFromCart;

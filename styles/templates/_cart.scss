@@ -2,7 +2,7 @@
   max-width: 85%;
   margin: 0 auto 13.5rem;
 
-  form {
+  .cart-items__wrapper {
     &.grid__2x {
       gap: 6rem;
       grid-template-columns: 1.5fr 1fr;
@@ -73,6 +73,19 @@
   }
 }
 
+// If no items are in cart
+.--empty-cart {
+  .cart-form__wrapper {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 6rem;
+
+    .items-table {
+      border-top: 1px solid $darkGrey;
+      padding-top: 1.8rem;
+    }
+  }
+}
 // Quantity Updater
 
 .cart-items-quantity__wrapper {

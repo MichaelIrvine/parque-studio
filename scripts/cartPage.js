@@ -1,16 +1,19 @@
 import * as cart from '@shopify/theme-cart';
-import removeItem from './removeItem';
+import cartTemplate from './cartTemplate';
+import removeItemFromCart from './removeItem';
 
 const cartPage = () => {
-  let state;
-  const removeItemBtn = document.querySelectorAll('.remove-cart-item');
+  window.Cart = cart;
 
-  // cart.getState().then((state) => (state = state));
+  cart.getState().then((state) => {
+    cartTemplate(state);
+  });
+
+  const removeItemBtn = document.querySelectorAll('.remove-cart-item');
 
   removeItemBtn.forEach((btn) => {
     btn.addEventListener('click', () => {
-      // console.log(btn.id);
-      removeItem(btn);
+      removeItemFromCart(btn);
     });
   });
 };

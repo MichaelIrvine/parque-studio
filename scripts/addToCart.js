@@ -23,7 +23,6 @@ const addToCart = () => {
         console.log(item);
         cart.getState().then((state) => {
           updateCartCount(state);
-          // cartTemplate(state);
           miniCart(state);
         });
         // Update UI to reflect changes

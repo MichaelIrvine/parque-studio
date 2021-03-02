@@ -1,7 +1,9 @@
 import cartSummary from './cartSummary';
 
 const cartTemplate = (state) => {
-  const cartItemsTable = document.querySelector('.items-table');
+  const cartItemsTable = document.querySelector(
+    '.cart-items__wrapper > .items-table'
+  );
   const loader = document.querySelector('.ajax-loader');
 
   if (state.items.length === 0) {
@@ -17,7 +19,6 @@ const cartTemplate = (state) => {
     if (loader) {
       loader.remove();
     }
-
     cartItemsTable.insertAdjacentHTML(
       'afterbegin',
       state.items

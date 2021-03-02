@@ -1,8 +1,14 @@
+import miniCartSummary from './miniCartSummary';
+import removeItemFromMiniCart from './removeMiniCartItem';
+import incrementMiniCartQuantity from './incrementMiniCartQuantity';
+import decrementMiniCartQuantity from './decrementMiniCartQuantity';
+
 // Mini Cart
 const miniCart = (state) => {
   const body = document.querySelector('body');
-  const itemsWrapper = document.querySelector('.mini-cart-items__wrapper');
-  const totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
+  const itemsWrapper = document.querySelector(
+    '.mini-cart-items__wrapper > .items-table'
+  );
 
   if (state.items.length === 0) {
     itemsWrapper.innerHTML = `<h3>Your cart is currently empty</h3>`;
@@ -11,30 +17,6 @@ const miniCart = (state) => {
     body.classList.remove('cart--no-items');
     itemsWrapper.innerHTML = state.items
       .map((item) => {
-        //   return `<div class="items-row">
-        //       <div class="aspect__wrapper _1x1">
-        //         <img
-        //           src="${item.featured_image.url}"
-        //           alt="${item.featured_image.alt}"
-        //           class="lazy blurUp lazy-reveal"
-        //         />
-        //       </div>
-        //       <div class="mini-cart-drawer__title__wrapper">
-        //         <h4 class="mini-cart-drawer__product-title">
-        //           ${item.product_title}
-        //         </h4>
-        //         <p class="font-prestige --small">
-        //           ${item.options_with_values[0].name} / ${item.variant_title}
-        //         </p>
-        //         <p class="font-prestige">
-        //           $${new Intl.NumberFormat('en-US', {
-        //             minimumFractionDigits: 2,
-        //           }).format(item.price / 100)}
-        //         </p>
-        //       </div>
-        //     </div>
-        //   </div>
-        // `;
         return `
           <div id="${item.key}" class="table-row__wrapper grid__2x">
             <div class="items-table__image">
@@ -103,34 +85,41 @@ const miniCart = (state) => {
       })
       .join('');
 
-    // Sub total and total prices
-    totalsWrapper.innerHTML = `
-      <div class="subtotal__col-01">
-        <p class="font-prestige --small">Subtotal:</p>
-        <p class="font-prestige --small">Taxes:</p>
-        <div class="total-price">
-          <p class="font-prestige">
-            Total:
-          </p>
-        </div>
-      </div>
-      <div class="subtotal__col-02">
-        <p class="font-prestige --small">
-        $${new Intl.NumberFormat('en-US', {
-          minimumFractionDigits: 2,
-        }).format(state.items_subtotal_price / 100)} CAD
-        </p>
-        <p class="font-prestige --small">—</p>
-        <div class="total-price">
-          <p class="font-prestige">
-          $${new Intl.NumberFormat('en-US', {
-            minimumFractionDigits: 2,
-          }).format(state.total_price / 100)} CAD
-          </p>
-        </div>
-      </div>
-      `;
+    miniCartSummary(state);
   }
+
+  // functionality to update/remove items
+  // -- Remove Item from Mini Cart
+  const miniCartRemoveBtn = document.querySelectorAll(
+    '.mini-cart-drawer__wrapper .remove-cart-item'
+  );
+
+  miniCartRemoveBtn.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      removeItemFromMiniCart(e.currentTarget);
+    });
+  });
+
+  // Increment Mini Cart Quantity
+  const btnIncrement = document.querySelectorAll(
+    '.mini-cart-drawer__wrapper .increaseQuantity'
+  );
+
+  btnIncrement.forEach((incBtn) => {
+    incBtn.addEventListener('click', (e) => {
+      incrementMiniCartQuantity(e.currentTarget);
+    });
+  });
+  // Decrement Mini Cart Quantity
+  const btnDecrement = document.querySelectorAll(
+    '.mini-cart-drawer__wrapper .decreaseQuantity'
+  );
+
+  btnDecrement.forEach((decBtn) => {
+    decBtn.addEventListener('click', (e) => {
+      decrementMiniCartQuantity(e.currentTarget);
+    });
+  });
 };
 
 export default miniCart;

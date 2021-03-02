@@ -28,7 +28,10 @@ if (document.body.classList.contains('cart')) {
 // -- On page load - grab the items in Cart State
 cart.getState().then((state) => {
   updateCartCount(state);
-  miniCart(state);
+
+  if (window.location.pathname !== '/cart') {
+    miniCart(state);
+  }
 });
 
 // Lazy Load

@@ -1,0 +1,25 @@
+import * as cart from '@shopify/theme-cart';
+import miniCartSummary from './miniCartSummary';
+import updateCartCount from './updateCartCount';
+
+const decrementCartQuantity = (key) => {
+  key.disabled = true;
+  let decKey = key.dataset.itemKey;
+  let currentVal = parseInt(key.nextElementSibling.value);
+  let newVal;
+
+  cart.updateItem(decKey, { quantity: currentVal - 1 }).then((state) => {
+    miniCartSummary(state);
+    updateCartCount(state);
+  });
+
+  newVal = currentVal - 1;
+
+  key.nextElementSibling.value = newVal;
+
+  setTimeout(() => {
+    key.disabled = false;
+  }, 1000);
+};
+
+export default decrementCartQuantity;

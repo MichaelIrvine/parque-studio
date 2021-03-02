@@ -7490,7 +7490,7 @@ var updateCartCount = function updateCartCount(state) {
 
 var _default = updateCartCount;
 exports.default = _default;
-},{}],"miniCart.js":[function(require,module,exports) {
+},{}],"miniCartSummary.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7498,11 +7498,174 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
+var miniCartSummary = function miniCartSummary(state) {
+  var totalsWrapper = document.querySelector('.mini-cart-total__wrapper'); // Sub total and total prices
+
+  totalsWrapper.innerHTML = "\n  <div class=\"subtotal__col-01\">\n    <p class=\"font-prestige --small\">Subtotal:</p>\n    <p class=\"font-prestige --small\">Taxes:</p>\n    <div class=\"total-price\">\n      <p class=\"font-prestige\">\n        Total:\n      </p>\n    </div>\n  </div>\n  <div class=\"subtotal__col-02\">\n    <p class=\"font-prestige --small\">\n    $".concat(new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2
+  }).format(state.items_subtotal_price / 100), " CAD\n    </p>\n    <p class=\"font-prestige --small\">\u2014</p>\n    <div class=\"total-price\">\n      <p class=\"font-prestige\">\n      $").concat(new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2
+  }).format(state.total_price / 100), " CAD\n      </p>\n    </div>\n  </div>\n  ");
+};
+
+var _default = miniCartSummary;
+exports.default = _default;
+},{}],"removeMiniCartItem.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _miniCartSummary = _interopRequireDefault(require("./miniCartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+var _gsap = require("gsap");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var removeItemFromMiniCart = function removeItemFromMiniCart(key) {
+  var itemKey = key.dataset.itemKey;
+  cart.removeItem(itemKey).then(function (state) {
+    var itemToRemove = document.getElementById(itemKey);
+
+    var miniCartTl = _gsap.gsap.timeline({
+      paused: true
+    });
+
+    (0, _miniCartSummary.default)(state);
+    (0, _updateCartCount.default)(state); // Update UI to reflect removed item
+
+    miniCartTl.to(itemToRemove, {
+      delay: 0,
+      duration: 0.3,
+      opacity: 0,
+      ease: 'power2.out'
+    }).to(itemToRemove, {
+      delay: 0,
+      duration: 0.2,
+      height: 0
+    });
+    miniCartTl.play();
+    setTimeout(function () {
+      // Remove item from DOM
+      itemToRemove.remove();
+    }, 510);
+  });
+};
+
+var _default = removeItemFromMiniCart;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./miniCartSummary":"miniCartSummary.js","./updateCartCount":"updateCartCount.js","gsap":"../node_modules/gsap/index.js"}],"incrementMiniCartQuantity.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _miniCartSummary = _interopRequireDefault(require("./miniCartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var incrementCartQuantity = function incrementCartQuantity(key) {
+  key.disabled = true;
+  var incKey = key.dataset.itemKey;
+  var currentVal = parseInt(key.previousElementSibling.value);
+  var newVal;
+  cart.updateItem(incKey, {
+    quantity: currentVal + 1
+  }).then(function (state) {
+    (0, _miniCartSummary.default)(state);
+    (0, _updateCartCount.default)(state);
+  });
+  newVal = currentVal + 1;
+  key.previousElementSibling.value = newVal;
+  setTimeout(function () {
+    key.disabled = false;
+  }, 1000);
+};
+
+var _default = incrementCartQuantity;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./miniCartSummary":"miniCartSummary.js","./updateCartCount":"updateCartCount.js"}],"decrementMiniCartQuantity.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _miniCartSummary = _interopRequireDefault(require("./miniCartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var decrementCartQuantity = function decrementCartQuantity(key) {
+  key.disabled = true;
+  var decKey = key.dataset.itemKey;
+  var currentVal = parseInt(key.nextElementSibling.value);
+  var newVal;
+  cart.updateItem(decKey, {
+    quantity: currentVal - 1
+  }).then(function (state) {
+    (0, _miniCartSummary.default)(state);
+    (0, _updateCartCount.default)(state);
+  });
+  newVal = currentVal - 1;
+  key.nextElementSibling.value = newVal;
+  setTimeout(function () {
+    key.disabled = false;
+  }, 1000);
+};
+
+var _default = decrementCartQuantity;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./miniCartSummary":"miniCartSummary.js","./updateCartCount":"updateCartCount.js"}],"miniCart.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _miniCartSummary = _interopRequireDefault(require("./miniCartSummary"));
+
+var _removeMiniCartItem = _interopRequireDefault(require("./removeMiniCartItem"));
+
+var _incrementMiniCartQuantity = _interopRequireDefault(require("./incrementMiniCartQuantity"));
+
+var _decrementMiniCartQuantity = _interopRequireDefault(require("./decrementMiniCartQuantity"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 // Mini Cart
 var miniCart = function miniCart(state) {
   var body = document.querySelector('body');
-  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper');
-  var totalsWrapper = document.querySelector('.mini-cart-total__wrapper');
+  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper > .items-table');
 
   if (state.items.length === 0) {
     itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
@@ -7510,46 +7673,40 @@ var miniCart = function miniCart(state) {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
     itemsWrapper.innerHTML = state.items.map(function (item) {
-      //   return `<div class="items-row">
-      //       <div class="aspect__wrapper _1x1">
-      //         <img
-      //           src="${item.featured_image.url}"
-      //           alt="${item.featured_image.alt}"
-      //           class="lazy blurUp lazy-reveal"
-      //         />
-      //       </div>
-      //       <div class="mini-cart-drawer__title__wrapper">
-      //         <h4 class="mini-cart-drawer__product-title">
-      //           ${item.product_title}
-      //         </h4>
-      //         <p class="font-prestige --small">
-      //           ${item.options_with_values[0].name} / ${item.variant_title}
-      //         </p>
-      //         <p class="font-prestige">
-      //           $${new Intl.NumberFormat('en-US', {
-      //             minimumFractionDigits: 2,
-      //           }).format(item.price / 100)}
-      //         </p>
-      //       </div>
-      //     </div>
-      //   </div>
-      // `;
       return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"0\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
       }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
-    }).join(''); // Sub total and total prices
+    }).join('');
+    (0, _miniCartSummary.default)(state);
+  } // functionality to update/remove items
+  // -- Remove Item from Mini Cart
 
-    totalsWrapper.innerHTML = "\n      <div class=\"subtotal__col-01\">\n        <p class=\"font-prestige --small\">Subtotal:</p>\n        <p class=\"font-prestige --small\">Taxes:</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n            Total:\n          </p>\n        </div>\n      </div>\n      <div class=\"subtotal__col-02\">\n        <p class=\"font-prestige --small\">\n        $".concat(new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2
-    }).format(state.items_subtotal_price / 100), " CAD\n        </p>\n        <p class=\"font-prestige --small\">\u2014</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n          $").concat(new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 2
-    }).format(state.total_price / 100), " CAD\n          </p>\n        </div>\n      </div>\n      ");
-  }
+
+  var miniCartRemoveBtn = document.querySelectorAll('.mini-cart-drawer__wrapper .remove-cart-item');
+  miniCartRemoveBtn.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      (0, _removeMiniCartItem.default)(e.currentTarget);
+    });
+  }); // Increment Mini Cart Quantity
+
+  var btnIncrement = document.querySelectorAll('.mini-cart-drawer__wrapper .increaseQuantity');
+  btnIncrement.forEach(function (incBtn) {
+    incBtn.addEventListener('click', function (e) {
+      (0, _incrementMiniCartQuantity.default)(e.currentTarget);
+    });
+  }); // Decrement Mini Cart Quantity
+
+  var btnDecrement = document.querySelectorAll('.mini-cart-drawer__wrapper .decreaseQuantity');
+  btnDecrement.forEach(function (decBtn) {
+    decBtn.addEventListener('click', function (e) {
+      (0, _decrementMiniCartQuantity.default)(e.currentTarget);
+    });
+  });
 };
 
 var _default = miniCart;
 exports.default = _default;
-},{}],"addToCart.js":[function(require,module,exports) {
+},{"./miniCartSummary":"miniCartSummary.js","./removeMiniCartItem":"removeMiniCartItem.js","./incrementMiniCartQuantity":"incrementMiniCartQuantity.js","./decrementMiniCartQuantity":"decrementMiniCartQuantity.js"}],"addToCart.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7581,8 +7738,7 @@ var addToCart = function addToCart() {
     cart.addItem(selectedVariantId).then(function (item) {
       console.log(item);
       cart.getState().then(function (state) {
-        (0, _updateCartCount.default)(state); // cartTemplate(state);
-
+        (0, _updateCartCount.default)(state);
         (0, _miniCart.default)(state);
       }); // Update UI to reflect changes
 
@@ -7673,7 +7829,7 @@ var _cartSummary = _interopRequireDefault(require("./cartSummary"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var cartTemplate = function cartTemplate(state) {
-  var cartItemsTable = document.querySelector('.items-table');
+  var cartItemsTable = document.querySelector('.cart-items__wrapper > .items-table');
   var loader = document.querySelector('.ajax-loader');
 
   if (state.items.length === 0) {
@@ -7941,7 +8097,10 @@ if (document.body.classList.contains('cart')) {
 
 cart.getState().then(function (state) {
   (0, _updateCartCount.default)(state);
-  (0, _miniCart.default)(state);
+
+  if (window.location.pathname !== '/cart') {
+    (0, _miniCart.default)(state);
+  }
 }); // Lazy Load
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -1,9 +1,9 @@
-import * as cart from '@shopify/theme-cart';
+// import * as cart from '@shopify/theme-cart';
 
-const cartCounter = () => {
-  cart.getState().then((state) => {
-    const cartItem;
-  });
-};
+// const cartCounter = () => {
+//   cart.getState().then((state) => {
+//     const cartItem;
+//   });
+// };
 
-export default cartCounter;
+// export default cartCounter;

@@ -6,6 +6,10 @@ const cartDrawer = () => {
   const cartClose = document.querySelector('#mini-cart-drawer-close');
   const tl = gsap.timeline({ paused: true });
 
+  if (window.location.pathname === '/cart') {
+    cartOpen.disabled = true;
+  }
+
   tl.to(body, { duration: 0, overflow: 'hidden' })
     .to('.screen', { duration: 0, minHeight: '100vh' })
     .to('.screen', {

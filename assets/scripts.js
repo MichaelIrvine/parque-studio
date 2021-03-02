@@ -7380,6 +7380,10 @@ var cartDrawer = function cartDrawer() {
     paused: true
   });
 
+  if (window.location.pathname === '/cart') {
+    cartOpen.disabled = true;
+  }
+
   tl.to(body, {
     duration: 0,
     overflow: 'hidden'
@@ -7506,9 +7510,33 @@ var miniCart = function miniCart(state) {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
     itemsWrapper.innerHTML = state.items.map(function (item) {
-      return "<div class=\"items-row\">\n            <div class=\"aspect__wrapper _1x1\">\n              <img\n                src=\"".concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </div>\n            <div class=\"mini-cart-drawer__title__wrapper\">\n              <h4 class=\"mini-cart-drawer__product-title\">\n                ").concat(item.product_title, "\n              </h4>\n              <p class=\"font-prestige --small\">\n                ").concat(item.options_with_values[0].name, " / ").concat(item.variant_title, "\n              </p>\n              <p class=\"font-prestige\">\n                $").concat(new Intl.NumberFormat('en-US', {
+      //   return `<div class="items-row">
+      //       <div class="aspect__wrapper _1x1">
+      //         <img
+      //           src="${item.featured_image.url}"
+      //           alt="${item.featured_image.alt}"
+      //           class="lazy blurUp lazy-reveal"
+      //         />
+      //       </div>
+      //       <div class="mini-cart-drawer__title__wrapper">
+      //         <h4 class="mini-cart-drawer__product-title">
+      //           ${item.product_title}
+      //         </h4>
+      //         <p class="font-prestige --small">
+      //           ${item.options_with_values[0].name} / ${item.variant_title}
+      //         </p>
+      //         <p class="font-prestige">
+      //           $${new Intl.NumberFormat('en-US', {
+      //             minimumFractionDigits: 2,
+      //           }).format(item.price / 100)}
+      //         </p>
+      //       </div>
+      //     </div>
+      //   </div>
+      // `;
+      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"0\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
-      }).format(item.price / 100), "\n              </p>\n            </div>          \n          </div>\n        </div>\n      ");
+      }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
     }).join(''); // Sub total and total prices
 
     totalsWrapper.innerHTML = "\n      <div class=\"subtotal__col-01\">\n        <p class=\"font-prestige --small\">Subtotal:</p>\n        <p class=\"font-prestige --small\">Taxes:</p>\n        <div class=\"total-price\">\n          <p class=\"font-prestige\">\n            Total:\n          </p>\n        </div>\n      </div>\n      <div class=\"subtotal__col-02\">\n        <p class=\"font-prestige --small\">\n        $".concat(new Intl.NumberFormat('en-US', {
@@ -7520,31 +7548,6 @@ var miniCart = function miniCart(state) {
 };
 
 var _default = miniCart;
-exports.default = _default;
-},{}],"cartTemplate.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var cartTemplate = function cartTemplate(state) {
-  var cartItemsTable = document.querySelector('.cart-items__wrapper');
-  var cartSummaryTable = document.querySelector('.cart-summary__wrapper');
-  console.log(state);
-
-  if (state.items === 0) {// render out Empty Cart UI
-  } else {
-    cartItemsTable.insertAdjacentHTML('afterbegin', state.items.map(function (item) {
-      return "<div class=\"items-table\">\n        <div class=\"table-row__wrapper grid__2x\">\n          <div class=\"items-table__image\">\n            <a href=\"".concat(item, "\">\n              <img\n                src=\"").concat(item.featured_image.url, "\"\n                alt=\"").concat(item.featured_image.alt, "\"\n                class=\"lazy blurUp lazy-reveal\"\n              />\n            </a>\n          </div>\n          <div class=\"items-tables__details\">\n            <div class=\"grid__2x\">\n              <div>\n                <a href=\"").concat(item.url, "\">\n                  <h4 style=\"text-transform: uppercase;\">\n                    ").concat(item.handle, "\n                  </h4>\n                </a>\n                <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n              </div>\n              <div>\n                <button id=\"").concat(item.key, "\" type=\"button\" class=\"remove-cart-item\" data-item-key=\"").concat(item.key, "\">\n                  <span></span>\n                  <span></span>\n                </button>\n              </div>\n            </div>\n            <div class=\"grid__2x\">\n              <div class=\"cart-items-quantity__wrapper\">\n                <div class=\"decrement\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    onclick=\"cartItemDecrement(0)\"\n                    \n                  >\n                  -\n                  </button>\n                </div>\n                <input\n                  type=\"number\"\n                  name=\"updates[]\"\n                  id=\"updates_").concat(item.key, "\"\n                  value=\"").concat(item.quantity, "\"\n                  min=\"0\"\n                  class=\"QuantityCount font-prestige --small\"\n                />\n                <div class=\"increment\">\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    onclick=\"cartItemIncrement(10)\"\n                    \n                  >\n                  +\n                  </button>\n                </div>\n              </div>\n              <div>\n              $").concat(new Intl.NumberFormat('en-US', {
-        minimumFractionDigits: 2
-      }).format(item.price / 100), "\n              </div>\n            </div>\n          </div>\n        </div>\n    ");
-    }).join(''));
-  }
-};
-
-var _default = cartTemplate;
 exports.default = _default;
 },{}],"addToCart.js":[function(require,module,exports) {
 "use strict";
@@ -7559,8 +7562,6 @@ var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
 
 var _miniCart = _interopRequireDefault(require("./miniCart"));
-
-var _cartTemplate = _interopRequireDefault(require("./cartTemplate"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7578,9 +7579,10 @@ var addToCart = function addToCart() {
   });
   addToCartBtn.addEventListener('click', function () {
     cart.addItem(selectedVariantId).then(function (item) {
+      console.log(item);
       cart.getState().then(function (state) {
-        (0, _updateCartCount.default)(state);
-        (0, _cartTemplate.default)(state);
+        (0, _updateCartCount.default)(state); // cartTemplate(state);
+
         (0, _miniCart.default)(state);
       }); // Update UI to reflect changes
 
@@ -7589,18 +7591,18 @@ var addToCart = function addToCart() {
       setTimeout(function () {
         addToCartBtn.textContent = "Add to Cart";
         addToCartBtn.disabled = false;
-        message.textContent = "Your item has been added to the cart";
+        message.innerHTML = "<p class=\"font-prestige --small\">".concat(item.handle, " has been added to the cart. <a href=\"/cart\" class=\"font-prestige --small\">Visit your cart</a> or continue shopping.</p> ");
       }, 1400); // Update cart counter
     }).catch(function (error) {
       console.log(error);
-      message.textContent = "Sorry, we are out of stock in that size";
+      message.innerHTML = "<p class=\"font-prestige --small\">Sorry, we are out of stock in that size</p>";
     });
   });
 };
 
 var _default = addToCart;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./cartTemplate":"cartTemplate.js"}],"productTabs.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js"}],"productTabs.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7633,7 +7635,71 @@ var productTabs = function productTabs() {
 
 var _default = productTabs;
 exports.default = _default;
-},{}],"removeItem.js":[function(require,module,exports) {
+},{}],"cartSummary.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cartSummary = function cartSummary(state) {
+  var cartSummaryTable = document.querySelector('.cart-summary__wrapper'); // Cart Summary
+
+  var subTotal = cartSummaryTable.querySelector('#cart-sub-total');
+  subTotal.textContent = "$".concat(new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2
+  }).format(state.items_subtotal_price / 100), " CAD");
+  var total = cartSummaryTable.querySelector('#cart-total');
+  total.textContent = "$".concat(new Intl.NumberFormat('en-US', {
+    minimumFractionDigits: 2
+  }).format(state.total_price / 100), " CAD");
+  cartSummaryTable.querySelector('#cart-tax').textContent = "Calculated at Checkout";
+  cartSummaryTable.querySelector('#cart-shipping').textContent = "Calculated at Checkout";
+};
+
+var _default = cartSummary;
+exports.default = _default;
+},{}],"cartTemplate.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _cartSummary = _interopRequireDefault(require("./cartSummary"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var cartTemplate = function cartTemplate(state) {
+  var cartItemsTable = document.querySelector('.items-table');
+  var loader = document.querySelector('.ajax-loader');
+
+  if (state.items.length === 0) {
+    if (loader) {
+      loader.remove();
+    } // render out Empty Cart UI
+
+
+    cartItemsTable.insertAdjacentHTML('afterbegin', '<h4>Your cart is currently empty</h4>');
+  } else {
+    if (loader) {
+      loader.remove();
+    }
+
+    cartItemsTable.insertAdjacentHTML('afterbegin', state.items.map(function (item) {
+      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"0\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
+        minimumFractionDigits: 2
+      }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
+    }).join(''));
+    (0, _cartSummary.default)(state);
+  }
+};
+
+var _default = cartTemplate;
+exports.default = _default;
+},{"./cartSummary":"cartSummary.js"}],"incrementCartQuantity.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7642,20 +7708,132 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _cartSummary = _interopRequireDefault(require("./cartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var incrementCartQuantity = function incrementCartQuantity(key) {
+  key.disabled = true;
+  var incKey = key.dataset.itemKey;
+  var currentVal = parseInt(key.previousElementSibling.value);
+  var newVal;
+  cart.updateItem(incKey, {
+    quantity: currentVal + 1
+  }).then(function (state) {
+    (0, _cartSummary.default)(state);
+    (0, _updateCartCount.default)(state);
+  });
+  newVal = currentVal + 1;
+  key.previousElementSibling.value = newVal;
+  setTimeout(function () {
+    key.disabled = false;
+  }, 1000);
+};
+
+var _default = incrementCartQuantity;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./updateCartCount":"updateCartCount.js"}],"decrementCartQuantity.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _cartSummary = _interopRequireDefault(require("./cartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var decrementCartQuantity = function decrementCartQuantity(key) {
+  key.disabled = true;
+  var decKey = key.dataset.itemKey;
+  var currentVal = parseInt(key.nextElementSibling.value);
+  var newVal;
+  cart.updateItem(decKey, {
+    quantity: currentVal - 1
+  }).then(function (state) {
+    (0, _cartSummary.default)(state);
+    (0, _updateCartCount.default)(state);
+  });
+  newVal = currentVal - 1;
+  key.nextElementSibling.value = newVal;
+  setTimeout(function () {
+    key.disabled = false;
+  }, 1000);
+};
+
+var _default = decrementCartQuantity;
+exports.default = _default;
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./updateCartCount":"updateCartCount.js"}],"removeItem.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
+
+var _cartSummary = _interopRequireDefault(require("./cartSummary"));
+
+var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
+
+var _gsap = require("gsap");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var removeItemFromCart = function removeItemFromCart(key) {
-  var itemKey = key.id; // console.log(itemKey);
+  var itemKey = key.dataset.itemKey;
+  cart.removeItem(itemKey).then(function (state) {
+    var itemToRemove = document.getElementById(itemKey);
 
-  cart.removeItem(itemKey).then(console.log("removing ".concat(itemKey, " item from cart")));
+    var cartTl = _gsap.gsap.timeline({
+      paused: true
+    });
+
+    (0, _cartSummary.default)(state);
+    (0, _updateCartCount.default)(state); // Update UI to reflect removed item
+
+    cartTl.to(itemToRemove, {
+      delay: 0,
+      duration: 0.3,
+      opacity: 0,
+      ease: 'power2.out'
+    }).to(itemToRemove, {
+      delay: 0,
+      duration: 0.2,
+      height: 0
+    });
+    cartTl.play();
+    setTimeout(function () {
+      // Remove item from DOM
+      itemToRemove.remove();
+    }, 510);
+  });
 };
 
 var _default = removeItemFromCart;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js"}],"cartPage.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./updateCartCount":"updateCartCount.js","gsap":"../node_modules/gsap/index.js"}],"cartPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -7665,7 +7843,13 @@ exports.default = void 0;
 
 var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 
+var _cartSummary = _interopRequireDefault(require("./cartSummary"));
+
 var _cartTemplate = _interopRequireDefault(require("./cartTemplate"));
+
+var _incrementCartQuantity = _interopRequireDefault(require("./incrementCartQuantity"));
+
+var _decrementCartQuantity = _interopRequireDefault(require("./decrementCartQuantity"));
 
 var _removeItem = _interopRequireDefault(require("./removeItem"));
 
@@ -7676,21 +7860,40 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var cartPage = function cartPage() {
-  window.Cart = cart;
   cart.getState().then(function (state) {
+    console.log(state); // Load Cart
+
     (0, _cartTemplate.default)(state);
-  });
-  var removeItemBtn = document.querySelectorAll('.remove-cart-item');
-  removeItemBtn.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      (0, _removeItem.default)(btn);
+    (0, _cartSummary.default)(state); // Remove Item Button
+
+    var removeItemBtn = document.querySelectorAll('.remove-cart-item');
+    removeItemBtn.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        (0, _removeItem.default)(e.currentTarget);
+      });
+    }); // Increment Cart Quantity
+
+    var btnIncrement = document.querySelectorAll('.increaseQuantity');
+    btnIncrement.forEach(function (incBtn) {
+      incBtn.addEventListener('click', function (e) {
+        (0, _incrementCartQuantity.default)(e.currentTarget);
+      });
+    }); // Decrement Cart Quantity
+
+    var btnDecrement = document.querySelectorAll('.decreaseQuantity');
+    btnDecrement.forEach(function (decBtn) {
+      decBtn.addEventListener('click', function (e) {
+        (0, _decrementCartQuantity.default)(e.currentTarget);
+      });
     });
+  }).catch(function (error) {
+    console.log(error);
   });
 };
 
 var _default = cartPage;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartTemplate":"cartTemplate.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./cartTemplate":"cartTemplate.js","./incrementCartQuantity":"incrementCartQuantity.js","./decrementCartQuantity":"decrementCartQuantity.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
 require("unfetch/polyfill");
@@ -7825,7 +8028,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63953" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

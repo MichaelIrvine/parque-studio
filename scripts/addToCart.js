@@ -1,7 +1,6 @@
 import * as cart from '@shopify/theme-cart';
 import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
-import cartTemplate from './cartTemplate';
 
 const addToCart = () => {
   const variantOption = document.querySelector('#productSelect');
@@ -21,9 +20,10 @@ const addToCart = () => {
     cart
       .addItem(selectedVariantId)
       .then((item) => {
+        console.log(item);
         cart.getState().then((state) => {
           updateCartCount(state);
-          cartTemplate(state);
+          // cartTemplate(state);
           miniCart(state);
         });
         // Update UI to reflect changes
@@ -32,13 +32,13 @@ const addToCart = () => {
         setTimeout(() => {
           addToCartBtn.textContent = `Add to Cart`;
           addToCartBtn.disabled = false;
-          message.textContent = `Your item has been added to the cart`;
+          message.innerHTML = `<p class="font-prestige --small">${item.handle} has been added to the cart. <a href="/cart" class="font-prestige --small">Visit your cart</a> or continue shopping.</p> `;
         }, 1400);
         // Update cart counter
       })
       .catch((error) => {
         console.log(error);
-        message.textContent = `Sorry, we are out of stock in that size`;
+        message.innerHTML = `<p class="font-prestige --small">Sorry, we are out of stock in that size</p>`;
       });
   });
 };

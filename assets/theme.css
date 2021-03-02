@@ -702,7 +702,6 @@ section.page-intro .page-intro__text {
 }
 #footer .footer-col:first-of-type {
   display: flex;
-  flex-wrap: wrap;
 }
 #footer .footer-col:first-of-type .footer-logo {
   max-width: 134px;
@@ -1011,6 +1010,11 @@ button.cta {
   color: #000000;
 }
 
+.mini-cart > button:disabled,
+.mini-cart > button[disabled] {
+  color: #d4d4d4;
+}
+
 a.cta-link {
   text-decoration: none;
   display: inline-block;
@@ -1286,6 +1290,7 @@ a.cta-link {
 }
 .cart-page__wrapper .cart-items__wrapper .items-table .table-row__wrapper {
   margin-bottom: 1.8rem;
+  opacity: 1;
 }
 .cart-page__wrapper .cart-items__wrapper .items-table .table-row__wrapper h4,
 .cart-page__wrapper .cart-items__wrapper .items-table .table-row__wrapper p {

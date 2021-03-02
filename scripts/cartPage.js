@@ -1,21 +1,47 @@
 import * as cart from '@shopify/theme-cart';
+import cartSummary from './cartSummary';
 import cartTemplate from './cartTemplate';
+import incrementCartQuantity from './incrementCartQuantity';
+import decrementCartQuantity from './decrementCartQuantity';
 import removeItemFromCart from './removeItem';
 
 const cartPage = () => {
-  window.Cart = cart;
+  cart
+    .getState()
+    .then((state) => {
+      console.log(state);
+      // Load Cart
+      cartTemplate(state);
+      cartSummary(state);
 
-  cart.getState().then((state) => {
-    cartTemplate(state);
-  });
+      // Remove Item Button
+      const removeItemBtn = document.querySelectorAll('.remove-cart-item');
+      removeItemBtn.forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          removeItemFromCart(e.currentTarget);
+        });
+      });
 
-  const removeItemBtn = document.querySelectorAll('.remove-cart-item');
+      // Increment Cart Quantity
+      const btnIncrement = document.querySelectorAll('.increaseQuantity');
 
-  removeItemBtn.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      removeItemFromCart(btn);
+      btnIncrement.forEach((incBtn) => {
+        incBtn.addEventListener('click', (e) => {
+          incrementCartQuantity(e.currentTarget);
+        });
+      });
+      // Decrement Cart Quantity
+      const btnDecrement = document.querySelectorAll('.decreaseQuantity');
+
+      btnDecrement.forEach((decBtn) => {
+        decBtn.addEventListener('click', (e) => {
+          decrementCartQuantity(e.currentTarget);
+        });
+      });
+    })
+    .catch((error) => {
+      console.log(error);
     });
-  });
 };
 
 export default cartPage;

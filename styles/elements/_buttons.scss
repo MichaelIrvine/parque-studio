@@ -26,6 +26,11 @@ button.cta {
   color: $black;
 }
 
+.mini-cart > button:disabled,
+.mini-cart > button[disabled] {
+  color: $darkGrey;
+}
+
 a.cta-link {
   text-decoration: none;
   display: inline-block;

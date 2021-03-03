@@ -198,11 +198,14 @@ select {
 .mini-cart-drawer__wrapper .mini-cart-items__wrapper .items-table .table-row__wrapper .items-tables__details div div:last-of-type {
   text-align: right;
 }
-.mini-cart-drawer__wrapper .mini-cart-items__wrapper .items-table .table-row__wrapper .items-tables__details > div .grid__2x {
+.mini-cart-drawer__wrapper .mini-cart-items__wrapper .items-table .table-row__wrapper .items-tables__details div.grid__2x {
   grid-template-columns: 2fr 0.5fr;
 }
 .mini-cart-drawer__wrapper .mini-cart-items__wrapper .items-table .table-row__wrapper .items-tables__details > div:last-of-type {
-  margin-top: 2rem;
+  margin-top: 1rem;
+}
+.mini-cart-drawer__wrapper .mini-cart-items__wrapper .items-table .table-row__wrapper .items-tables__details > div:last-of-type.grid__2x {
+  grid-template-columns: 2fr 0.5fr;
 }
 
 .mini-cart-total__wrapper {

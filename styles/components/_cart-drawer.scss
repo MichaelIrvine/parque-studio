@@ -44,12 +44,18 @@
             }
           }
 
-          > div .grid__2x {
-            grid-template-columns: 2fr 0.5fr;
+          div {
+            &.grid__2x {
+              grid-template-columns: 2fr 0.5fr;
+            }
           }
 
           > div:last-of-type {
-            margin-top: 2rem;
+            margin-top: 1rem;
+
+            &.grid__2x {
+              grid-template-columns: 2fr 0.5fr;
+            }
           }
         }
       }

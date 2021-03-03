@@ -62,7 +62,7 @@ const miniCart = (state) => {
                     name="updates[]"
                     id="updates_${item.key}"
                     value="${item.quantity}"
-                    min="0"
+                    min="1"
                     pattern="[0-9]*"
                     class="QuantityCount font-prestige --small"
                   />

@@ -7629,14 +7629,18 @@ var decrementCartQuantity = function decrementCartQuantity(key) {
   var decKey = key.dataset.itemKey;
   var currentVal = parseInt(key.nextElementSibling.value);
   var newVal;
-  cart.updateItem(decKey, {
-    quantity: currentVal - 1
-  }).then(function (state) {
-    (0, _miniCartSummary.default)(state);
-    (0, _updateCartCount.default)(state);
-  });
-  newVal = currentVal - 1;
-  key.nextElementSibling.value = newVal;
+
+  if (currentVal > 1) {
+    cart.updateItem(decKey, {
+      quantity: currentVal - 1
+    }).then(function (state) {
+      (0, _miniCartSummary.default)(state);
+      (0, _updateCartCount.default)(state);
+    });
+    newVal = currentVal - 1;
+    key.nextElementSibling.value = newVal;
+  }
+
   setTimeout(function () {
     key.disabled = false;
   }, 1000);
@@ -7673,7 +7677,7 @@ var miniCart = function miniCart(state) {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
     itemsWrapper.innerHTML = state.items.map(function (item) {
-      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"0\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
+      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"1\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
       }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
     }).join('');
@@ -7845,7 +7849,7 @@ var cartTemplate = function cartTemplate(state) {
     }
 
     cartItemsTable.insertAdjacentHTML('afterbegin', state.items.map(function (item) {
-      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"0\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
+      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"1\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                    \n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
       }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
     }).join(''));
@@ -7875,11 +7879,16 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var incrementCartQuantity = function incrementCartQuantity(key) {
+var incrementCartQuantity = function incrementCartQuantity(key, state) {
   key.disabled = true;
   var incKey = key.dataset.itemKey;
   var currentVal = parseInt(key.previousElementSibling.value);
   var newVal;
+  var item = state.items.find(function (item) {
+    return item.key === incKey;
+  }); // if product inventory is available
+  // continue
+
   cart.updateItem(incKey, {
     quantity: currentVal + 1
   }).then(function (state) {
@@ -7887,7 +7896,9 @@ var incrementCartQuantity = function incrementCartQuantity(key) {
     (0, _updateCartCount.default)(state);
   });
   newVal = currentVal + 1;
-  key.previousElementSibling.value = newVal;
+  key.previousElementSibling.value = newVal; // if not
+  // display out of stock message
+
   setTimeout(function () {
     key.disabled = false;
   }, 1000);
@@ -7920,14 +7931,18 @@ var decrementCartQuantity = function decrementCartQuantity(key) {
   var decKey = key.dataset.itemKey;
   var currentVal = parseInt(key.nextElementSibling.value);
   var newVal;
-  cart.updateItem(decKey, {
-    quantity: currentVal - 1
-  }).then(function (state) {
-    (0, _cartSummary.default)(state);
-    (0, _updateCartCount.default)(state);
-  });
-  newVal = currentVal - 1;
-  key.nextElementSibling.value = newVal;
+
+  if (currentVal > 1) {
+    cart.updateItem(decKey, {
+      quantity: currentVal - 1
+    }).then(function (state) {
+      (0, _cartSummary.default)(state);
+      (0, _updateCartCount.default)(state);
+    });
+    newVal = currentVal - 1;
+    key.nextElementSibling.value = newVal;
+  }
+
   setTimeout(function () {
     key.disabled = false;
   }, 1000);
@@ -8017,8 +8032,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var cartPage = function cartPage() {
   cart.getState().then(function (state) {
-    console.log(state); // Load Cart
-
+    // Load Cart
     (0, _cartTemplate.default)(state);
     (0, _cartSummary.default)(state); // Remove Item Button
 
@@ -8032,7 +8046,7 @@ var cartPage = function cartPage() {
     var btnIncrement = document.querySelectorAll('.increaseQuantity');
     btnIncrement.forEach(function (incBtn) {
       incBtn.addEventListener('click', function (e) {
-        (0, _incrementCartQuantity.default)(e.currentTarget);
+        (0, _incrementCartQuantity.default)(e.currentTarget, state);
       });
     }); // Decrement Cart Quantity
 
@@ -8187,7 +8201,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63953" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49559" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -68,7 +68,7 @@ const cartTemplate = (state) => {
                     name="updates[]"
                     id="updates_${item.key}"
                     value="${item.quantity}"
-                    min="0"
+                    min="1"
                     pattern="[0-9]*"
                     class="QuantityCount font-prestige --small"
                   />
@@ -77,6 +77,7 @@ const cartTemplate = (state) => {
                     type="button"
                     aria-label="increase quantity"
                     data-item-key="${item.key}"
+                    
                   >+</button>
                 </div>
                 <div>

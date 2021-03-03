@@ -8,15 +8,16 @@ const decrementCartQuantity = (key) => {
   let currentVal = parseInt(key.nextElementSibling.value);
   let newVal;
 
-  cart.updateItem(decKey, { quantity: currentVal - 1 }).then((state) => {
-    miniCartSummary(state);
-    updateCartCount(state);
-  });
+  if (currentVal > 1) {
+    cart.updateItem(decKey, { quantity: currentVal - 1 }).then((state) => {
+      miniCartSummary(state);
+      updateCartCount(state);
+    });
 
-  newVal = currentVal - 1;
+    newVal = currentVal - 1;
 
-  key.nextElementSibling.value = newVal;
-
+    key.nextElementSibling.value = newVal;
+  }
   setTimeout(() => {
     key.disabled = false;
   }, 1000);

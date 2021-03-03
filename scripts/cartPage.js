@@ -9,7 +9,6 @@ const cartPage = () => {
   cart
     .getState()
     .then((state) => {
-      console.log(state);
       // Load Cart
       cartTemplate(state);
       cartSummary(state);
@@ -27,7 +26,7 @@ const cartPage = () => {
 
       btnIncrement.forEach((incBtn) => {
         incBtn.addEventListener('click', (e) => {
-          incrementCartQuantity(e.currentTarget);
+          incrementCartQuantity(e.currentTarget, state);
         });
       });
       // Decrement Cart Quantity

@@ -7669,10 +7669,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Mini Cart
 var miniCart = function miniCart(state) {
   var body = document.querySelector('body');
-  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper > .items-table');
+  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper > .items-table'); //
+
+  var miniCartBtns = document.querySelectorAll('.mini-cart-btns');
+  console.log(miniCartBtns);
 
   if (state.items.length === 0) {
     itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
+    miniCartBtns.forEach(function (btn) {
+      btn.disabled = true;
+    });
   } else {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
@@ -7731,31 +7737,43 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 var addToCart = function addToCart() {
-  var variantOption = document.querySelector('#productSelect');
+  var variantOption = document.querySelector('.productSelect');
   var selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
   var addToCartBtn = document.querySelector('#AddToCart');
-  var message = document.querySelector('.cart-message');
+  var message = document.querySelector('.message');
+  console.log(message);
+  var varInventory = variantOption.options[variantOption.selectedIndex].dataset.variantInventory;
   variantOption.addEventListener('change', function () {
-    selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
+    selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value); // get dataset from selected option
+
+    varInventory = variantOption.options[variantOption.selectedIndex].dataset.variantInventory;
   });
   addToCartBtn.addEventListener('click', function () {
     cart.addItem(selectedVariantId).then(function (item) {
-      console.log(item);
       cart.getState().then(function (state) {
         (0, _updateCartCount.default)(state);
         (0, _miniCart.default)(state);
-      }); // Update UI to reflect changes
+      });
+      console.log(item); // Update UI to reflect changes
 
       addToCartBtn.textContent = "Adding...";
       addToCartBtn.disabled = true;
       setTimeout(function () {
         addToCartBtn.textContent = "Add to Cart";
         addToCartBtn.disabled = false;
-        message.innerHTML = "<p class=\"font-prestige --small\">".concat(item.handle, " has been added to the cart. <a href=\"/cart\" class=\"font-prestige --small\">Visit your cart</a> or continue shopping.</p> ");
+        message.innerHTML = "<p class=\"font-prestige --small\">".concat(item.handle, ":").concat(item.options_with_values[0].name, "/").concat(item.options_with_values[0].size, " has been added to the cart. <a href=\"/cart\" class=\"font-prestige --small\">Visit your cart</a> or continue shopping.</p> ");
+        message.classList.add('active');
+        setTimeout(function () {
+          message.classList.remove('active');
+        }, 10000);
       }, 1400); // Update cart counter
     }).catch(function (error) {
       console.log(error);
+      message.classList.add('active');
       message.innerHTML = "<p class=\"font-prestige --small\">Sorry, we are out of stock in that size</p>";
+      setTimeout(function () {
+        message.classList.remove('active');
+      }, 10000);
     });
   });
 };
@@ -7832,9 +7850,10 @@ var _cartSummary = _interopRequireDefault(require("./cartSummary"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var cartTemplate = function cartTemplate(state) {
+var cartTemplate = function cartTemplate(state, inventory) {
   var cartItemsTable = document.querySelector('.cart-items__wrapper > .items-table');
   var loader = document.querySelector('.ajax-loader');
+  console.log(inventory);
 
   if (state.items.length === 0) {
     if (loader) {
@@ -7849,7 +7868,7 @@ var cartTemplate = function cartTemplate(state) {
     }
 
     cartItemsTable.insertAdjacentHTML('afterbegin', state.items.map(function (item) {
-      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"1\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                    \n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
+      return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">\n                  ").concat(item.options_with_values[0].name, " \n                  / \n                  ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"1\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
       }).format(item.price / 100), "\n                </div>\n              </div>\n            </div>\n          </div>\n      ");
     }).join(''));
@@ -7879,16 +7898,11 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var incrementCartQuantity = function incrementCartQuantity(key, state) {
+var incrementCartQuantity = function incrementCartQuantity(key) {
   key.disabled = true;
   var incKey = key.dataset.itemKey;
   var currentVal = parseInt(key.previousElementSibling.value);
   var newVal;
-  var item = state.items.find(function (item) {
-    return item.key === incKey;
-  }); // if product inventory is available
-  // continue
-
   cart.updateItem(incKey, {
     quantity: currentVal + 1
   }).then(function (state) {
@@ -7896,9 +7910,7 @@ var incrementCartQuantity = function incrementCartQuantity(key, state) {
     (0, _updateCartCount.default)(state);
   });
   newVal = currentVal + 1;
-  key.previousElementSibling.value = newVal; // if not
-  // display out of stock message
-
+  key.previousElementSibling.value = newVal;
   setTimeout(function () {
     key.disabled = false;
   }, 1000);
@@ -8201,7 +8213,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49559" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49648" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

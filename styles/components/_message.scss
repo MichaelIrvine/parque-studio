@@ -1,0 +1,23 @@
+.message {
+  position: fixed;
+  left: 2%;
+  bottom: 2%;
+  background-color: $white;
+  width: 35%;
+  border: 1px solid $black;
+  height: 0;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 400ms ease;
+
+  padding: 2rem 3rem;
+
+  p {
+    margin: 0;
+  }
+}
+
+.message.active {
+  opacity: 1;
+  height: auto;
+}

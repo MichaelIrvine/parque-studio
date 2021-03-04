@@ -10,6 +10,7 @@
     grid-template-columns: repeat(2, minmax(0, auto));
     gap: 1.5rem;
     width: 55%;
+    padding-top: 2rem;
 
     .product-slider-nav {
       max-width: 100px;
@@ -27,6 +28,7 @@
   }
 
   .product-details__wrapper {
+    position: relative;
     width: 45%;
     margin-left: 2rem;
 
@@ -80,10 +82,6 @@
     #fit-chart-toggle {
       margin-bottom: 1.5rem;
       padding: 0;
-    }
-
-    .cart-message {
-      margin-bottom: 1rem;
     }
   }
 }

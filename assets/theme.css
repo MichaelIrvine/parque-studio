@@ -486,6 +486,35 @@ section.page-intro .page-intro__text {
   z-index: 9999;
 }
 
+.fixed-panel {
+  padding-top: 2rem;
+  position: sticky;
+  top: 0;
+  margin-bottom: 350px;
+}
+
+.message {
+  position: fixed;
+  left: 2%;
+  bottom: 2%;
+  background-color: #ffffff;
+  width: 35%;
+  border: 1px solid #000000;
+  height: 0;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 400ms ease;
+  padding: 2rem 3rem;
+}
+.message p {
+  margin: 0;
+}
+
+.message.active {
+  opacity: 1;
+  height: auto;
+}
+
 .image__wrapper {
   display: flex;
   justify-content: center;
@@ -1177,6 +1206,7 @@ a.cta-link {
   grid-template-columns: repeat(2, minmax(0, auto));
   gap: 1.5rem;
   width: 55%;
+  padding-top: 2rem;
 }
 .single-product .product-images__wrapper--grid .product-slider-nav {
   max-width: 100px;
@@ -1188,6 +1218,7 @@ a.cta-link {
   margin-bottom: 2rem;
 }
 .single-product .product-details__wrapper {
+  position: relative;
   width: 45%;
   margin-left: 2rem;
 }
@@ -1236,9 +1267,6 @@ a.cta-link {
   margin-bottom: 1.5rem;
   padding: 0;
 }
-.single-product .product-details__wrapper .cart-message {
-  margin-bottom: 1rem;
-}
 
 .cart-page__wrapper {
   max-width: 85%;
@@ -1269,6 +1297,7 @@ a.cta-link {
 }
 .cart-page__wrapper .cart-summary__wrapper {
   max-width: 390px;
+  position: relative;
 }
 .cart-page__wrapper .cart-summary__wrapper div {
   background-color: #f7f7f7;
@@ -1342,4 +1371,10 @@ input[type=number] {
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
+}
+
+.cart .fixed-panel {
+  padding-top: 0;
+  top: 2rem;
+  margin-bottom: 200px;
 }

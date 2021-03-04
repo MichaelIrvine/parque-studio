@@ -9,9 +9,16 @@ const miniCart = (state) => {
   const itemsWrapper = document.querySelector(
     '.mini-cart-items__wrapper > .items-table'
   );
+  //
+  const miniCartBtns = document.querySelectorAll('.mini-cart-btns');
+
+  console.log(miniCartBtns);
 
   if (state.items.length === 0) {
     itemsWrapper.innerHTML = `<h3>Your cart is currently empty</h3>`;
+    miniCartBtns.forEach((btn) => {
+      btn.disabled = true;
+    });
   } else {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');

@@ -4,10 +4,6 @@
 {% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
 {% assign product_care = product.description | split: "Care" | last %}
 
-<script type="text/javascript">
-  window.product = {{product | json}} || {};
-</script>
-
 <div class="single-product">
     {% if product.images.size > 1 %}
       <div class="product-images__wrapper--grid">
@@ -34,56 +30,59 @@
       </div>
       {% endif %}
 
-  <div class="product-details__wrapper">
-    <div class="details-header__wrapper">
-      <h1>{{ product.title }}</h1>
-      <p class="font-prestige">{{ product.price | money }}</p>
-    </div>
+  <div class="product-details__wrapper" >
+    <div class="fixed-panel">
+      <div class="details-header__wrapper">
+        <h1>{{ product.title }}</h1>
+        <p class="font-prestige">{{ product.price | money }}</p>
+      </div>
 
 
-    <div class="description-tab__wrapper">
-      <ul class="tabs" role="tablist">
-        <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
-        
-          <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>  
-        
-        
-        <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
-      </ul>
-      {% comment %} Tab Content {% endcomment %}
-      <div class="tabcontent__wrapper">
-        <div id="Overview" class="tabcontent active">
-            <p>{{ product_overview }}</p>
-        </div>
-        <div id="Details" class="tabcontent">
-            <p>{{product_details}}</p>
-        </div>
-        <div id="Care" class="tabcontent">
-            {{ product_care}}
+      <div class="description-tab__wrapper">
+        <ul class="tabs" role="tablist">
+          <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
+          
+            <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>  
+          
+          
+          <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
+        </ul>
+        {% comment %} Tab Content {% endcomment %}
+        <div class="tabcontent__wrapper">
+          <div id="Overview" class="tabcontent active">
+              <p>{{ product_overview }}</p>
+          </div>
+          <div id="Details" class="tabcontent">
+              <p>{{product_details}}</p>
+          </div>
+          <div id="Care" class="tabcontent">
+              {{ product_care}}
+          </div>
         </div>
       </div>
+        <div class="product-options__wrapper">
+          <div class="product-options">
+            <label for="productSelect">Size</label>
+            <select name="id" class="productSelect">   
+              {% for variant in product.variants %}
+                {% if variant.available %}    
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} 
+                  value="{{ variant.id }}" data-variant-inventory="{{ variant.inventory_quantity }}">
+                    {{ variant.title }}
+                  </option>
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - sold out
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
+          <button type="button" name="add" id="AddToCart" class="ps-btn --dark" >Add to Cart</button>
+        </div>  
     </div>
-      <div class="product-options__wrapper">
-        <div class="product-options">
-          <label for="productSelect">Size</label>
-          <select name="id" id="productSelect">   
-            {% for variant in product.variants %}
-              {% if variant.available %}    
-                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} 
-                value="{{ variant.id }}">
-                  {{ variant.title }}
-                </option>
-              {% else %}
-                <option disabled="disabled">
-                  {{ variant.title }} - sold out
-                </option>
-              {% endif %}
-            {% endfor %}
-          </select>
-        </div>
-        <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
-        <div class="cart-message font-prestige"></div>
-        <button type="button" name="add" id="AddToCart" class="ps-btn --dark" >Add to Cart</button>
-      </div>  
   </div>
 </div>
+{% comment %} Message Component {% endcomment %}
+<div class="message font-prestige"></div>

@@ -1,10 +1,12 @@
 import cartSummary from './cartSummary';
 
-const cartTemplate = (state) => {
+const cartTemplate = (state, inventory) => {
   const cartItemsTable = document.querySelector(
     '.cart-items__wrapper > .items-table'
   );
   const loader = document.querySelector('.ajax-loader');
+
+  console.log(inventory);
 
   if (state.items.length === 0) {
     if (loader) {
@@ -42,9 +44,10 @@ const cartTemplate = (state) => {
                       ${item.handle}
                     </h4>
                   </a>
-                  <p class="font-prestige">${
-                    item.options_with_values[0].name
-                  } / ${item.options_with_values[0].value}</p>
+                  <p class="font-prestige">
+                  ${item.options_with_values[0].name} 
+                  / 
+                  ${item.options_with_values[0].value}</p>
                 </div>
                 <div>
                   <button type="button" 
@@ -77,7 +80,6 @@ const cartTemplate = (state) => {
                     type="button"
                     aria-label="increase quantity"
                     data-item-key="${item.key}"
-                    
                   >+</button>
                 </div>
                 <div>

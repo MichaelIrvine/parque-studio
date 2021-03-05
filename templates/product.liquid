@@ -11,30 +11,28 @@
 
 
 <div class="single-product">
-    {% if product.images.size > 1 %}
-      <div class="product-images__wrapper--grid">
-        <div class="product-slider-nav">
-          {% for image in product.images %}
-            <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
-          {% endfor %}
-        </div>
-          
-        <div class="product-slider">
-          {% for image in product.images %}
-            <a href="{{ image.src | img_url: '600x' }}" >
-              <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
-            </a>
-          {% endfor %}
-        </div>
+  {% if product.images.size > 1 %}
+    <div class="product-images__wrapper--grid">
+      <div class="product-slider-nav">
+        {% for image in product.images %}
+          <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
+        {% endfor %}
       </div>
-      {% else %}
-        <div class="product-images__wrapper">
-          <a href="{{ product.featured_image.src | img_url: '600x' }}">
-            <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+      <div class="product-slider">
+        {% for image in product.images %}
+          <a href="{{ image.src | img_url: '600x' }}" >
+            <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
           </a>
-        </div>
+        {% endfor %}
       </div>
-      {% endif %}
+    </div>
+  {% else %}
+    <div class="product-images__wrapper">
+      <a href="{{ product.featured_image.src | img_url: '600x' }}">
+        <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+      </a>
+    </div>
+  {% endif %}
 
   <div class="product-details__wrapper" >
     <div class="fixed-panel">
@@ -42,8 +40,6 @@
         <h1>{{ product.title }}</h1>
         <p class="font-prestige">{{ product.price | money }}</p>
       </div>
-
-
       <div class="description-tab__wrapper">
         <ul class="tabs" role="tablist">
           <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
@@ -103,6 +99,7 @@
     </div>
   </div>
 </div>
+{% section 'product-collection-block'%}
 {% comment %} Message Component {% endcomment %}
 <div class="message font-prestige"></div>
 

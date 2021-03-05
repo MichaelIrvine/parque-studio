@@ -7669,10 +7669,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // Mini Cart
 var miniCart = function miniCart(state) {
   var body = document.querySelector('body');
-  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper > .items-table'); //
-
+  var itemsWrapper = document.querySelector('.mini-cart-items__wrapper > .items-table');
   var miniCartBtns = document.querySelectorAll('.mini-cart-btns');
-  console.log(miniCartBtns);
 
   if (state.items.length === 0) {
     itemsWrapper.innerHTML = "<h3>Your cart is currently empty</h3>";
@@ -7741,7 +7739,6 @@ var addToCart = function addToCart() {
   var selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value);
   var addToCartBtn = document.querySelector('#AddToCart');
   var message = document.querySelector('.message');
-  console.log(message);
   var varInventory = variantOption.options[variantOption.selectedIndex].dataset.variantInventory;
   variantOption.addEventListener('change', function () {
     selectedVariantId = parseInt(variantOption.options[variantOption.selectedIndex].value); // get dataset from selected option

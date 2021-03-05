@@ -9,7 +9,7 @@ const addToCart = () => {
   );
   const addToCartBtn = document.querySelector('#AddToCart');
   const message = document.querySelector('.message');
-  console.log(message);
+
   let varInventory =
     variantOption.options[variantOption.selectedIndex].dataset.variantInventory;
 

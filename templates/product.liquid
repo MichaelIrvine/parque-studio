@@ -3,6 +3,12 @@
 {% assign product_overview = product.description | split: "Overview" | last | split: "Details" | first %}
 {% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
 {% assign product_care = product.description | split: "Care" | last %}
+{% comment %} Presale Dates {% endcomment %}
+{% assign presaleStart = product.metafields.presale.start-date %}
+{% assign presaleEnd = product.metafields.presale.end-date %}
+
+
+
 
 <div class="single-product">
     {% if product.images.size > 1 %}
@@ -41,10 +47,7 @@
       <div class="description-tab__wrapper">
         <ul class="tabs" role="tablist">
           <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
-          
-            <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>  
-          
-          
+          <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>                      
           <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
         </ul>
         {% comment %} Tab Content {% endcomment %}
@@ -59,6 +62,22 @@
               {{ product_care}}
           </div>
         </div>
+      </div>
+      <div class="presale__wrapper">
+      {% if product.metafields.presale.start-date %}  
+        <h4>Presale Time Remaining</h4>
+        <div class="presale-bar__wrapper">
+          <div class="presale-bar"></div>
+        </div>
+        <div class="presale-date__wrapper">
+          <div class="time-remaining">
+            <p class="font-prestige">
+            <span class="days"></span>D <span class="hours"></span>H
+            <span class="minutes"></span>M <span class="seconds"></span>S
+          </p>
+          </div>
+        </div>
+      {% endif %}
       </div>
         <div class="product-options__wrapper">
           <div class="product-options">
@@ -86,3 +105,70 @@
 </div>
 {% comment %} Message Component {% endcomment %}
 <div class="message font-prestige"></div>
+
+<script>
+  const timeRemainsBar = document.querySelector('.presale-bar');
+  const startDate = '{{presaleStart}}';
+  const endDate = '{{presaleEnd}}';
+
+  function getTimeRemaining(endDate) {
+    const total = Date.parse(endDate) - Date.now();
+    const seconds = Math.floor((total / 1000) % 60);
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+
+    return {
+      total,
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  }
+
+  function calculateProgressBar(endDate, startDate) {
+    const timeLeft = Math.floor(
+      ((Date.parse(endDate) - Date.now()) / (Date.parse(endDate) - Date.parse(startDate))) * 100
+    );
+    console.log(timeLeft, endDate, startDate)
+    timeRemainsBar.style.minWidth = `${timeLeft}%`;
+  }
+
+  function initializeClock(element, endDate, startDate) {
+  const clock = document.querySelector(element);
+  const daysSpan = clock.querySelector('.days');
+  const hoursSpan = clock.querySelector('.hours');
+  const minutesSpan = clock.querySelector('.minutes');
+  const secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+      const t = getTimeRemaining(endDate);
+
+      daysSpan.innerHTML = t.days;
+      hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+      calculateProgressBar(endDate, startDate);
+
+      if (t.total <= 0) {
+        clearInterval(timeinterval);
+      }
+    }
+
+    updateClock();
+    const timeinterval = setInterval(updateClock, 1000);
+  }
+
+  if (endDate > startDate) {
+    // init timer functions
+    console.log('dates good');
+    getTimeRemaining(endDate);
+    calculateProgressBar(endDate, startDate);
+    initializeClock('.time-remaining', endDate, startDate);
+
+  }
+
+
+</script>

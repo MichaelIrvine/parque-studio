@@ -14,7 +14,7 @@
       <input
         type="email"
         value="{% if customer %}{{ customer.email }}{% endif %}"
-        placeholder="Your Email"
+        placeholder="Enter e-mail to subscribe to our newsletter"
         name="contact[email]"
         id="Email"
         class="input-group-field newsletter__input"
@@ -26,10 +26,9 @@
         <button
           id="Subscribe"
           type="submit"
-          class="button-main"
           aria-label="Newsletter sign-up"
         >
-          {% render 'newsletter-arrow' %}
+          Sign Up
         </button>
       </span>
     </div>

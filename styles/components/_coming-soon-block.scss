@@ -1,0 +1,41 @@
+#shopify-section-coming-soon-collection-block {
+  margin-bottom: 1.5rem;
+}
+
+.--coming-soon {
+  margin: 1.5rem;
+  background-color: #f1f0f0;
+  padding: 2.5rem 3.75rem;
+
+  h2 {
+    margin-bottom: 2rem;
+  }
+
+  .collection-header__wrapper {
+    margin-bottom: 0;
+  }
+
+  .collection__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding: 2rem 0;
+
+    h4 {
+      margin-bottom: 1rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .collection__wrapper:first-of-type {
+    padding-top: 0;
+  }
+  .collection__wrapper:last-of-type {
+    border: 0;
+    padding-bottom: 2.5rem;
+  }
+}

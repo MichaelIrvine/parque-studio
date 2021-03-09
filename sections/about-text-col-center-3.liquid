@@ -1,0 +1,39 @@
+{%if section.settings.about-center-col-image3 %}
+  {% render 'responsive-image' with imgSrc: section.settings.about-center-col-image3, aspectVar: '_16x9' %}
+{% endif %}
+<div class="page-text-col align-center">
+  <div class="col-text__wrapper">
+    {%if section.settings.about-center-col-header3 %}
+      <h3>{{section.settings.about-center-col-header3}}</h3>
+    {% endif %}
+    {%if section.settings.about-center-col-text3 %}
+      <p>{{section.settings.about-center-col-text3}}</p>
+    {% endif %}
+  </div>
+</div>
+ 
+
+
+
+{% schema %}
+  {
+    "name": "About Text Center Column",
+    "settings": [
+      {
+        "id": "about-center-col-header3",
+        "type": "text",
+        "label": "About Text center Column Header"
+      },
+      {
+        "id": "about-center-col-text3",
+        "type": "textarea",
+        "label": "About Text center Column Text"
+      },
+      {
+        "id": "about-center-col-image3",
+        "type": "image_picker",
+        "label": "About Text Center Image"
+      }
+    ]
+  }
+{% endschema %}

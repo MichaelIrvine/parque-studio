@@ -3,6 +3,12 @@ import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
 
 const addToCart = () => {
+  // Check if product template is 'coming-soon' page
+  // Return early if yes
+  if (document.body.classList.contains('coming-soon')) {
+    return;
+  }
+
   const variantOption = document.querySelector('.productSelect');
   let selectedVariantId = parseInt(
     variantOption.options[variantOption.selectedIndex].value

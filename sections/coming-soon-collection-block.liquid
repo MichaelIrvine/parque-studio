@@ -1,0 +1,49 @@
+
+<section class="collection-block --coming-soon">
+  <div class="collection-header__wrapper">
+    <h2>{{section.settings.coming_soon_heading}}</h2>
+  </div>
+
+  {% assign csCollection = collections[section.settings.coming_soon_collection] %}
+  
+  {% for product in csCollection.products limit: section.settings.product_limit %}
+    <div class="collection__wrapper">
+      <div>
+        <h4>{{product.title}}</h4>
+        <p class="font-prestige --small">{{product.metafields.coming-soon.excerpt}}</p>
+      </div>
+      <div>  
+        <a href="{{product.url}}" class="cta-link">Learn More</a>
+      </div>
+    </div>
+  {% endfor %}
+</section>
+
+
+
+{% schema %}
+  {
+    "name": "Coming Soon Collection",
+    "settings": [
+      {
+        "type": "text",
+        "id": "coming_soon_heading",
+        "label": "Coming Soon Heading",
+        "default": "Coming Soon"
+      },
+      {
+        "type": "collection",
+        "id": "coming_soon_collection",
+        "label": "Coming Soon Collection"
+      },
+      {
+        "type": "range",
+        "id": "product_limit",
+        "label": "Product Limit",
+        "min": 3,
+        "max": 9,
+        "default": 3
+      }
+    ]
+  }
+{% endschema %}

@@ -12,8 +12,9 @@
 
   .block__column:first-of-type {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
 
     div {
       width: 70%;

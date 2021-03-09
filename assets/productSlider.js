@@ -1,3 +1,4 @@
+$('.product-slider')[0].slick.setPosition();
 $('.product-slider').slick({
   infinite: true,
   arrows: false,
@@ -6,7 +7,7 @@ $('.product-slider').slick({
   vertical: true,
   centerMode: true,
 });
-
+$('.product-slider-nav')[0].slick.setPosition();
 $('.product-slider-nav').slick({
   infinite: true,
   arrows: false,

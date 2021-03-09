@@ -1,0 +1,94 @@
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign product_overview = product.description | split: "Overview" | last | split: "Details" | first %}
+{% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
+{% assign product_care = product.description | split: "Care" | last %}
+
+<div class="single-product">
+  {% if product.images.size > 1 %}
+    <div class="product-images__wrapper--grid">
+      <div class="product-slider-nav">
+        {% for image in product.images %}
+          <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
+        {% endfor %}
+      </div>
+      <div class="product-slider">
+        {% for image in product.images %}
+          <a href="{{ image.src | img_url: '600x' }}" >
+            <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="product-images__wrapper --single-image">
+      <a href="{{ product.featured_image.src | img_url: '600x' }}">
+        <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="product-details__wrapper" >
+    <div class="fixed-panel">
+      <div class="details-header__wrapper">
+        <h1>{{ product.title }}</h1>
+        <p class="font-prestige">{{ product.price | money }}</p>
+      </div>
+      <div class="description-tab__wrapper">
+        <ul class="tabs" role="tablist">
+          <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
+          <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>                      
+          <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
+        </ul>
+        {% comment %} Tab Content {% endcomment %}
+        <div class="tabcontent__wrapper">
+          <div id="Overview" class="tabcontent active">
+              <p>{{ product_overview }}</p>
+          </div>
+          <div id="Details" class="tabcontent">
+              <p>{{product_details}}</p>
+          </div>
+          <div id="Care" class="tabcontent">
+              {{ product_care}}
+          </div>
+        </div>
+      </div>
+      <div class="presale__wrapper">
+      {% if product.metafields.presale.start-date %}  
+        <h4>Presale Time Remaining</h4>
+        <div class="presale-bar__wrapper">
+          <div class="presale-bar"></div>
+        </div>
+        <div class="presale-date__wrapper">
+          <div class="time-remaining">
+            <p class="font-prestige">
+            <span class="days"></span>D <span class="hours"></span>H
+            <span class="minutes"></span>M <span class="seconds"></span>S
+          </p>
+          </div>
+        </div>
+      {% endif %}
+      </div>
+        <div class="product-options__wrapper">
+          <div class="product-options">
+            <label for="productSelect">Size</label>
+            <select name="id" class="productSelect">   
+              {% for variant in product.variants %}
+                {% if variant.available %}    
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} 
+                  value="{{ variant.id }}" data-variant-inventory="{{ variant.inventory_quantity }}">
+                    {{ variant.title }}
+                  </option>
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - sold out
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
+          <button type="button" name="add" id="AddToCart" class="ps-btn --dark" >Add to Cart</button>
+        </div>  
+    </div>
+  </div>
+</div>

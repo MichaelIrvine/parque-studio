@@ -1,0 +1,17 @@
+<div class="image__wrapper --header-image">
+  {% render 'responsive-image' with imgSrc: section.settings.collections-list-image, aspectVar: '_9x21' %}
+</div>
+
+
+{% schema %}
+  {
+    "name": "About Image",
+    "settings": [
+      {
+        "id": "collections-list-image",
+        "type": "image_picker",
+        "label": "Header Image for Collections"
+      }
+    ]
+  }
+{% endschema %}

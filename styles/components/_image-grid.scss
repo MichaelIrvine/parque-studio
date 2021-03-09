@@ -12,26 +12,32 @@
     width: 100%;
   }
   .grid-image-crop {
-    max-width: 65%;
+    picture {
+      max-width: 65%;
+    }
   }
 
-  .top {
-    align-self: start;
-  }
-  .middle {
-    justify-self: center;
-  }
-  .bottom {
-    align-self: end;
-  }
+  .image-grid-item {
+    display: grid;
 
-  .left {
-    justify-self: start;
-  }
-  .center {
-    align-self: center;
-  }
-  .right {
-    justify-self: end;
+    &.top {
+      align-items: start;
+    }
+    &.middle {
+      align-items: center;
+    }
+    &.bottom {
+      align-items: end;
+    }
+
+    &.left {
+      justify-items: start;
+    }
+    &.center {
+      justify-items: center;
+    }
+    &.right {
+      justify-items: end;
+    }
   }
 }

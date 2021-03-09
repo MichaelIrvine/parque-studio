@@ -1,0 +1,53 @@
+<div class="single-product coming-soon">
+  {% if product.images.size > 1 %}
+    <div class="product-images__wrapper--grid">
+      <div class="product-slider-nav">
+        {% for image in product.images %}
+          <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
+        {% endfor %}
+      </div>
+      <div class="product-slider">
+        {% for image in product.images %}
+          <a href="{{ image.src | img_url: '600x' }}" >
+            <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="product-images__wrapper --single-image">
+      <a href="{{ product.featured_image.src | img_url: '600x' }}">
+        <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="product-details__wrapper" >
+    <div>
+      <div class="details-header__wrapper">
+        <h1>{{ product.title }}</h1>
+      </div>
+      <div class="description-tab__wrapper">
+        {{product.description}}
+      </div>
+      <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
+      <div class="presale__wrapper">
+      {% if product.metafields.presale.start-date %}  
+        <h4>Presale Time Remaining</h4>
+        <div class="presale-bar__wrapper">
+          <div class="presale-bar"></div>
+        </div>
+        <div class="presale-date__wrapper">
+          <div class="time-remaining">
+            <p class="font-prestige">
+            <span class="days"></span>D <span class="hours"></span>H
+            <span class="minutes"></span>M <span class="seconds"></span>S
+          </p>
+          </div>
+        </div>
+      {% endif %}
+      </div>
+ 
+    </div>
+  </div>
+</div>

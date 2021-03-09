@@ -1,0 +1,19 @@
+{% if section.settings.not-found-image %}
+  <div class="four-oh-four--image__wrapper">
+    {% render 'responsive-image' with imgSrc: section.settings.not-found-image, aspectVar: '_9x21' %}
+    <h1>Sorry, that page doesn't exist.</h1>
+  </div>
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Not Found Image",
+    "settings": [
+      {
+        "id": "not-found-image",
+        "type": "image_picker",
+        "label": "404 Page Full Width Image"
+      }
+    ]
+  }
+{% endschema %}

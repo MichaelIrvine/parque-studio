@@ -2,8 +2,20 @@
   padding: 0 3.75rem;
   display: flex;
 
+  @media (max-width: 600px) {
+    padding: 0 2rem;
+  }
+
   .col-text__wrapper {
     max-width: 40%;
+
+    @media (max-width: 768px) {
+      max-width: 60%;
+    }
+
+    @media (max-width: 600px) {
+      max-width: 100%;
+    }
   }
 }
 
@@ -14,4 +26,9 @@
 .align-center {
   text-align: center;
   justify-content: center;
+
+  @media (max-width: 600px) {
+    text-align: left;
+    justify-content: flex-start;
+  }
 }

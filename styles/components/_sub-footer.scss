@@ -6,13 +6,19 @@
   width: 100%;
   .sub-footer__row:first-of-type {
     background: transparent;
-    background-position: center bottom;
+    background-position: center top;
     background-repeat: no-repeat;
     background-image: url('Parque_Shape.svg');
+    background-size: cover;
+
     height: 500px;
 
     display: flex;
     justify-content: center;
+
+    @media (max-width: 600px) {
+      height: 300px;
+    }
 
     .sub-footer-newsletter__wrapper {
       width: 40%;
@@ -22,6 +28,10 @@
       align-items: center;
       margin-bottom: 100px;
 
+      @media (max-width: 768px) {
+        width: 80%;
+      }
+
       h3,
       p {
         text-align: center;
@@ -29,6 +39,10 @@
 
       p {
         width: 75%;
+
+        @media (max-width: 768px) {
+          width: 100%;
+        }
       }
     }
 
@@ -45,6 +59,10 @@
           display: flex;
           flex-wrap: nowrap;
 
+          @media (max-width: 600px) {
+            height: 35px;
+          }
+
           input {
             font-family: 'haboro-contrast-normal', sans-serif;
             appearance: none;
@@ -54,6 +72,10 @@
             border-radius: 25px;
             background: white;
             padding-left: 1rem;
+
+            @media (max-width: 600px) {
+              height: 35px;
+            }
           }
 
           input::-webkit-input-placeholder {
@@ -102,8 +124,32 @@
     margin-top: -2px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 0 4.5rem;
+
+    &.--align-left {
+      justify-content: center;
+      align-items: flex-start;
+
+      .sub-footer__text-wrapper {
+        text-align: left;
+      }
+    }
+    &.--align-center {
+      justify-content: center;
+      align-items: center;
+
+      .sub-footer__text-wrapper {
+        text-align: center;
+      }
+    }
+    &.--align-right {
+      justify-content: center;
+      align-items: flex-end;
+
+      .sub-footer__text-wrapper {
+        text-align: right;
+      }
+    }
 
     .sub-footer__row--screen {
       width: 100%;
@@ -119,10 +165,10 @@
     }
 
     .sub-footer__text-wrapper {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
       z-index: 2;
 
       h3,

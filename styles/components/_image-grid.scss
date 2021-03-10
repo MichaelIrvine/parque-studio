@@ -8,6 +8,14 @@
   gap: 2rem;
   grid-row-gap: 200px;
 
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
+
+  @media (max-width: 600px) {
+    grid-row-gap: 6rem;
+  }
+
   .grid-image-full {
     width: 100%;
   }

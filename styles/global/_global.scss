@@ -4,6 +4,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 14px;
+  padding-bottom: 0 !important;
 }
 
 body {
@@ -12,6 +13,13 @@ body {
 
 .shopify-section {
   margin-bottom: 13.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 10rem;
+  }
+  @media (max-width: 600px) {
+    margin-bottom: 3.75rem;
+  }
 }
 
 // for cart drawer and modals

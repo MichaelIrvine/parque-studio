@@ -53,9 +53,7 @@
         <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
       {% endif %}
         <header>
-          <div
-            class="header__logo--wrapper {% if template == 'index' %}no-display{% endif %}"
-          >
+          <div class="header-logo__wrapper {% if template == 'index' %}no-display{% endif %}">
             <a href="/" aria-label="Parque Studio Home Page">
               {% render 'header-logo' %}
             </a>
@@ -67,6 +65,11 @@
               <span id="cart-item-count">(0)</span>
             </button>
           </div>
+          <button class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </header>
       </div>
     <main role="main">

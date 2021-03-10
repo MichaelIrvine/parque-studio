@@ -1,10 +1,10 @@
 <div class="sub-footer__wrapper">
   <div class="sub-footer__row">{% render 'page-newsletter' %}</div>
-  <div class="sub-footer__row" style="background-image: url('{{section.settings.home-sub-footer-image.src | img_url: 'master'}}');">
+  <div class="sub-footer__row --align-{{section.settings.sub-footer-alignment}}"" style="background-image: url('{{section.settings.home-sub-footer-image.src | img_url: 'master'}}');">
   <div class="sub-footer__row--screen" style="opacity: {{section.settings.home-sub-footer-screen-opacity}}"></div>
     <div class="sub-footer__text-wrapper">
-      <h3>{{section.settings.home-sub-footer-header}}</h3>
-      <a href="{{section.settings.home-sub-footer-link}}">
+      <h3 style="color: {{section.settings.text_color}}">{{section.settings.home-sub-footer-header}}</h3>
+      <a href="{{section.settings.home-sub-footer-link}}" style="color: {{section.settings.text_color}}; border-bottom: 1px solid {{section.settings.text_color}}">
         {{section.settings.home-sub-footer-link-title}}
       </a>
     </div>
@@ -35,6 +35,22 @@
         "id": "home-sub-footer-link",
         "type": "url",
         "label": "Sub Footer Link"
+      },
+      {
+        "id": "sub-footer-alignment",
+        "type": "select",
+        "options": [
+          { "value": "left", "label": "Left"},
+          { "value": "center", "label": "Center"},
+          { "value": "right", "label": "Right"}
+        ],
+        "label": "Text Alignment"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Text color",
+        "default": "#FFFFFF"
       },
       {
         "id": "home-sub-footer-screen-opacity",

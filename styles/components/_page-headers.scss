@@ -10,4 +10,9 @@
   > * {
     margin: 0;
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+    padding: 1.5rem 0 2.5rem 0;
+  }
 }

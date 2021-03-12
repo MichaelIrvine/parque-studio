@@ -3,4 +3,12 @@
   width: 100%;
   background: $black;
   margin-bottom: 13.5rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 6rem;
+  }
+
+  @media (max-width: 600px) {
+    margin-bottom: 3.75rem;
+  }
 }

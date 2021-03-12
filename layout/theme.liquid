@@ -37,18 +37,14 @@
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> {% endcomment %}
     <!-- End Google Tag Manager (noscript) -->
 
-
-
     <div class="screen">
       {% if template == 'product' %}
         {% render 'product-fit-sizes' %}
     {% endif %}
     </div>
     {% render 'cart-drawer' %}
-    
       
-      
-      <div class="header__wrapper">
+    <div class="header__wrapper">
       {% if template == 'index'%}
         <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
       {% endif %}
@@ -58,7 +54,15 @@
               {% render 'header-logo' %}
             </a>
           </div>
-          <nav class="main-nav">{%include 'menu' %}</nav>
+          <nav class="main-nav">
+            <div class="mobile-menu-header">
+              <button id="menu-drawer-close" class="close-cart">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+            {%include 'menu' %}
+          </nav>
           <div class="mini-cart">
             <button id="mini-cart-drawer-open">
               <span>Cart</span>

@@ -14,7 +14,10 @@
         {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %}
       </a>
       <a href="{{ product.url | within: collection }}"><h4>{{ product.title }}</h4></a>
-      <p class="font-prestige">{{product.price | money}}</p>
+      <div>
+        <p class="font-prestige">{{product.price | money}}</p>
+        <a href="{{product.url}}">Pre-Order</a>
+      </div>
     </div>
   {% endfor %} 
 </div>

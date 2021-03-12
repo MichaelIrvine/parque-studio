@@ -12,10 +12,14 @@
         {% endfor %}
       </div>
       <div class="product-slider">
+        {% for image in product.images %}          
+          <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
+        {% endfor %}
+      </div>
+      {% comment %} Mobile Thumbnails {% endcomment %}
+      <div class="product-slider-nav--mobile">
         {% for image in product.images %}
-          <a href="{{ image.src | img_url: '600x' }}" >
-            <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
-          </a>
+          <img src="{{ image.src | img_url: '100x', crop:'center' }}" alt="{{ image.alt | escape }}">
         {% endfor %}
       </div>
     </div>

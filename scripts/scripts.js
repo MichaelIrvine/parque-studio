@@ -5,6 +5,7 @@ import * as cart from '@shopify/theme-cart';
 
 // Imports
 import cartDrawer from './cartDrawer';
+import mobileMenuDrawer from './mobileMenuDrawer';
 import fitChartModal from './fitChartModal';
 import addToCart from './addToCart';
 import productTabs from './productTabs';
@@ -15,6 +16,7 @@ import miniCart from './miniCart';
 // Imported Functions
 cartDrawer();
 productTabs();
+mobileMenuDrawer();
 
 if (document.body.classList.contains('product')) {
   fitChartModal();

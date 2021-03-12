@@ -7415,6 +7415,56 @@ var cartDrawer = function cartDrawer() {
 
 var _default = cartDrawer;
 exports.default = _default;
+},{"gsap":"../node_modules/gsap/index.js"}],"mobileMenuDrawer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _gsap = require("gsap");
+
+var menuDrawer = function menuDrawer() {
+  var body = document.querySelector('body');
+  var menuOpen = document.querySelector('.mobile-menu-btn');
+  var menuClose = document.querySelector('#menu-drawer-close');
+
+  var tl = _gsap.gsap.timeline({
+    paused: true
+  });
+
+  tl.to(body, {
+    duration: 0,
+    overflow: 'hidden'
+  }).to('.screen', {
+    duration: 0,
+    minHeight: '100vh'
+  }).to('.screen', {
+    delay: 0.1,
+    duration: 0.3,
+    opacity: 1,
+    ease: 'power2.out'
+  }).to('.main-nav', {
+    delay: 0,
+    duration: 0.3,
+    x: 0,
+    ease: 'power2.out'
+  });
+  menuOpen.addEventListener('click', function () {
+    tl.play();
+  });
+  menuClose.addEventListener('click', function () {
+    if (tl.reversed()) {
+      tl.play();
+    } else {
+      tl.reverse();
+    }
+  });
+};
+
+var _default = menuDrawer;
+exports.default = _default;
 },{"gsap":"../node_modules/gsap/index.js"}],"fitChartModal.js":[function(require,module,exports) {
 "use strict";
 
@@ -8089,6 +8139,8 @@ var cart = _interopRequireWildcard(require("@shopify/theme-cart"));
 
 var _cartDrawer = _interopRequireDefault(require("./cartDrawer"));
 
+var _mobileMenuDrawer = _interopRequireDefault(require("./mobileMenuDrawer"));
+
 var _fitChartModal = _interopRequireDefault(require("./fitChartModal"));
 
 var _addToCart = _interopRequireDefault(require("./addToCart"));
@@ -8112,6 +8164,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 // Imported Functions
 (0, _cartDrawer.default)();
 (0, _productTabs.default)();
+(0, _mobileMenuDrawer.default)();
 
 if (document.body.classList.contains('product')) {
   (0, _fitChartModal.default)();
@@ -8188,7 +8241,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('orientationChange', lazyload);
   }
 });
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -8216,7 +8269,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64870" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60101" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

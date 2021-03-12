@@ -7,6 +7,11 @@
   background-color: #f1f0f0;
   padding: 2.5rem 3.75rem;
 
+  @media (max-width: 600px) {
+    padding: 2rem;
+    margin: 1rem;
+  }
+
   h2 {
     margin-bottom: 2rem;
   }
@@ -17,6 +22,7 @@
 
   .collection__wrapper {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid black;
@@ -28,6 +34,12 @@
 
     p {
       margin-bottom: 0;
+    }
+
+    div:first-of-type {
+      @media (max-width: 600px) {
+        margin-bottom: 1.5rem;
+      }
     }
   }
 

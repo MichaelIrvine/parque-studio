@@ -67,15 +67,20 @@
         }
       }
 
-      .social-icons__link {
-        width: 15px;
-        height: 15px;
-        line-height: 15px;
-      }
+      .social-links__wrapper {
+        display: flex;
+        margin-bottom: 0;
 
-      a:first-of-type {
-        @media (max-width: 768px) {
-          margin-left: 0;
+        .social-icons__link {
+          width: 15px;
+          height: 15px;
+          line-height: 15px;
+        }
+
+        a:first-of-type {
+          @media (max-width: 768px) {
+            margin-left: 0;
+          }
         }
       }
     }

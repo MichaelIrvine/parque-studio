@@ -4,3 +4,17 @@
 .product-slider-nav img {
   margin-bottom: 0.5rem;
 }
+
+.product-slider-nav--mobile {
+  
+  .slick-slide {
+    border: 0.5px solid transparent;
+    &:focus {
+      outline: none;
+      border: 0.5px solid $black;
+    }
+  }
+}
+  
+
+

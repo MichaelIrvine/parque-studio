@@ -4,7 +4,7 @@
     Subscribe to our newsletters to hear first &nbsp;about new releases and
     more!
   </p>
-  {% form 'customer' %}
+  {% form 'customer', id:'subFooterNewsletter' %}
   {{ form.errors | default_errors }}
   {% if form.posted_successfully? %}
   <div class="newsletter--form">
@@ -27,10 +27,11 @@
         autocorrect="off"
         autocapitalize="off"
         aria-label="Parque Studio Newsletter Sign up form"
+        required
       />
       <span class="input-group-btn">
         <button
-          id="Subscribe"
+          id="subFooterSubscribe"
           type="submit"
           class="button-main"
           aria-label="Newsletter sign-up"

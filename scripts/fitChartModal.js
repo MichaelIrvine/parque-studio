@@ -9,10 +9,6 @@ const fitChartModal = () => {
 
   let windowHeight = window.innerHeight / 2;
 
-  window.addEventListener('resize', () => {
-    console.log(window.innerHeight);
-  });
-
   fitChartTl
     .to(body, { duration: 0, overflow: 'hidden' })
     .to('.screen', {

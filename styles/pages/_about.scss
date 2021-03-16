@@ -96,6 +96,10 @@
       .text-col-text {
         display: none;
       }
+
+      .block__column:last-of-type {
+        margin-bottom: 0;
+      }
     }
   }
 
@@ -150,6 +154,10 @@
   .aspect__wrapper {
     width: 88%;
     margin: 0 auto 6rem;
+
+    @media (max-width: 600px){
+      margin-bottom: 3rem;
+    }
   }
 
   margin-bottom: 8rem;
@@ -167,6 +175,7 @@
 
         @media (max-width: 600px) {
           width: 100%;
+          margin-top: 3rem;
         }
       }
     }
@@ -181,6 +190,14 @@
     @media (max-width: 600px) {
       flex-direction: column;
     }
+
+    .block__column:last-of-type {
+      margin-bottom: 3rem;
+      @media (max-width: 600px) {
+        margin-bottom: 0;
+        margin-top: 3rem;
+      }
+    }    
 
     .text-col-text {
       width: 100%;

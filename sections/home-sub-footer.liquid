@@ -1,5 +1,8 @@
 <div class="sub-footer__wrapper">
-  <div class="sub-footer__row">{% render 'page-newsletter' %}</div>
+  <div class="sub-footer__row">
+  {% render 'sub-footer-bg' %}
+  {% render 'page-newsletter' %}
+  </div>
   <div class="sub-footer__row --align-{{section.settings.sub-footer-alignment}}"" style="background-image: url('{{section.settings.home-sub-footer-image.src | img_url: 'master'}}');">
   <div class="sub-footer__row--screen" style="opacity: {{section.settings.home-sub-footer-screen-opacity}}"></div>
     <div class="sub-footer__text-wrapper">

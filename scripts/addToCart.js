@@ -29,6 +29,12 @@ const addToCart = () => {
         .variantInventory;
   });
 
+  function closeMessage() {
+    if (message.classList.contains('active')) {
+      message.classList.remove('active');
+    }
+  }
+
   addToCartBtn.addEventListener('click', () => {
     cart
       .addItem(selectedVariantId)
@@ -44,7 +50,7 @@ const addToCart = () => {
         setTimeout(() => {
           addToCartBtn.textContent = `Add to Cart`;
           addToCartBtn.disabled = false;
-          message.innerHTML = `<p class="font-prestige --small">${item.handle}:${item.options_with_values[0].name}/${item.options_with_values[0].size} has been added to the cart. <a href="/cart" class="font-prestige --small">Visit your cart</a> or continue shopping.</p> `;
+          message.innerHTML = `<p class="font-prestige --small">${item.handle}: ${item.options_with_values[0].name}/${item.options_with_values[0].value} has been added to the cart. <a href="/cart" class="font-prestige --small">Visit your cart</a> or <a id="close-message" class="font-prestige --small">continue shopping</a>.</p> `;
 
           message.classList.add('active');
           setTimeout(() => {
@@ -62,6 +68,8 @@ const addToCart = () => {
         }, 10000);
       });
   });
+
+  message.addEventListener('click', closeMessage);
 };
 
 export default addToCart;

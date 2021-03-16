@@ -17,6 +17,7 @@
 <div class="message font-prestige"></div>
 
 <script>
+  const preSaleWrapper = document.querySelector('.presale__wrapper');
   const timeRemainsBar = document.querySelector('.presale-bar');
   const startDate = '{{presaleStart}}';
   const endDate = '{{presaleEnd}}';
@@ -25,6 +26,17 @@
   // Add 'coming-soon' class name to Body
   if(comingSoon){
     document.body.classList.add('coming-soon');
+  }
+
+  if(Date.parse(endDate) < Date.now()){
+    preSaleWrapper.remove();
+  } else {
+    // init timer functions
+    if (endDate > startDate) {
+      getTimeRemaining(endDate);
+      calculateProgressBar(endDate, startDate);
+      initializeClock('.time-remaining', endDate, startDate);
+    }
   }
 
   function getTimeRemaining(endDate) {
@@ -77,13 +89,7 @@
     const timeinterval = setInterval(updateClock, 1000);
   }
 
-  if (endDate > startDate) {
-    // init timer functions
-    getTimeRemaining(endDate);
-    calculateProgressBar(endDate, startDate);
-    initializeClock('.time-remaining', endDate, startDate);
 
-  }
 
 
 </script>

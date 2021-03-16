@@ -5,19 +5,32 @@
 .sub-footer__wrapper {
   width: 100%;
   .sub-footer__row:first-of-type {
-    background: transparent;
-    background-position: center top;
-    background-repeat: no-repeat;
-    background-image: url('Parque_Shape.svg');
-    background-size: cover;
-
+    overflow: hidden;
     height: 500px;
-
+    width: 100%;
     display: flex;
     justify-content: center;
 
+    position: relative;
+
     @media (max-width: 600px) {
       height: 300px;
+    }
+
+    .sub-footer-bg {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 5;
+
+      @media (min-width: 1600px) {
+        top: 0;
+      }
+
+      @media (max-width: 600px) {
+        height: 200px;
+      }
     }
 
     .sub-footer-newsletter__wrapper {
@@ -27,6 +40,7 @@
       justify-content: flex-end;
       align-items: center;
       margin-bottom: 100px;
+      z-index: 10;
 
       @media (max-width: 768px) {
         width: 80%;
@@ -50,6 +64,7 @@
       width: 100%;
 
       .newsletter--form {
+        margin-top: 1rem;
         .input-group {
           background: white;
           width: 100%;
@@ -72,6 +87,10 @@
             border-radius: 25px;
             background: white;
             padding-left: 1rem;
+
+            &:focus {
+              outline: 1px solid $darkGrey;
+            }
 
             @media (max-width: 600px) {
               height: 35px;
@@ -103,11 +122,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 50px;
+
+            @media (max-width: 600px) {
+              height: 35px;
+            }
+
             button {
               width: 24px;
-              height: 46px;
+              height: 50px;
               padding: 0;
               margin-right: 1rem;
+
+              @media (max-width: 600px) {
+                height: 35px;
+                margin-left: 0.5rem;
+                margin-top: 0.5rem;
+              }
             }
           }
         }
@@ -120,18 +151,24 @@
     background-position: center;
     background-size: cover;
     height: 400px;
-    // make sure there is no gap between the rows
-    margin-top: -2px;
     display: flex;
     flex-direction: column;
     padding: 0 4.5rem;
+    margin-top: -2px;
+
+    @media (max-width: 420px) {
+      padding: 0 1.5rem;
+    }
 
     &.--align-left {
       justify-content: center;
       align-items: flex-start;
 
       .sub-footer__text-wrapper {
-        text-align: left;
+        h3,
+        a {
+          text-align: left;
+        }
       }
     }
     &.--align-center {
@@ -161,14 +198,9 @@
       right: 0;
       z-index: 1;
       background-color: $black;
-      // opacity: 0.25;
     }
 
     .sub-footer__text-wrapper {
-      // display: flex;
-      // flex-direction: column;
-      // justify-content: center;
-      // align-items: center;
       z-index: 2;
 
       h3,

@@ -12,6 +12,10 @@
   display: flex;
   width: 100%;
 
+  @media (max-width: 600px) {
+    padding: 10px;
+  }
+
   header {
     display: flex;
     justify-content: space-between;
@@ -19,6 +23,7 @@
     height: 90px;
     width: 100%;
     border-bottom: 1px solid $darkGrey;
+    position: relative;
 
     @media (max-width: 768px) {
       height: 40px;
@@ -37,6 +42,10 @@
       }
       svg {
         width: 134px;
+
+        @media (max-width: 600px) {
+          width: 72px;
+        }
       }
     }
 

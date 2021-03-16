@@ -19,6 +19,9 @@ const miniCart = (state) => {
   } else {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
+    miniCartBtns.forEach((btn) => {
+      btn.disabled = false;
+    });
     itemsWrapper.innerHTML = state.items
       .map((item) => {
         return `

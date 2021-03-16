@@ -8,7 +8,7 @@
   @media (max-width: 600px) {
     display: flex;
     flex-direction: column-reverse;
-    gap: 3.75rem;
+    gap: 3rem;
     padding: 0 2rem;
   }
 
@@ -61,6 +61,16 @@
       @media (max-width: 600px) {
         width: 100%;
       }
+    }
+  }
+}
+
+// Specific to Index page Two Col Block Layout
+
+.index .two-col-block__wrapper.--img-right {
+  div:last-of-type {
+    @media (max-width: 600px) {
+      margin-bottom: 2rem;
     }
   }
 }

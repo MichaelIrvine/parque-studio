@@ -12,12 +12,33 @@
 
   padding: 2rem 3rem;
 
+  @media (max-width: 600px) {
+    top: -100%;
+    left: 0;
+    right: 0;
+    bottom: unset;
+    width: 100%;
+    padding: 1rem;
+    border: 0;
+    border-bottom: 1px solid $black;
+    transition: all 1s ease-in-out;
+  }
   p {
     margin: 0;
+  }
+
+  a {
+    cursor: pointer;
   }
 }
 
 .message.active {
   opacity: 1;
   height: auto;
+
+  @media (max-width: 600px) {
+    height: auto;
+    opacity: 1;
+    top: 0;
+  }
 }

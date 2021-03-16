@@ -9,10 +9,11 @@
   position: fixed;
   top: 0;
   right: 0;
-  min-height: 100vh;
+  bottom: 0;
   z-index: 9999;
   background: $white;
   overflow: auto;
+  overflow-y: scroll;
   transform: translateX(210%);
 
   @media (min-width: 1100px) {
@@ -27,6 +28,10 @@
   }
   @media (max-width: 600px) {
     width: 100%;
+    padding: 1.5rem;
+  }
+  @media (max-width: 420px) {
+    padding: 1.5rem 1rem;
   }
 
   .mini-cart-items__wrapper {

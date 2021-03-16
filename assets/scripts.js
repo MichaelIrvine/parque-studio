@@ -7485,9 +7485,6 @@ var fitChartModal = function fitChartModal() {
   });
 
   var windowHeight = window.innerHeight / 2;
-  window.addEventListener('resize', function () {
-    console.log(window.innerHeight);
-  });
   fitChartTl.to(body, {
     duration: 0,
     overflow: 'hidden'
@@ -7730,6 +7727,9 @@ var miniCart = function miniCart(state) {
   } else {
     // Remove cart--no-items on body to display checkout button
     body.classList.remove('cart--no-items');
+    miniCartBtns.forEach(function (btn) {
+      btn.disabled = false;
+    });
     itemsWrapper.innerHTML = state.items.map(function (item) {
       return "\n          <div id=\"".concat(item.key, "\" class=\"table-row__wrapper grid__2x\">\n            <div class=\"items-table__image\">\n              <a href=\"").concat(item.url, "\">\n                <img\n                  src=\"").concat(item.featured_image.url, "\"\n                  alt=\"").concat(item.featured_image.alt, "\"\n                  class=\"lazy blurUp lazy-reveal\"\n                />\n              </a>\n            </div>\n            <div class=\"items-tables__details\">\n              <div class=\"grid__2x\">\n                <div>\n                  <a href=\"").concat(item.url, "\">\n                    <h4 style=\"text-transform: uppercase;\">\n                      ").concat(item.handle, "\n                    </h4>\n                  </a>\n                  <p class=\"font-prestige\">").concat(item.options_with_values[0].name, " / ").concat(item.options_with_values[0].value, "</p>\n                </div>\n                <div>\n                  <button type=\"button\" \n                  class=\"remove-cart-item\" \n                  data-item-key=\"").concat(item.key, "\">\n                    <span></span>\n                    <span></span>\n                  </button>\n                </div>\n              </div>\n              <div class=\"grid__2x\">\n                <div class=\"cart-items-quantity__wrapper\">\n                  <button\n                    class=\"decreaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"decrease quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >-</button>\n                  <input\n                    type=\"number\"\n                    name=\"updates[]\"\n                    id=\"updates_").concat(item.key, "\"\n                    value=\"").concat(item.quantity, "\"\n                    min=\"1\"\n                    pattern=\"[0-9]*\"\n                    class=\"QuantityCount font-prestige --small\"\n                  />\n                  <button\n                    class=\"increaseQuantity\"\n                    type=\"button\"\n                    aria-label=\"increase quantity\"\n                    data-item-key=\"").concat(item.key, "\"\n                  >+</button>\n                </div>\n                <div>\n                $").concat(new Intl.NumberFormat('en-US', {
         minimumFractionDigits: 2
@@ -7801,6 +7801,13 @@ var addToCart = function addToCart() {
 
     varInventory = variantOption.options[variantOption.selectedIndex].dataset.variantInventory;
   });
+
+  function closeMessage() {
+    if (message.classList.contains('active')) {
+      message.classList.remove('active');
+    }
+  }
+
   addToCartBtn.addEventListener('click', function () {
     cart.addItem(selectedVariantId).then(function (item) {
       cart.getState().then(function (state) {
@@ -7814,7 +7821,7 @@ var addToCart = function addToCart() {
       setTimeout(function () {
         addToCartBtn.textContent = "Add to Cart";
         addToCartBtn.disabled = false;
-        message.innerHTML = "<p class=\"font-prestige --small\">".concat(item.handle, ":").concat(item.options_with_values[0].name, "/").concat(item.options_with_values[0].size, " has been added to the cart. <a href=\"/cart\" class=\"font-prestige --small\">Visit your cart</a> or continue shopping.</p> ");
+        message.innerHTML = "<p class=\"font-prestige --small\">".concat(item.handle, ": ").concat(item.options_with_values[0].name, "/").concat(item.options_with_values[0].value, " has been added to the cart. <a href=\"/cart\" class=\"font-prestige --small\">Visit your cart</a> or <a id=\"close-message\" class=\"font-prestige --small\">continue shopping</a>.</p> ");
         message.classList.add('active');
         setTimeout(function () {
           message.classList.remove('active');
@@ -7829,6 +7836,7 @@ var addToCart = function addToCart() {
       }, 10000);
     });
   });
+  message.addEventListener('click', closeMessage);
 };
 
 var _default = addToCart;
@@ -8269,7 +8277,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57808" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,10 +2,22 @@
   max-width: 85%;
   margin: 0 auto 13.5rem;
 
+  @media (max-width: 1100px) {
+    max-width: 100%;
+    margin: 0 2rem;
+  }
+
   .cart-items__wrapper {
     &.grid__2x {
       gap: 6rem;
       grid-template-columns: 1.5fr 1fr;
+
+      @media (max-width: 1100px) {
+        gap: 3rem;
+      }
+      @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+      }
     }
 
     .items-table {
@@ -34,12 +46,22 @@
           }
         }
       }
+
+      .table-row__wrapper.grid__2x {
+        @media (max-width: 450px) {
+          grid-template-columns: 1fr;
+        }
+      }
     }
   }
 
   .cart-summary__wrapper {
     max-width: 390px;
     position: relative;
+
+    @media (max-width: 720px) {
+      max-width: 100%;
+    }
 
     div {
       background-color: #f7f7f7;
@@ -66,6 +88,7 @@
         justify-content: space-between;
         width: 100%;
         color: #6d7278;
+        text-align: right;
       }
 
       div:last-of-type p {

@@ -8136,7 +8136,34 @@ var cartPage = function cartPage() {
 
 var _default = cartPage;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./cartTemplate":"cartTemplate.js","./incrementCartQuantity":"incrementCartQuantity.js","./decrementCartQuantity":"decrementCartQuantity.js","./removeItem":"removeItem.js"}],"scripts.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./cartTemplate":"cartTemplate.js","./incrementCartQuantity":"incrementCartQuantity.js","./decrementCartQuantity":"decrementCartQuantity.js","./removeItem":"removeItem.js"}],"fixedPanel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var fixedPanel = function fixedPanel() {
+  var panel = document.querySelector('.fixed-panel');
+
+  if (document.body.contains(panel)) {
+    var updatePanel = function updatePanel() {
+      if (window.innerHeight < panel.clientHeight) {
+        panel.classList.add('unfix');
+      } else {
+        panel.classList.remove('unfix');
+      }
+    };
+
+    updatePanel();
+    window.addEventListener('resize', updatePanel);
+  }
+};
+
+var _default = fixedPanel;
+exports.default = _default;
+},{}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
 require("unfetch/polyfill");
@@ -8161,6 +8188,8 @@ var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
 
 var _miniCart = _interopRequireDefault(require("./miniCart"));
 
+var _fixedPanel = _interopRequireDefault(require("./fixedPanel"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -8173,6 +8202,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 (0, _cartDrawer.default)();
 (0, _productTabs.default)();
 (0, _mobileMenuDrawer.default)();
+(0, _fixedPanel.default)();
 
 if (document.body.classList.contains('product')) {
   (0, _fitChartModal.default)();
@@ -8249,7 +8279,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('orientationChange', lazyload);
   }
 });
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./fixedPanel":"fixedPanel.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

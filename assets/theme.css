@@ -842,6 +842,10 @@ section.page-intro .page-intro__text {
   margin-bottom: 150px;
 }
 
+.fixed-panel.unfix {
+  position: relative;
+}
+
 .message {
   position: fixed;
   left: 2%;

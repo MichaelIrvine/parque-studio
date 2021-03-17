@@ -12,11 +12,13 @@ import productTabs from './productTabs';
 import cartPage from './cartPage';
 import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
+import fixedPanel from './fixedPanel';
 
 // Imported Functions
 cartDrawer();
 productTabs();
 mobileMenuDrawer();
+fixedPanel();
 
 if (document.body.classList.contains('product')) {
   fitChartModal();

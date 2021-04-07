@@ -12,6 +12,7 @@ const cartTemplate = (state, inventory) => {
     if (loader) {
       loader.remove();
     }
+
     // render out Empty Cart UI
     cartItemsTable.insertAdjacentHTML(
       'afterbegin',

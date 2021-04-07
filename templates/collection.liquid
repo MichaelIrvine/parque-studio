@@ -1,22 +1,24 @@
 <div class="image__wrapper --header-image">
-  {% render 'responsive-image' with imgSrc: collection.image, aspectVar: '_9x21' %}
+  {% render 'responsive-image' with imgSrc: collection.image, aspectVar: '_9x21', imgTitle: collection.title %}
 </div>
 <div class="product-filter__wrapper">
   {% render 'product-filter' %}
 </div>
 <div class="page-header__wrapper">
-  <h1>{{ collection.title }}</h1>
+  <h2>{{ collection.title }}</h2>
 </div> 
-<div class="grid_3x collection-list">
+<div class="grid_3x collection-list collection-block">
   {% for product in collection.products %}
-    <div>
+    <div class="product-item">
       <a href="{{ product.url | within: collection }}">
         {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %}
       </a>
-      <a href="{{ product.url | within: collection }}"><h4>{{ product.title }}</h4></a>
-      <div>
-        <p class="font-prestige">{{product.price | money}}</p>
-        <a href="{{product.url}}">Pre-Order</a>
+      <div class="product-content">  
+        <h4>{{product.title}}</h4>
+        <div class="product-content__meta">
+          <p class="font-prestige">{{product.price | money}}</p>
+          <a href="{{product.url}}">Pre-Order</a>
+        </div>
       </div>
     </div>
   {% endfor %} 

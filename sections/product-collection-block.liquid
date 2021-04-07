@@ -13,8 +13,9 @@
               {% if product.compare_at_price and product.compare_at_price != product.price %}
                 <span class="sale-badge">Sale</span>
               {% endif %}
-
-              {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %} 
+              <a href="{{product.url}}">
+                {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %} 
+              </a>
             </div>
             <div class="product-content">  
               <h4>{{product.title}}</h4>

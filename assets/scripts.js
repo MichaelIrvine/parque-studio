@@ -7375,6 +7375,7 @@ var cartDrawer = function cartDrawer() {
   var body = document.querySelector('body');
   var cartOpen = document.querySelector('#mini-cart-drawer-open');
   var cartClose = document.querySelector('#mini-cart-drawer-close');
+  var screen = document.querySelector('.screen');
 
   var tl = _gsap.gsap.timeline({
     paused: true
@@ -7387,10 +7388,10 @@ var cartDrawer = function cartDrawer() {
   tl.to(body, {
     duration: 0,
     overflow: 'hidden'
-  }).to('.screen', {
+  }).to(screen, {
     duration: 0,
     minHeight: '100vh'
-  }).to('.screen', {
+  }).to(screen, {
     delay: 0.1,
     duration: 0.3,
     opacity: 1,
@@ -7402,13 +7403,29 @@ var cartDrawer = function cartDrawer() {
     ease: 'power2.out'
   });
   cartOpen.addEventListener('click', function () {
+    screen.setAttribute('data-screen', 'cart');
     tl.play();
   });
   cartClose.addEventListener('click', function () {
+    screen.setAttribute('data-screen', 'disabled');
+
     if (tl.reversed()) {
       tl.play();
     } else {
       tl.reverse();
+    }
+  }); // check data-attr is Cart
+  // Close cart drawer if data-attr is Cart
+
+  screen.addEventListener('click', function () {
+    if (screen.getAttribute('data-screen') === 'cart') {
+      screen.setAttribute('data-screen', 'disabled');
+
+      if (tl.reversed()) {
+        tl.play();
+      } else {
+        tl.reverse();
+      }
     }
   });
 };
@@ -7429,18 +7446,19 @@ var menuDrawer = function menuDrawer() {
   var body = document.querySelector('body');
   var menuOpen = document.querySelector('.mobile-menu-btn');
   var menuClose = document.querySelector('#menu-drawer-close');
+  var screen = document.querySelector('#menu-screen');
 
-  var tl = _gsap.gsap.timeline({
+  var menuTl = _gsap.gsap.timeline({
     paused: true
   });
 
-  tl.to(body, {
+  menuTl.to(body, {
     duration: 0,
     overflow: 'hidden'
-  }).to('.screen', {
+  }).to(screen, {
     duration: 0,
     minHeight: '100vh'
-  }).to('.screen', {
+  }).to(screen, {
     delay: 0.1,
     duration: 0.3,
     opacity: 1,
@@ -7452,13 +7470,29 @@ var menuDrawer = function menuDrawer() {
     ease: 'power2.out'
   });
   menuOpen.addEventListener('click', function () {
-    tl.play();
+    screen.setAttribute('data-screen', 'menu');
+    menuTl.play();
   });
   menuClose.addEventListener('click', function () {
-    if (tl.reversed()) {
-      tl.play();
+    screen.setAttribute('data-screen', 'disabled');
+
+    if (menuTl.reversed()) {
+      menuTl.play();
     } else {
-      tl.reverse();
+      menuTl.reverse();
+    }
+  }); // check data-attr is Shop
+  // Close Shop drawer if data-attr is Shop
+
+  screen.addEventListener('click', function () {
+    if (screen.getAttribute('data-screen') === 'menu') {
+      screen.setAttribute('data-screen', 'disabled');
+
+      if (menuTl.reversed()) {
+        menuTl.play();
+      } else {
+        menuTl.reverse();
+      }
     }
   });
 };
@@ -8307,7 +8341,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57808" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55062" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

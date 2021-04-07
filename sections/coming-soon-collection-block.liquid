@@ -9,7 +9,7 @@
   {% for product in csCollection.products limit: section.settings.product_limit %}
     <div class="collection__wrapper">
       <div>
-        <h4>{{product.title}}</h4>
+        <a href="{{product.url}}"><h4>{{product.title}}</h4></a>
         <p class="font-prestige --small">{{product.metafields.coming-soon.excerpt}}</p>
       </div>
       <div>  

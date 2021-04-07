@@ -6,22 +6,22 @@
 <div class="single-product">
   {% if product.images.size > 1 %}
     <div class="product-images__wrapper--grid">
-      <div class="product-slider-nav">
+      {% comment %} <div class="product-slider-nav">
         {% for image in product.images %}
           <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
         {% endfor %}
-      </div>
+      </div> {% endcomment %}
       <div class="product-slider">
         {% for image in product.images %}          
           <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
         {% endfor %}
       </div>
       {% comment %} Mobile Thumbnails {% endcomment %}
-      <div class="product-slider-nav--mobile">
+      {% comment %} <div class="product-slider-nav--mobile">
         {% for image in product.images %}
           <img src="{{ image.src | img_url: '100x', crop:'center' }}" alt="{{ image.alt | escape }}">
         {% endfor %}
-      </div>
+      </div> {% endcomment %}
     </div>
   {% else %}
     <div class="product-images__wrapper --single-image">

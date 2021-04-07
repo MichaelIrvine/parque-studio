@@ -111,8 +111,6 @@
       }
 
       p {
-        margin-bottom: 0;
-
         @media (max-width: 620px) {
           margin-bottom: 1.5rem;
         }
@@ -193,7 +191,6 @@
   @media (max-width: 600px) {
     padding: 0 1rem;
   }
-
 
   .grid_3x {
     @media (max-width: 700px) {

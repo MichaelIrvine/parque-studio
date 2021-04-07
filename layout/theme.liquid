@@ -31,20 +31,21 @@
       })(window,document,'script','dataLayer','GTM-WVSLM9Z');</script> {% endcomment %}
     <!-- End Google Tag Manager -->
   </head>
-  <body class="{{ template | handleize }} cart--no-items">
+  <body class="{{ template | handleize }} cart--no-items fixed-header">
     <!-- Google Tag Manager (noscript) -->
       {% comment %} <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVSLM9Z"
       height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> {% endcomment %}
     <!-- End Google Tag Manager (noscript) -->
 
-    <div class="screen">
+    <div class="screen" data-screen>
       {% if template == 'product' %}
         {% render 'product-fit-sizes' %}
-    {% endif %}
+      {% endif %}
     </div>
     {% render 'cart-drawer' %}
       
     <div class="header__wrapper">
+    <div id="menu-screen" class="screen" data-screen></div>
       {% if template == 'index'%}
         <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
       {% endif %}

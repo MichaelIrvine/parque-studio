@@ -85,6 +85,10 @@ select {
     scroll-behavior: auto !important;
   }
 }
+.index .header__wrapper {
+  background: transparent;
+}
+
 .index .header__wrapper header {
   width: 80%;
   border-bottom: none;
@@ -95,10 +99,28 @@ select {
   }
 }
 
+body.index.fixed-header {
+  margin-top: 0;
+}
+
+body.fixed-header {
+  margin-top: 90px;
+}
+
 .header__wrapper {
-  padding: 25px;
+  padding-top: 0;
   display: flex;
   width: 100%;
+  position: fixed;
+  top: 0;
+  background: #ffffff;
+  z-index: 999;
+}
+@media (max-width: 768px) {
+  .header__wrapper {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
 }
 @media (max-width: 600px) {
   .header__wrapper {
@@ -113,6 +135,7 @@ select {
   width: 100%;
   border-bottom: 1px solid #d4d4d4;
   position: relative;
+  padding: 0 25px;
 }
 @media (max-width: 768px) {
   .header__wrapper header {
@@ -178,7 +201,7 @@ select {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9997;
+  z-index: 9996;
 }
 .index .header__wrapper .no-display {
   display: none;
@@ -383,6 +406,11 @@ body.cart--no-items #mini-cart-checkout {
   margin-bottom: 1rem;
 }
 
+@media (min-width: 768px) {
+  .header__wrapper header .main-nav {
+    transform: translateX(0) !important;
+  }
+}
 @media (max-width: 768px) {
   .header__wrapper header .main-nav {
     padding: 1.5rem 2.5rem;
@@ -578,7 +606,7 @@ section.page-intro .page-intro__text {
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #000000;
-  padding: 2.5rem 0 4.5rem 0;
+  padding: 4.5rem 0 4.5rem 0;
   margin-bottom: 4rem;
 }
 .page-header__wrapper > * {
@@ -838,7 +866,7 @@ section.page-intro .page-intro__text {
 .fixed-panel {
   padding-top: 2rem;
   position: sticky;
-  top: 0;
+  top: 100px;
   margin-bottom: 150px;
 }
 
@@ -1615,7 +1643,7 @@ body {
   height: 0vh;
   background-color: rgba(0, 0, 0, 0.5);
   overflow: auto;
-  z-index: 99;
+  z-index: 9997;
   opacity: 0;
 }
 
@@ -1625,6 +1653,14 @@ body {
   overflow: hidden;
   background: white;
   position: relative;
+}
+.aspect__wrapper .aspect__wrapper--title {
+  position: absolute;
+  top: 50%;
+  left: 2rem;
+  transform: translateY(-50%);
+  z-index: 99;
+  width: 200px;
 }
 .aspect__wrapper picture {
   position: absolute;
@@ -1745,9 +1781,10 @@ a.cta-link {
   border: 1px solid #000000;
   border-radius: 17px;
   height: 35px;
-  width: 120px;
+  width: auto;
   text-align: center;
   line-height: 35px;
+  padding: 0 1.5rem;
 }
 a.cta-link:hover {
   color: #ffffff;
@@ -2018,6 +2055,10 @@ a:hover {
   }
 }
 
+.page-contact .shopify-section {
+  margin-bottom: 100px;
+}
+
 .contact-details__wrapper {
   width: 90%;
   margin: 0 auto;
@@ -2051,6 +2092,9 @@ a:hover {
 .article-list {
   padding: 25px;
 }
+.article-list .article-list-title {
+  margin-top: 4rem;
+}
 @media (max-width: 640px) {
   .article-list .grid_3x {
     grid-template-columns: 1fr 1fr;
@@ -2060,6 +2104,9 @@ a:hover {
   .article-list .grid_3x {
     grid-template-columns: 1fr;
   }
+}
+.article-list .grid_3x .article-item h4 {
+  margin-bottom: 1.15rem;
 }
 .article-list .aspect__wrapper {
   margin-bottom: 1.5rem;
@@ -2095,7 +2142,7 @@ a:hover {
   }
 }
 .article .article-content p {
-  max-width: 75%;
+  max-width: 900px;
 }
 @media (max-width: 360px) {
   .article .article-content p {
@@ -2113,12 +2160,6 @@ a:hover {
   .collection .header__wrapper {
     padding-bottom: 25px;
   }
-}
-.collection .header__wrapper header {
-  border-bottom: none;
-}
-.collection .--header-image {
-  padding-top: 0;
 }
 @media (max-width: 768px) {
   .collection .--header-image {
@@ -2152,7 +2193,7 @@ a:hover {
   margin-bottom: 0;
 }
 .collection .collection-list {
-  padding: 1.5rem 3rem;
+  padding: 0 3rem;
 }
 @media (max-width: 600px) {
   .collection .collection-list {
@@ -2321,9 +2362,6 @@ a:hover {
 }
 .single-product .product-details__wrapper .details-header__wrapper h1 {
   margin-bottom: 1.25rem;
-}
-.single-product .product-details__wrapper .details-header__wrapper p {
-  margin-bottom: 0;
 }
 @media (max-width: 620px) {
   .single-product .product-details__wrapper .details-header__wrapper p {

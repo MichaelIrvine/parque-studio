@@ -6,6 +6,15 @@
   background: white;
   position: relative;
 
+  .aspect__wrapper--title {
+    position: absolute;
+    top: 50%;
+    left: 2rem;
+    transform: translateY(-50%);
+    z-index: 99;
+    width: 200px;
+  }
+
   picture {
     position: absolute;
     top: 0;

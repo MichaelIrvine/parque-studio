@@ -11,6 +11,13 @@
   margin-bottom: 1rem;
 }
 
+// Force Menu to have no translate applied
+@media (min-width: 768px) {
+  .header__wrapper header .main-nav {
+    transform: translateX(0) !important;
+  }
+}
+
 @media (max-width: 768px) {
   .header__wrapper header .main-nav {
     padding: 1.5rem 2.5rem;

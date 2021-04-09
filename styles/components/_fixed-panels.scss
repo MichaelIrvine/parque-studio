@@ -3,10 +3,11 @@
   position: -webkit-sticky;
   position: sticky;
   top: 100px;
-
   margin-bottom: 150px;
 }
 
 .fixed-panel.unfix {
   position: relative;
+  top: 0;
+  margin-bottom: 0;
 }

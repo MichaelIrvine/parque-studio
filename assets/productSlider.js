@@ -2,7 +2,7 @@ $('.product-slider').slick({
   infinite: true,
   arrows: false,
   slidesToShow: 5,
-  asNavFor: '.product-slider-nav',
+  // asNavFor: '.product-slider-nav',
   vertical: true,
   centerMode: true,
 

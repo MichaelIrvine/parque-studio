@@ -2,7 +2,7 @@ const fixedPanel = () => {
   const panel = document.querySelector('.fixed-panel');
   if (document.body.contains(panel)) {
     const updatePanel = () => {
-      if (window.innerHeight < panel.clientHeight) {
+      if (window.innerHeight - 90 < panel.clientHeight) {
         panel.classList.add('unfix');
       } else {
         panel.classList.remove('unfix');

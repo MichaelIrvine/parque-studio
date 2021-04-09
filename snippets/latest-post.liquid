@@ -11,7 +11,7 @@ blogs[blog_handle].articles limit: 1 %}
         {% if article.excerpt.size > 0 %}
         <p>{{ article.excerpt }}</p>
         {% else %}
-        <p>{{ article.content | strip_html | truncate: 150 }}</p>
+        <p>{{ article.content | strip_html | truncate: 650 }}</p>
         {% endif %}
       </div>
       <a href="{{ article.url }}">Read More</a>

@@ -15,6 +15,8 @@
   overflow: auto;
   overflow-y: scroll;
   transform: translateX(210%);
+  display: flex;
+  flex-direction: column;
 
   @media (min-width: 1100px) {
     width: 35%;
@@ -38,7 +40,7 @@
     padding-bottom: 2.5rem;
     margin-bottom: 2.5rem;
     border-bottom: 1px solid $darkGrey;
-    max-height: 270px;
+    // max-height: 270px;
     overflow: auto;
 
     .items-table {
@@ -82,6 +84,7 @@
 }
 
 .mini-cart-total__wrapper {
+  flex: 1;
   display: flex;
   justify-content: flex-start;
   padding-bottom: 2rem;
@@ -99,7 +102,7 @@
     width: 60%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    // justify-content: flex-end;
     align-items: flex-end;
   }
 

@@ -3,6 +3,7 @@
     object-fit: cover;
     min-height: 100vh;
     max-height: 100vh;
+    object-position: bottom;
 
     @media (max-width: 768px) {
       min-height: 60vh;

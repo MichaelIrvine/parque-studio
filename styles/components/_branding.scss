@@ -1,11 +1,13 @@
 .branding__wrapper {
   display: inline-block;
   position: relative;
-  width: 20%;
+  width: 24%;
   min-width: 180px;
   height: 100vh;
   vertical-align: middle;
   overflow: hidden;
+  opacity: 0;
+  transform: translateX(-20px);
 
   @media (max-width: 840px) {
     display: none;

@@ -13,6 +13,9 @@ import cartPage from './cartPage';
 import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
 import fixedPanel from './fixedPanel';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+gsap.registerPlugin(ScrollTrigger);
 
 // Imported Functions
 cartDrawer();
@@ -96,4 +99,75 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('resize', lazyload);
     window.addEventListener('orientationChange', lazyload);
   }
+});
+
+// **
+// ** ANIMATIONS
+// **
+
+// ** INDEX/HOME
+const homeBranding = document.querySelector('.branding__wrapper');
+const homeNav = document.querySelector('.index header');
+const elTriggers = document.querySelectorAll('.scroll-trigger-element');
+
+const homeTl = gsap.timeline({ paused: true });
+homeTl.to(homeBranding, {
+  duration: 2.5,
+  opacity: 1,
+  x: 0,
+  ease: 'power4.out',
+  delay: 1.5,
+});
+homeTl.to(
+  homeNav,
+  {
+    duration: 2,
+    opacity: 1,
+    y: 0,
+    ease: 'power4.out',
+  },
+  '<0.5'
+);
+
+// Scroll Triggers
+gsap.fromTo(
+  homeBranding,
+  {
+    y: 0,
+  },
+  {
+    y: 50,
+    scrollTrigger: {
+      trigger: homeBranding,
+      toggleActions: 'play none none none',
+      scrub: 0.25,
+      start: 'top top',
+    },
+  }
+);
+
+elTriggers.forEach((trigger) => {
+  gsap.fromTo(
+    trigger,
+    {
+      autoAlpha: 0,
+      y: 40,
+    },
+    {
+      autoAlpha: 1,
+      y: 0,
+      scrollTrigger: {
+        trigger: trigger,
+        start: 'top 90%',
+        end: 'bottom center',
+        scrub: false,
+        toggleActions: 'play none none none',
+        // markers: true,
+      },
+    }
+  );
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  homeTl.play();
 });

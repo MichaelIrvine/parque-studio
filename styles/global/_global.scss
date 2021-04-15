@@ -3,7 +3,6 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 14px;
   padding-bottom: 0 !important;
 }
 
@@ -35,4 +34,8 @@ body {
   overflow: auto;
   z-index: 9997;
   opacity: 0;
+}
+
+#menu-screen {
+  z-index: 0;
 }

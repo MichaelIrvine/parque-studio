@@ -1,11 +1,11 @@
 <section class="page-intro">
-  <div class="page-intro__text">
+  <div class="page-intro__text scroll-trigger-element">
     <h2>{{section.settings.home-intro-text}}</h2>
     <a href="{{section.settings.home-intro-url}}" class="cta-link">
       {{section.settings.home-intro-link}}
     </a>
   </div>
-  <div class="image__wrapper cropped">
+  <div class="image__wrapper cropped scroll-trigger-element">
     {% render 'responsive-image' with imgSrc: section.settings.home-intro-image, aspectVar: '_16x9' %} 
   </div>
 </section>

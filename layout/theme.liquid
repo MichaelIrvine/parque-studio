@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Parque Studio | {{ page_title }}</title>
+    {% if template.name != 'index' %}
+      <title>Parque Studio | {{ page_title }}</title>
+    {% endif %}
+    {% if template.name == 'index' %}
+      <title>Parque Studio</title>
+    {% endif %}
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="description" content="{{ page_description | escape }}" />

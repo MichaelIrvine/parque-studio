@@ -1,3 +1,5 @@
+{% assign product_tags = "Mens,Womens" | split: "," %}
+
 {% if collection.tags.size > 0 %}
 <nav class="tags-menu">
   <a href="/collections/{{ collection.handle }}" class="tag__wrapper">
@@ -5,13 +7,15 @@
     <span>All Products</span>
   </a>
   {% for tag in collection.all_tags %}
-  <a
-    href="/collections/{{ collection.handle }}/{{ tag | handleize }}"
-    class="tag__wrapper"
-  >
-    <span class="blog-tag--check"></span>
-    <span>{{ tag }}</span>
-  </a>
+  {% if product_tags contains tag %}  
+    <a
+      href="/collections/{{ collection.handle }}/{{ tag | handleize }}"
+      class="tag__wrapper"
+    >
+      <span class="blog-tag--check"></span>
+      <span>{{ tag }}</span>
+    </a>
+  {% endif %}
   {% endfor %}
 </nav>
 {% endif %}

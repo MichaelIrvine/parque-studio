@@ -13,15 +13,20 @@ import cartPage from './cartPage';
 import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
 import fixedPanel from './fixedPanel';
-import { gsap } from 'gsap';
+import { gsap, Power3 } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import fixedHomeHeader from './fixedHomeheader';
 gsap.registerPlugin(ScrollTrigger);
 
 // Imported Functions
 cartDrawer();
 productTabs();
 mobileMenuDrawer();
-fixedPanel();
+// fixedPanel();
+
+if (document.body.classList.contains('index')) {
+  fixedHomeHeader();
+}
 
 if (document.body.classList.contains('product')) {
   fitChartModal();
@@ -105,69 +110,84 @@ document.addEventListener('DOMContentLoaded', function () {
 // ** ANIMATIONS
 // **
 
+// Check media query
+const mediaQuery = window.matchMedia('(min-width: 768px)');
+
 // ** INDEX/HOME
-const homeBranding = document.querySelector('.branding__wrapper');
-const homeNav = document.querySelector('.index header');
-const elTriggers = document.querySelectorAll('.scroll-trigger-element');
+const indexAni = () => {
+  if (window.location.pathname === '/' && mediaQuery.matches) {
+    const homeBranding = document.querySelector('.branding__wrapper');
+    const homeNav = document.querySelector('.index header');
+    const elTriggers = document.querySelectorAll('.scroll-trigger-element');
 
-const homeTl = gsap.timeline({ paused: true });
-homeTl.to(homeBranding, {
-  duration: 2.5,
-  opacity: 1,
-  x: 0,
-  ease: 'power4.out',
-  delay: 1.5,
-});
-homeTl.to(
-  homeNav,
-  {
-    duration: 2,
-    opacity: 1,
-    y: 0,
-    ease: 'power4.out',
-  },
-  '<0.5'
-);
-
-// Scroll Triggers
-gsap.fromTo(
-  homeBranding,
-  {
-    y: 0,
-  },
-  {
-    y: 50,
-    scrollTrigger: {
-      trigger: homeBranding,
-      toggleActions: 'play none none none',
-      scrub: 0.25,
-      start: 'top top',
-    },
-  }
-);
-
-elTriggers.forEach((trigger) => {
-  gsap.fromTo(
-    trigger,
-    {
-      autoAlpha: 0,
-      y: 40,
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      scrollTrigger: {
-        trigger: trigger,
-        start: 'top 90%',
-        end: 'bottom center',
-        scrub: false,
-        toggleActions: 'play none none none',
-        // markers: true,
+    const homeTl = gsap.timeline({ paused: true });
+    homeTl.fromTo(
+      homeBranding,
+      { autoAlpha: 0, x: -20 },
+      {
+        duration: 1.25,
+        autoAlpha: 1,
+        x: 0,
+        ease: Power3.easeInOut,
+        delay: 1,
+      }
+    );
+    homeTl.fromTo(
+      homeNav,
+      {
+        autoAlpha: 0,
+        y: -12,
       },
-    }
-  );
-});
+      {
+        duration: 1,
+        autoAlpha: 1,
+        y: 0,
+        ease: Power3.easeInOut,
+      },
+      '<0.5'
+    );
 
-document.addEventListener('DOMContentLoaded', function () {
-  homeTl.play();
-});
+    // Scroll Triggers
+    gsap.fromTo(
+      homeBranding,
+      {
+        y: 0,
+      },
+      {
+        y: 50,
+        scrollTrigger: {
+          trigger: homeBranding,
+          toggleActions: 'play none none none',
+          scrub: 3.5,
+          start: 'top top',
+        },
+      }
+    );
+
+    elTriggers.forEach((trigger) => {
+      gsap.fromTo(
+        trigger,
+        {
+          autoAlpha: 0,
+          y: 20,
+        },
+        {
+          autoAlpha: 1,
+          y: 0,
+          duration: 1.2,
+          scrollTrigger: {
+            trigger: trigger,
+            start: 'top 90%',
+            end: 'bottom center',
+            scrub: false,
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    });
+
+    homeTl.play();
+  }
+};
+
+window.addEventListener('DOMContentLoaded', indexAni);

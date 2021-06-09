@@ -1,8 +1,4 @@
 const productTabs = () => {
-  //Credit: https://codepen.io/rafaelavlucas/pen/MLKGba
-
-  // tabs
-
   const tabLinks = document.querySelectorAll('.tablinks');
   const tabContent = document.querySelectorAll('.tabcontent');
 

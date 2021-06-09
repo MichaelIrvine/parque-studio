@@ -1,11 +1,11 @@
 <div class="single-product coming-soon">
   {% if product.images.size > 1 %}
     <div class="product-images__wrapper--grid">
-      <div class="product-slider-nav">
+      {% comment %} <div class="product-slider-nav">
         {% for image in product.images %}
           <img src="{{ image.src | img_url: '200x', crop:'center' }}" alt="{{ image.alt | escape }}">
         {% endfor %}
-      </div>
+      </div> {% endcomment %}
       <div class="product-slider">
         {% for image in product.images %}
           <a href="{{ image.src | img_url: '600x' }}" >

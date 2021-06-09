@@ -1,4 +1,4 @@
-<div class="image-grid__wrapper">
+<div class="image-grid__wrapper scroll-trigger-element">
   {% for block in section.blocks %}
     {% if block.settings.home-gallery-image %}
       {% render 'responsive-image-grid' with imgSrc: block.settings.home-gallery-image, aspectVar: {{block.settings.image-aspect}}, imagePosY: {{block.settings.image-position-y}},imagePosX: {{block.settings.image-position-x}}, imageSize: {{block.settings.image-size}} %}

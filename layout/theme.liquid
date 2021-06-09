@@ -15,6 +15,7 @@
       name="viewport"
       content="width=device-width,initial-scale=1,shrink-to-fit=no"
     />
+    <meta name="google-site-verification" content="wO9Le5YHiG4wkpQ_C09zNPF_VlnMOemQ9siGIyL5auk" />
     {{
       content_for_header
     }}
@@ -29,17 +30,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
     
     <!-- Google Tag Manager -->
-      {% comment %} <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
       new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
       j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-WVSLM9Z');</script> {% endcomment %}
+      })(window,document,'script','dataLayer','GTM-WVSLM9Z');</script>
     <!-- End Google Tag Manager -->
   </head>
-  <body class="{{ template | handleize }} cart--no-items fixed-header">
+  <body class="{{ template | handleize }} cart--no-items {% if template != 'index' %}fixed-header{% endif %}">
     <!-- Google Tag Manager (noscript) -->
-      {% comment %} <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVSLM9Z"
-      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> {% endcomment %}
+      <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WVSLM9Z"
+      height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> 
     <!-- End Google Tag Manager (noscript) -->
 
     <div class="screen" data-screen>
@@ -55,19 +56,23 @@
         <div class="branding__wrapper">{% render 'home-page-branding'%}</div>
       {% endif %}
         <header>
-          <div class="header-logo__wrapper {% if template == 'index' %}no-display{% endif %}">
+          <div class="header-logo__wrapper {% if template == 'index' %}{% endif %}">
             <a href="/" aria-label="Parque Studio Home Page">
               {% render 'header-logo' %}
             </a>
           </div>
           <nav class="main-nav">
+            {%include 'menu' %}
+          </nav>
+          {% comment %} Mobile Menu {% endcomment %}
+          <nav class="mobile-nav">
             <div class="mobile-menu-header">
               <button id="menu-drawer-close" class="close-cart">
                 <span></span>
                 <span></span>
               </button>
             </div>
-            {%include 'menu' %}
+            {%include 'menu-mobile' %}
           </nav>
           <div class="mini-cart">
             <button id="mini-cart-drawer-open">

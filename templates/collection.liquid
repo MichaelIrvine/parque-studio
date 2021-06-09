@@ -1,5 +1,15 @@
 <div class="image__wrapper --header-image">
-  {% render 'responsive-image' with imgSrc: collection.image, aspectVar: '_9x21', imgTitle: collection.title %}
+  <div class="aspect__wrapper _9x21">
+    <picture>
+      <img
+        src="{{ collection.image | img_url: 'master' }}"
+        srcset="{{ collection.image | img_url: 'master' }}"
+        alt="{{ collection.image.alt | escape }}"
+        loading="lazy"
+        class="lazy blurUp lazy-reveal"
+      />
+    </picture>
+  </div>
 </div>
 <div class="product-filter__wrapper">
   {% render 'product-filter' %}

@@ -29,7 +29,7 @@
   }
 
   if(Date.parse(endDate) < Date.now()){
-    preSaleWrapper.remove();
+    preSaleWrapper.querySelector('h4').innerText = "Presale has ended";
   } else {
     // init timer functions
     if (endDate > startDate) {

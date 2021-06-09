@@ -1,36 +1,34 @@
-@media (min-width: 768px) {
+// @media (min-width: 768px) {
+//   .mobile-menu-header {
+//     display: none;
+//   }
+// }
+
+.header__wrapper header .mobile-nav {
+  height: 0px;
+  display: none;
+
   .mobile-menu-header {
-    display: none;
+    height: 40px;
+    width: 100%;
+    text-align: right;
+    margin-bottom: 1rem;
   }
-}
 
-.mobile-menu-header {
-  height: 40px;
-  width: 100%;
-  text-align: right;
-  margin-bottom: 1rem;
-}
-
-// Force Menu to have no translate applied
-@media (min-width: 768px) {
-  .header__wrapper header .main-nav {
-    transform: translateX(0) !important;
-  }
-}
-
-@media (max-width: 768px) {
-  .header__wrapper header .main-nav {
+  @media (max-width: 768px) {
     padding: 1.5rem 2.5rem;
     position: fixed;
     top: 0;
     right: 0;
     width: 35%;
+    height: 100vh;
     min-height: 100vh;
     z-index: 9999;
     background: $white;
     overflow: auto;
     transform: translateX(210%);
 
+    display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;

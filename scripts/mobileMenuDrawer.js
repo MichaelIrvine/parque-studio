@@ -16,7 +16,7 @@ const menuDrawer = () => {
       opacity: 1,
       ease: 'power2.out',
     })
-    .to('.main-nav', {
+    .to('.mobile-nav', {
       delay: 0,
       duration: 0.3,
       x: 0,

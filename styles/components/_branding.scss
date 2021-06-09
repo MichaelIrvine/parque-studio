@@ -6,8 +6,8 @@
   height: 100vh;
   vertical-align: middle;
   overflow: hidden;
-  opacity: 0;
   transform: translateX(-20px);
+  opacity: 0;
 
   @media (max-width: 840px) {
     display: none;

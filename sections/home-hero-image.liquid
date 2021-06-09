@@ -1,0 +1,32 @@
+<div class="home-hero__wrapper">
+  {% if section.settings.home-hero-image %}
+  <img 
+    data-src="{{section.settings.home-hero-image | img_url: 'master' }}"
+    src="{{section.settings.home-hero-image | img_url: '350x' }}" alt="{{home-hero-image.alt | escape}}" loading="lazy" class="lazy blurUp lazy-reveal">  
+  {% endif %}
+  {% if section.settings.home-hero-video %}
+    <video autoplay muted loop id="parqueHeroVideo">
+      <source src="{{ section.settings.home-hero-video }}" type="video/mp4">
+    </video>
+  {% endif %}
+</div>
+
+{% schema %}
+  {
+    "name": "Home Hero",
+    "settings": [
+      {
+        "id": "home-hero-image",
+        "type": "image_picker",
+        "label": "Home Page Hero Image"
+      },
+      {
+        "id": "home-hero-video",
+        "type": "text",
+        "label": "Home Page Hero Video Link"
+      }
+    ]
+  }
+{% endschema %}
+
+

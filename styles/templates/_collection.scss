@@ -1,14 +1,6 @@
 .collection {
   .header__wrapper {
     padding-bottom: 0;
-
-    @media (max-width: 768px) {
-      padding-bottom: 25px;
-    }
-
-    // header {
-    //   border-bottom: none;
-    // }
   }
 
   .--header-image {
@@ -17,12 +9,12 @@
     }
 
     @media (max-width: 680px) {
-      min-height: 50vh;
+      height: auto;
     }
 
     .aspect__wrapper {
       @media (max-width: 600px) {
-        min-height: 50vh;
+        height: 50vh;
       }
       img {
         @media (max-width: 600px) {

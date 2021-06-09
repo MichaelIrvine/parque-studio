@@ -169,6 +169,9 @@
 .single-product.coming-soon {
   .product-details__wrapper {
     padding-top: 2rem;
+    height: 100%;
+    position: sticky;
+    top: 90px;
   }
 }
 

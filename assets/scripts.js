@@ -7463,7 +7463,7 @@ var menuDrawer = function menuDrawer() {
     duration: 0.3,
     opacity: 1,
     ease: 'power2.out'
-  }).to('.main-nav', {
+  }).to('.mobile-nav', {
     delay: 0,
     duration: 0.3,
     x: 0,
@@ -7884,8 +7884,6 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var productTabs = function productTabs() {
-  //Credit: https://codepen.io/rafaelavlucas/pen/MLKGba
-  // tabs
   var tabLinks = document.querySelectorAll('.tablinks');
   var tabContent = document.querySelectorAll('.tabcontent');
   tabLinks.forEach(function (el) {
@@ -9873,6 +9871,28 @@ ScrollTrigger.sort = function (func) {
 };
 
 _getGSAP() && gsap.registerPlugin(ScrollTrigger);
+},{}],"fixedHomeheader.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var fixedHomeHeader = function fixedHomeHeader() {
+  var homeHeader = document.querySelector('body.index .header__wrapper');
+  var homeHero = document.querySelector('body.index #shopify-section-home-hero-image');
+  window.addEventListener('scroll', function () {
+    if (window.scrollY >= homeHero.clientHeight) {
+      homeHeader.classList.add('fixed');
+    } else {
+      homeHeader.classList.remove('fixed');
+    }
+  });
+};
+
+var _default = fixedHomeHeader;
+exports.default = _default;
 },{}],"scripts.js":[function(require,module,exports) {
 "use strict";
 
@@ -9904,6 +9924,8 @@ var _gsap = require("gsap");
 
 var _ScrollTrigger = require("gsap/ScrollTrigger");
 
+var _fixedHomeheader = _interopRequireDefault(require("./fixedHomeheader"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
@@ -9917,8 +9939,11 @@ _gsap.gsap.registerPlugin(_ScrollTrigger.ScrollTrigger); // Imported Functions
 
 (0, _cartDrawer.default)();
 (0, _productTabs.default)();
-(0, _mobileMenuDrawer.default)();
-(0, _fixedPanel.default)();
+(0, _mobileMenuDrawer.default)(); // fixedPanel();
+
+if (document.body.classList.contains('index')) {
+  (0, _fixedHomeheader.default)();
+}
 
 if (document.body.classList.contains('product')) {
   (0, _fitChartModal.default)();
@@ -9997,63 +10022,75 @@ document.addEventListener('DOMContentLoaded', function () {
 }); // **
 // ** ANIMATIONS
 // **
-// ** INDEX/HOME
+// Check media query
 
-var homeBranding = document.querySelector('.branding__wrapper');
-var homeNav = document.querySelector('.index header');
-var elTriggers = document.querySelectorAll('.scroll-trigger-element');
+var mediaQuery = window.matchMedia('(min-width: 768px)'); // ** INDEX/HOME
 
-var homeTl = _gsap.gsap.timeline({
-  paused: true
-});
+var indexAni = function indexAni() {
+  if (window.location.pathname === '/' && mediaQuery.matches) {
+    var homeBranding = document.querySelector('.branding__wrapper');
+    var homeNav = document.querySelector('.index header');
+    var elTriggers = document.querySelectorAll('.scroll-trigger-element');
 
-homeTl.to(homeBranding, {
-  duration: 2.5,
-  opacity: 1,
-  x: 0,
-  ease: 'power4.out',
-  delay: 1.5
-});
-homeTl.to(homeNav, {
-  duration: 2,
-  opacity: 1,
-  y: 0,
-  ease: 'power4.out'
-}, '<0.5'); // Scroll Triggers
+    var homeTl = _gsap.gsap.timeline({
+      paused: true
+    });
 
-_gsap.gsap.fromTo(homeBranding, {
-  y: 0
-}, {
-  y: 50,
-  scrollTrigger: {
-    trigger: homeBranding,
-    toggleActions: 'play none none none',
-    scrub: 0.25,
-    start: 'top top'
+    homeTl.fromTo(homeBranding, {
+      autoAlpha: 0,
+      x: -20
+    }, {
+      duration: 1.25,
+      autoAlpha: 1,
+      x: 0,
+      ease: _gsap.Power3.easeInOut,
+      delay: 1
+    });
+    homeTl.fromTo(homeNav, {
+      autoAlpha: 0,
+      y: -12
+    }, {
+      duration: 1,
+      autoAlpha: 1,
+      y: 0,
+      ease: _gsap.Power3.easeInOut
+    }, '<0.5'); // Scroll Triggers
+
+    _gsap.gsap.fromTo(homeBranding, {
+      y: 0
+    }, {
+      y: 50,
+      scrollTrigger: {
+        trigger: homeBranding,
+        toggleActions: 'play none none none',
+        scrub: 3.5,
+        start: 'top top'
+      }
+    });
+
+    elTriggers.forEach(function (trigger) {
+      _gsap.gsap.fromTo(trigger, {
+        autoAlpha: 0,
+        y: 20
+      }, {
+        autoAlpha: 1,
+        y: 0,
+        duration: 1.2,
+        scrollTrigger: {
+          trigger: trigger,
+          start: 'top 90%',
+          end: 'bottom center',
+          scrub: false,
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+    homeTl.play();
   }
-});
+};
 
-elTriggers.forEach(function (trigger) {
-  _gsap.gsap.fromTo(trigger, {
-    autoAlpha: 0,
-    y: 40
-  }, {
-    autoAlpha: 1,
-    y: 0,
-    scrollTrigger: {
-      trigger: trigger,
-      start: 'top 90%',
-      end: 'bottom center',
-      scrub: false,
-      toggleActions: 'play none none none' // markers: true,
-
-    }
-  });
-});
-document.addEventListener('DOMContentLoaded', function () {
-  homeTl.play();
-});
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./fixedPanel":"fixedPanel.js","gsap":"../node_modules/gsap/index.js","gsap/ScrollTrigger":"../node_modules/gsap/ScrollTrigger.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+window.addEventListener('DOMContentLoaded', indexAni);
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./fixedPanel":"fixedPanel.js","gsap":"../node_modules/gsap/index.js","gsap/ScrollTrigger":"../node_modules/gsap/ScrollTrigger.js","./fixedHomeheader":"fixedHomeheader.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10081,7 +10118,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52001" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59970" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -1,10 +1,11 @@
-
+{% assign csCollection = collections[section.settings.coming_soon_collection] %}
+{% if csCollection.products.size > 0  %}
 <section class="collection-block --coming-soon">
   <div class="collection-header__wrapper">
     <h2>{{section.settings.coming_soon_heading}}</h2>
   </div>
 
-  {% assign csCollection = collections[section.settings.coming_soon_collection] %}
+  
   
   {% for product in csCollection.products limit: section.settings.product_limit %}
     <div class="collection__wrapper">
@@ -18,7 +19,7 @@
     </div>
   {% endfor %}
 </section>
-
+{% endif %}
 
 
 {% schema %}

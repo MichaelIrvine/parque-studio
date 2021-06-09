@@ -6,7 +6,7 @@
   grid-template-columns: repeat(2, auto);
   grid-template-rows: auto;
   gap: 2rem;
-  grid-row-gap: 200px;
+  grid-row-gap: 150px;
 
   @media (max-width: 768px) {
     gap: 1rem;

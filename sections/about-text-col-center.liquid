@@ -4,7 +4,9 @@
     <p>{{section.settings.about-center-col-text}}</p>
   </div>
 </div>
+{% if section.settings.about-center-col-image %}
 {% render 'responsive-image' with imgSrc: section.settings.about-center-col-image, aspectVar: '_16x9' %} 
+{% endif %}
 
 
 

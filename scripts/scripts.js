@@ -12,7 +12,7 @@ import productTabs from './productTabs';
 import cartPage from './cartPage';
 import updateCartCount from './updateCartCount';
 import miniCart from './miniCart';
-import fixedPanel from './fixedPanel';
+
 import { gsap, Power3 } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import fixedHomeHeader from './fixedHomeheader';
@@ -22,7 +22,6 @@ gsap.registerPlugin(ScrollTrigger);
 cartDrawer();
 productTabs();
 mobileMenuDrawer();
-// fixedPanel();
 
 if (document.body.classList.contains('index')) {
   fixedHomeHeader();

@@ -12,6 +12,7 @@
   {% render 'product-template' %}  
 {% endif %}
 
+
 {% section 'product-collection-block' %}
 {% comment %} Message Component {% endcomment %}
 <div class="message font-prestige"></div>
@@ -22,6 +23,8 @@
   const startDate = '{{presaleStart}}';
   const endDate = '{{presaleEnd}}';
   const comingSoon = '{{comingSoon}}';
+
+
 
   // Add 'coming-soon' class name to Body
   if(comingSoon){

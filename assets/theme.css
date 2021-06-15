@@ -1862,6 +1862,20 @@ a + * {
   gap: 1.5rem;
 }
 
+.grid__auto {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-flow: dense;
+}
+
+.grid__auto-flow {
+  display: grid;
+  gap: 1rem;
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(3, 1fr);
+}
+
 button {
   border: none;
   background-color: transparent;
@@ -2189,11 +2203,11 @@ a:hover {
   width: 90%;
   margin: 0 auto;
 }
-.contact-details__wrapper .grid_3x {
+.contact-details__wrapper .grid__2x {
   gap: 6rem;
 }
 @media (max-width: 768px) {
-  .contact-details__wrapper .grid_3x {
+  .contact-details__wrapper .grid__2x {
     grid-template-columns: 1fr;
   }
 }
@@ -2274,6 +2288,9 @@ a:hover {
   .article .article-content p {
     max-width: 85%;
   }
+}
+.article .article-content p:first-of-type {
+  margin: 0 auto 3rem;
 }
 .article .article-content * + * {
   margin: 0 auto 3rem;
@@ -2466,6 +2483,7 @@ a:hover {
   position: relative;
   width: 45%;
   margin-left: 2rem;
+  padding-top: 2rem;
 }
 @media (max-width: 768px) {
   .single-product .product-details__wrapper {
@@ -2536,8 +2554,6 @@ a:hover {
 .single-product.coming-soon .product-details__wrapper {
   padding-top: 2rem;
   height: 100%;
-  position: sticky;
-  top: 90px;
 }
 
 .product #shopify-section-product-collection-block {
@@ -2712,6 +2728,9 @@ input[type=number]::-webkit-outer-spin-button {
   min-height: 100vh;
   margin-top: 150px;
   padding-bottom: 4.5rem;
+}
+.shopify-policy__container ul {
+  font-family: "haboro-contrast-normal", sans-serif;
 }
 
 .four-oh-four {

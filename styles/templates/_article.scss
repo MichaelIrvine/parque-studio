@@ -39,6 +39,10 @@
       }
     }
 
+    p:first-of-type {
+      margin: 0 auto 3rem;
+    }
+
     * + * {
       margin: 0 auto 3rem;
     }

@@ -3,9 +3,6 @@ blogs[blog_handle].articles limit: 1 %}
 <div class="responsive-grid">
   <div>
     <div class="meta__wrapper">
-      <p class="font-prestige small">
-        {{ article.created_at | date: '%d.%m.%Y' }}
-      </p>
       <h2>{{ article.title }}</h2>
       <div class="latest-post__excerpt--wrapper">
         {% if article.excerpt.size > 0 %}

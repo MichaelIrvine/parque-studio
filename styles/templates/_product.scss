@@ -93,6 +93,7 @@
     position: relative;
     width: 45%;
     margin-left: 2rem;
+    padding-top: 2rem;
 
     @media (max-width: 768px) {
       margin-left: 0;
@@ -170,8 +171,6 @@
   .product-details__wrapper {
     padding-top: 2rem;
     height: 100%;
-    position: sticky;
-    top: 90px;
   }
 }
 

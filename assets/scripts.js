@@ -8168,34 +8168,7 @@ var cartPage = function cartPage() {
 
 var _default = cartPage;
 exports.default = _default;
-},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./cartTemplate":"cartTemplate.js","./incrementCartQuantity":"incrementCartQuantity.js","./decrementCartQuantity":"decrementCartQuantity.js","./removeItem":"removeItem.js"}],"fixedPanel.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var fixedPanel = function fixedPanel() {
-  var panel = document.querySelector('.fixed-panel');
-
-  if (document.body.contains(panel)) {
-    var updatePanel = function updatePanel() {
-      if (window.innerHeight - 90 < panel.clientHeight) {
-        panel.classList.add('unfix');
-      } else {
-        panel.classList.remove('unfix');
-      }
-    };
-
-    updatePanel();
-    window.addEventListener('resize', updatePanel);
-  }
-};
-
-var _default = fixedPanel;
-exports.default = _default;
-},{}],"../node_modules/gsap/ScrollTrigger.js":[function(require,module,exports) {
+},{"@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartSummary":"cartSummary.js","./cartTemplate":"cartTemplate.js","./incrementCartQuantity":"incrementCartQuantity.js","./decrementCartQuantity":"decrementCartQuantity.js","./removeItem":"removeItem.js"}],"../node_modules/gsap/ScrollTrigger.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -9918,8 +9891,6 @@ var _updateCartCount = _interopRequireDefault(require("./updateCartCount"));
 
 var _miniCart = _interopRequireDefault(require("./miniCart"));
 
-var _fixedPanel = _interopRequireDefault(require("./fixedPanel"));
-
 var _gsap = require("gsap");
 
 var _ScrollTrigger = require("gsap/ScrollTrigger");
@@ -9939,7 +9910,7 @@ _gsap.gsap.registerPlugin(_ScrollTrigger.ScrollTrigger); // Imported Functions
 
 (0, _cartDrawer.default)();
 (0, _productTabs.default)();
-(0, _mobileMenuDrawer.default)(); // fixedPanel();
+(0, _mobileMenuDrawer.default)();
 
 if (document.body.classList.contains('index')) {
   (0, _fixedHomeheader.default)();
@@ -10090,7 +10061,7 @@ var indexAni = function indexAni() {
 };
 
 window.addEventListener('DOMContentLoaded', indexAni);
-},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","./fixedPanel":"fixedPanel.js","gsap":"../node_modules/gsap/index.js","gsap/ScrollTrigger":"../node_modules/gsap/ScrollTrigger.js","./fixedHomeheader":"fixedHomeheader.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"unfetch/polyfill":"../node_modules/unfetch/polyfill/index.js","es6-promise/auto":"../node_modules/es6-promise/auto.js","@shopify/theme-cart":"../node_modules/@shopify/theme-cart/theme-cart.js","./cartDrawer":"cartDrawer.js","./mobileMenuDrawer":"mobileMenuDrawer.js","./fitChartModal":"fitChartModal.js","./addToCart":"addToCart.js","./productTabs":"productTabs.js","./cartPage":"cartPage.js","./updateCartCount":"updateCartCount.js","./miniCart":"miniCart.js","gsap":"../node_modules/gsap/index.js","gsap/ScrollTrigger":"../node_modules/gsap/ScrollTrigger.js","./fixedHomeheader":"fixedHomeheader.js"}],"../../../../../../../../../.nvm/versions/node/v12.16.1/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -10118,7 +10089,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59970" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62415" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

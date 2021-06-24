@@ -1,0 +1,39 @@
+<div class="image__wrapper --header-image">
+  <div class="aspect__wrapper _9x21">
+    <picture>
+      <img
+        src="{{ collection.image | img_url: 'master' }}"
+        srcset="{{ collection.image | img_url: 'master' }}"
+        alt="{{ collection.image.alt | escape }}"
+        loading="lazy"
+        class="lazy blurUp lazy-reveal"
+      />
+    </picture>
+  </div>
+</div>
+<div class="product-filter__wrapper">
+  {% render 'product-filter' %}
+</div>
+<div class="page-header__wrapper">
+  <h2>{{ collection.title }}</h2>
+</div> 
+<div class="grid_3x collection-list collection-block">
+  {% for product in collection.products %}
+    <div class="product-item">
+      <a href="{{ product.url | within: collection }}">
+        {% render 'responsive-image' with imgSrc: product.featured_image, aspectVar: '_1x1' %}
+      </a>
+      <div class="product-content">  
+        <h4>{{product.title}}</h4>
+        <div class="product-content__meta">
+          <p class="font-prestige">{{product.price | money}}</p>
+          <a href="{{product.url}}">Learn More</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %} 
+</div>
+
+{% section 'coming-soon-collection-block' %}  
+
+

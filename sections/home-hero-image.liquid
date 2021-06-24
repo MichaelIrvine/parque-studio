@@ -5,7 +5,7 @@
     src="{{section.settings.home-hero-image | img_url: '350x' }}" alt="{{home-hero-image.alt | escape}}" loading="lazy" class="lazy blurUp lazy-reveal">  
   {% endif %}
   {% if section.settings.home-hero-video %}
-    <video autoplay muted loop id="parqueHeroVideo">
+    <video autoplay  playsinline muted loop id="parqueHeroVideo">
       <source src="{{ section.settings.home-hero-video }}" type="video/mp4">
     </video>
   {% endif %}

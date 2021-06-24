@@ -511,28 +511,17 @@ body.cart--no-items #mini-cart-checkout {
     min-height: auto;
   }
 }
+@media (max-width: 600px) {
+  #shopify-section-home-hero-image {
+    margin-top: 60px;
+  }
+}
 #shopify-section-home-hero-image .home-hero__wrapper img {
   object-fit: cover;
   height: 0;
   min-height: 0;
   max-height: 100vh;
   object-position: bottom;
-}
-@media (max-width: 768px) {
-  #shopify-section-home-hero-image .home-hero__wrapper img {
-    min-height: 60vh;
-  }
-}
-@media (max-width: 600px) {
-  #shopify-section-home-hero-image .home-hero__wrapper img {
-    min-height: 50vh;
-    margin-top: 61px;
-  }
-}
-@media (max-width: 500px) {
-  #shopify-section-home-hero-image .home-hero__wrapper img {
-    min-height: 30vh;
-  }
 }
 #shopify-section-home-hero-image .home-hero__wrapper #parqueHeroVideo {
   min-width: 100%;
@@ -541,9 +530,9 @@ body.cart--no-items #mini-cart-checkout {
   width: 100%;
   object-fit: cover;
 }
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   #shopify-section-home-hero-image .home-hero__wrapper #parqueHeroVideo {
-    display: none;
+    min-height: auto;
   }
 }
 
@@ -1567,6 +1556,9 @@ section.page-intro .page-intro__text {
   color: #000000;
   background-color: #ffffff;
 }
+#footer .footer-col:last-of-type .contact-form .newsletter--form .note {
+  color: white;
+}
 
 .newsletter h3 {
   font-size: 1.3rem;
@@ -1637,7 +1629,7 @@ section.page-intro .page-intro__text {
   padding: 0;
 }
 .errors ul li {
-  font-size: 2rem;
+  font-size: 1rem;
   color: #ffffff;
   text-align: center;
   line-height: 1.25;
@@ -1646,6 +1638,8 @@ section.page-intro .page-intro__text {
 
 .shopify-challenge__container {
   min-height: 60vh;
+  height: 100vh;
+  padding-top: 70px;
 }
 .shopify-challenge__container .shopify-challenge__button {
   cursor: pointer;

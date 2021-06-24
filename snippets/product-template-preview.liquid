@@ -1,0 +1,53 @@
+{% assign product_overview = product.description | split: "Overview" | last | split: "Details" | first %}
+{% assign product_details = product.description | split: "Details" | last | split: "Care" | first %}
+{% assign product_care = product.description | split: "Care" | last %}
+
+<div class="single-product coming-soon">
+  {% if product.images.size > 1 %}
+    <div class="product-images__wrapper--grid">
+      <div class="product-slider">
+        {% for image in product.images %}
+          <img src="{{ image.src | img_url: '800x', crop:'center' }}" alt="{{ image.alt | escape }}">
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="product-images__wrapper --single-image">
+      <a href="{{ product.featured_image.src | img_url: '600x' }}">
+        <img src="{{ product.featured_image.src | img_url: '800x', crop:'center' }}" alt="{{ product.image.alt | escape }}">
+      </a>
+    </div>
+  {% endif %}
+
+  <div class="product-details__wrapper" >
+    <div>
+      <div class="details-header__wrapper">
+        <h1>{{ product.title }}</h1>
+      </div>
+
+      <div class="description-tab__wrapper">
+        <ul class="tabs" role="tablist">
+          <li role="tab" class="tablinks active" data-tab="Overview"><p data-title="Overview">Overview</p></li>
+          <li role="tab" class="tablinks" data-tab="Details"><p data-title="Details">Details</p></li>                      
+          <li role="tab" class="tablinks" data-tab="Care"><p data-title="Care">Care</p></li>
+        </ul>
+        {% comment %} Tab Content {% endcomment %}
+        <div class="tabcontent__wrapper">
+          <div id="Overview" class="tabcontent active">
+              <p>{{ product_overview }}</p>
+          </div>
+          <div id="Details" class="tabcontent">
+              <p>{{product_details}}</p>
+          </div>
+          <div id="Care" class="tabcontent">
+              {{ product_care}}
+          </div>
+        </div>
+      </div>
+
+      <button type="button" id="fit-chart-toggle" class="font-prestige --small">Fit & Sizing</button>
+      
+ 
+    </div>
+  </div>
+</div>

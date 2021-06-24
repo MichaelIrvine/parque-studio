@@ -20,7 +20,12 @@
             <h4>{{product.title}}</h4>
             <div class="product-content__meta">
               <p class="font-prestige">{{product.price | money}}</p>
-              <a href="{{product.url}}">Pre-Order</a>
+              {% if product.template_suffix == 'preview' %}
+                <a href="{{product.url}}">Learn More</a>
+              {% else %}
+                <a href="{{product.url}}">Pre-Order</a>
+              {% endif %}
+
             </div>
           </div>
         </div>

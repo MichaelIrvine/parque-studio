@@ -127,3 +127,14 @@ a:hover {
 #mini-cart-drawer-open:hover {
   color: #707070;
 }
+
+#backToTop {
+  position: absolute;
+  bottom: 100px;
+  right: 100px;
+  width: 32px;
+  max-width: 32px;
+  height: auto;
+  border: 1px solid $black;
+  padding: 4px;
+}

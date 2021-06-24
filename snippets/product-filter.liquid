@@ -1,4 +1,5 @@
-{% assign product_tags = "Mens,Womens" | split: "," %}
+{% comment %} {% assign product_tags = "Mens,Womens" | split: "," %} {% endcomment %}
+{% assign product_tags = "Boots,Flats,Heels,Sneakers" | split: "," %}
 
 {% if collection.tags.size > 0 %}
 <nav class="tags-menu">

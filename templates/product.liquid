@@ -3,14 +3,7 @@
 {% assign presaleStart = product.metafields.presale.start-date %}
 {% assign presaleEnd = product.metafields.presale.end-date %}
 
-{% if product.tags contains 'Coming Soon' %}
-  {% comment %} Add 'coming-soon' class name to Body {% endcomment %}
-  {% assign comingSoon = 'coming-soon' %}
-  {% render 'product-template-cs' %}  
-  {% comment %} Render Coming Soon Template {% endcomment %}
-{% else %}
-  {% render 'product-template' %}  
-{% endif %}
+{% render 'product-template' %}  
 
 
 {% section 'product-collection-block' %}
@@ -63,6 +56,7 @@
       ((Date.parse(endDate) - Date.now()) / (Date.parse(endDate) - Date.parse(startDate))) * 100
     );
     
+    // Check max width of timer bar
     timeRemainsBar.style.minWidth = `${timeLeft}%`;
   }
 

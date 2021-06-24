@@ -1,5 +1,5 @@
 <div class="page-header__wrapper">
-  <h1>Parque Studio Journal</h1>
+  <h1>{{blog.title}}</h1>
   {% render 'blog-filter' %}
 </div>
 
@@ -10,7 +10,7 @@
 <section class="article-list">
   <div class="article-list-title">
     <h2>
-      Journal Entries{% if current_tags %}: {{ current_tags.first }}{% endif %}
+      {{blog.title}}
     </h2>
   </div>
   <div class="grid_3x">{% render 'posts-list' %}</div>
